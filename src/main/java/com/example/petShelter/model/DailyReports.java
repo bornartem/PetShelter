@@ -17,11 +17,12 @@ public class DailyReports {
 
     @OneToOne
     @JsonIgnore
+    @JoinColumn(name = "id_valunteer")
     private Animals animal;
 
+    @OneToOne
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "id_valunteer")
+    @JoinColumn(name = "id_animal")
     private Valunteers valunteer;
 
     @Id
@@ -40,7 +41,4 @@ public class DailyReports {
     @Lob
     @Column(name = "foto_animal", nullable = false)
     private byte[] data;
-
-
-
 }
