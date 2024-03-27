@@ -32,13 +32,13 @@ public class DailyReports {
     @Column(name = "date_time", nullable = false)
     private LocalDateTime dateTime;
 
-    @Column(name = "well", nullable = false)
+    @Column(name = "well")
     private String well;
 
-    @Column(name = "reaction", nullable = false)
+    @Column(name = "reaction")
     private String reaction;
 
     @Lob
-    @Column(name = "foto_animal", nullable = false)
+    @Column(name = "foto_animal")
     private byte[] data;
 }
