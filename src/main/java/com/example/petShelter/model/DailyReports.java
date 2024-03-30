@@ -15,15 +15,10 @@ import java.time.LocalDateTime;
 @Entity(name = "daily_report")
 public class DailyReports {
 
-    @OneToOne
-    @JsonIgnore
-    @JoinColumn(name = "id_valunteer")
-    private Animals animal;
-
-    @OneToOne
+    @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "id_animal")
-    private Valunteers valunteer;
+    private Animals animal;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,4 +36,7 @@ public class DailyReports {
     @Lob
     @Column(name = "foto_animal")
     private byte[] data;
+
+    @Column(name = "check", nullable = false)
+    private Boolean check;
 }
