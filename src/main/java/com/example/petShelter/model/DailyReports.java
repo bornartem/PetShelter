@@ -17,11 +17,12 @@ public class DailyReports {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "id_animal")
+//    @JoinColumn(name = "id_animal")
     private Animals animal;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_daily_report")
     private long idDailyReport;
 
     @Column(name = "date_time", nullable = false)
@@ -37,6 +38,6 @@ public class DailyReports {
     @Column(name = "foto_animal")
     private byte[] data;
 
-    @Column(name = "check", nullable = false)
-    private Boolean check;
+    @Column(name = "is_check", nullable = false)
+    private Boolean is_check;
 }
