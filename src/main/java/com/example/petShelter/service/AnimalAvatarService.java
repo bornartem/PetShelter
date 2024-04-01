@@ -17,7 +17,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
+/**
+ * The class consists of logic of the project, which has the method of download and upload the photos of animals
+ * @author Khilola Kushbakova
 
+ */
 @Service
 @Transactional
 @Slf4j
@@ -34,6 +38,14 @@ public class AnimalAvatarService {
         this.animalAvatarRepository = animalAvatarRepository;
     }
 
+
+    /**
+     * Uploads an image for a specific animal.
+     *
+     * @param animalId The ID of the animal
+     * @param file The image file to upload
+     * @throws IOException If an I/O error occurs
+     */
     public void uploadImage(Long animalId, MultipartFile file) throws IOException {
         Animals animal = animalsService.findAnimalById(animalId);
 
@@ -64,6 +76,13 @@ public class AnimalAvatarService {
 
     }
 
+
+    /**
+     * Finds an animal avatar by ID.
+     *
+     * @param animalId The ID of the animal avatar to find
+     * @return The found animal avatar, or null if not found
+     */
     public AnimalAvatar findAnimalAvatarById(Long animalId) {
         AnimalAvatar animalAvatar =  animalAvatarRepository.findById(animalId).orElse(null);
         log.info("Was invoked method for findAnimalAvatarById");
@@ -74,6 +93,15 @@ public class AnimalAvatarService {
         return animalAvatar;
     }
 
+
+
+    /**
+     * Generates a preview image from the given file path.
+     *
+     * @param filePath The file path of the image to generate a preview for
+     * @return The generated preview image as a byte array
+     * @throws IOException If an I/O error occurs
+     */
     private byte[] generateImagePreview(Path filePath) throws IOException {
 
         try ( InputStream is = Files.newInputStream(filePath);
@@ -93,6 +121,14 @@ public class AnimalAvatarService {
         }
     }
 
+
+
+    /**
+     * Gets the file extension from a filename.
+     *
+     * @param filename The filename to get the extension for
+     * @return The file extension
+     */
     private String getExtension(String filename){
         return filename.substring(filename.lastIndexOf(".") + 1);
     }
