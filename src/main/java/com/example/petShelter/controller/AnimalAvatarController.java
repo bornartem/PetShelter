@@ -2,6 +2,9 @@ package com.example.petShelter.controller;
 
 import com.example.petShelter.model.AnimalAvatar;
 import com.example.petShelter.service.AnimalAvatarService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +19,11 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * The class consists of codes in order to upload and download the photos of animals for REST API
+ * @author Khilola Kushbakova
+
+ */
 @RestController
 @RequestMapping("avatar")
 public class AnimalAvatarController {
@@ -25,6 +33,15 @@ public class AnimalAvatarController {
         this.animalAvatarService = animalAvatarService;
     }
 
+
+
+
+
+    @Operation(summary = "Upload an image for a specific animal")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Image uploaded successfully"),
+            @ApiResponse(responseCode = "400", description = "Bad request, file size is too big")
+    })
     @PostMapping(value = "/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadImage(@PathVariable Long id, @RequestParam MultipartFile image) throws IOException {
         if (image.getSize() >= 1024 * 300) {
@@ -33,6 +50,9 @@ public class AnimalAvatarController {
         animalAvatarService.uploadImage(id, image);
         return ResponseEntity.ok().build();
     }
+
+
+
 
     @GetMapping(value = "/{id}/image/preview")
     public ResponseEntity<byte[]> downloadImage(@PathVariable Long animalId) {
@@ -47,6 +67,12 @@ public class AnimalAvatarController {
 
     }
 
+
+    @Operation(summary = "Download animal avatar image from file by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved animal avatar image"),
+            @ApiResponse(responseCode = "404", description = "Animal avatar not found")
+    })
     @GetMapping(value = "/{id}/image-from-file")
     public void downloadAvatar(@PathVariable Long animalId, HttpServletResponse response) throws IOException {
         AnimalAvatar animalAvatar = animalAvatarService.findAnimalAvatarById(animalId);
