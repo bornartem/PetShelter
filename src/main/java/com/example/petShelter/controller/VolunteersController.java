@@ -1,8 +1,8 @@
 package com.example.petShelter.controller;
 
-import com.example.petShelter.model.Visitor;
-import com.example.petShelter.service.VolunteerService;
-import com.example.petShelter.model.Volunteer;
+import com.example.petShelter.model.Clients;
+import com.example.petShelter.service.VolunteersService;
+import com.example.petShelter.model.Volunteers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,22 +18,22 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/volunteer")
-public class VolunteerController {
-    private final VolunteerService volunteerService;
+public class VolunteersController {
+    private final VolunteersService volunteersService;
 
     @Autowired
-    public VolunteerController(VolunteerService volunteerService) {
-        this.volunteerService = volunteerService;
+    public VolunteersController(VolunteersService volunteersService) {
+        this.volunteersService = volunteersService;
     }
 
     @PostMapping("/create")
-    public Volunteer create(@RequestBody Volunteer volunteer) {
-        return volunteerService.create(volunteer);
+    public Volunteers create(@RequestBody Volunteers volunteers) {
+        return volunteersService.create(volunteers);
     }
 
     @GetMapping("/read{id}")
-    public Volunteer read(@PathVariable long id) {
-        return volunteerService.read(id);
+    public Volunteers read(@PathVariable long id) {
+        return volunteersService.read(id);
     }
 
     @Operation(
@@ -41,13 +41,13 @@ public class VolunteerController {
                     description = "update volunteer",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Volunteer.class)
+                            schema = @Schema(implementation = Volunteers.class)
                     )
             )
     )
     @PutMapping("/update")
-    public Volunteer update(@RequestBody Volunteer volunteer) {
-        return volunteerService.update(volunteer);
+    public Volunteers update(@RequestBody Volunteers volunteers) {
+        return volunteersService.update(volunteers);
     }
 
     @ApiResponses({
@@ -56,17 +56,17 @@ public class VolunteerController {
                     description = "delete volunteer from db by id",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Visitor.class)
+                            schema = @Schema(implementation = Volunteers.class)
                     )
             )
     })
     @DeleteMapping("/delete{id}")
     public void delete(@PathVariable long id) {
-        volunteerService.delete(id);
+        volunteersService.delete(id);
     }
 
     @GetMapping("/all")
-    public List<Volunteer> getAll() {
-        return volunteerService.getAll();
+    public List<Volunteers> getAll() {
+        return volunteersService.getAll();
     }
 }

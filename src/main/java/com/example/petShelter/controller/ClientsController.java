@@ -1,8 +1,7 @@
 package com.example.petShelter.controller;
 
-import com.example.petShelter.model.Visitor;
-import com.example.petShelter.model.Volunteer;
-import com.example.petShelter.service.VisitorService;
+import com.example.petShelter.model.Clients;
+import com.example.petShelter.service.ClientsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -19,67 +18,67 @@ import java.util.List;
  * @author bornartem
  */
 @RestController
-@RequestMapping("/visitor")
-public class VisitorController {
-    private final VisitorService visitorService;
+@RequestMapping("/client")
+public class ClientsController {
+    private final ClientsService clientService ;
 
     @Autowired
-    public VisitorController(VisitorService visitorService) {
-        this.visitorService = visitorService;
+    public ClientsController(ClientsService clientService) {
+        this.clientService = clientService;
     }
 
     @Operation(
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "create visitor",
+                    description = "create client",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Volunteer.class)
+                            schema = @Schema(implementation = Clients.class)
                     )
             )
     )
     @PostMapping("/create")
-    public Visitor create(@RequestBody Visitor visitor) {
-        return visitorService.create(visitor);
+    public Clients create(@RequestBody Clients clients) {
+        return clientService.create(clients);
     }
 
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
-                    description = "find visitor from db by id",
+                    description = "find client from db by id",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Visitor.class)
+                            schema = @Schema(implementation = Clients.class)
                     )
             )
     })
     @GetMapping("/read{id}")
-    public Visitor read(@Parameter(description = "all data of visitor", example = "Artem, 8911-111-1111")
+    public Clients read(@Parameter(description = "all data of client", example = "Artem, 8911-111-1111")
                         @PathVariable long id) {
-        return visitorService.read(id);
+        return clientService.read(id);
     }
 
     @PutMapping("/update")
-    public Visitor update(@RequestBody Visitor visitor) {
-        return visitorService.update(visitor);
+    public Clients update(@RequestBody Clients clients) {
+        return clientService.update(clients);
     }
 
     @DeleteMapping("/delete{id}")
     public void delete(@PathVariable long id) {
-        visitorService.delete(id);
+        clientService.delete(id);
     }
 
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
-                    description = "find all visitors from db",
+                    description = "find all clients from db",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Visitor[].class)
+                            schema = @Schema(implementation = Clients[].class)
                     )
             )
     })
     @GetMapping("/all")
-    public List<Visitor> getAll() {
-        return visitorService.getAll();
+    public List<Clients> getAll() {
+        return clientService.getAll();
     }
 }
