@@ -26,4 +26,5 @@ public class CommandContainer {
             commandMap.get(commandName).execute(message, callbackQuery);
         }
     }
+
 }

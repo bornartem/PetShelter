@@ -140,7 +140,6 @@ public class AnimalsController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(changeAnimalInfo);
-
     }
 
 }

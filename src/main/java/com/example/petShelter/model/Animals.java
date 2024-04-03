@@ -35,4 +35,5 @@ public class Animals {
     private Boolean busyFree;
     @Column(name = "date_take")
     private LocalDateTime dateTake;
+
 }

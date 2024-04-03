@@ -21,4 +21,5 @@ public class StartCommand implements Command{
     public void execute(Message message, CallbackQuery callbackQuery) {
         telegramBotClient.sendMessage(message.chat().id(), START_MESSAGE);
     }
+
 }

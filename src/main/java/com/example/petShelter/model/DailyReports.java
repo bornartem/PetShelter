@@ -40,4 +40,5 @@ public class DailyReports {
 
     @Column(name = "is_check", nullable = false)
     private Boolean is_check;
+
 }

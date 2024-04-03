@@ -28,4 +28,5 @@ public class TelegramBotClientImpl implements TelegramBotClient {
             logger.error("Error sending message {}", sendResponse.description());
         }
     }
+
 }

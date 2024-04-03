@@ -69,4 +69,5 @@ public class VolunteersController {
     public List<Volunteers> getAll() {
         return volunteersService.getAll();
     }
+
 }

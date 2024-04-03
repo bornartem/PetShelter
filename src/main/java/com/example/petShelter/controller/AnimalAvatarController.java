@@ -87,4 +87,5 @@ public class AnimalAvatarController {
             is.transferTo(os);
         }
     }
+
 }

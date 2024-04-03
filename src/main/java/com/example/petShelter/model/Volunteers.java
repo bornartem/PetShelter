@@ -29,4 +29,5 @@ public class Volunteers {
 
     @Column(name = "contact")
     private String contact;
+
 }

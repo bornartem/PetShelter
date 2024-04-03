@@ -47,4 +47,5 @@ public class VolunteersService {
     public List<Volunteers> getAll() {
         return volunteersRepository.findAll();
     }
+
 }
