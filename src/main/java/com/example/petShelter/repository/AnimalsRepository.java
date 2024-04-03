@@ -10,8 +10,8 @@ import java.util.List;
 
 @Repository
 public interface  AnimalsRepository extends JpaRepository<Animals, Long> {
-    public List<Animals> findAllByByShelterId(long shelter_id);
-    public Collection<Animals> findAnimalsByStatus(boolean busyAnimalStatus);
+//    public List<Animals> findAllByShelterId(long shelter_id);
+    public Collection<Animals> findAnimalsByBusyFree(boolean busyAnimalStatus);
     public Collection<Animals> findAnimalsByType(String animalType);
 
 }

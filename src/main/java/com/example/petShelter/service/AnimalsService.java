@@ -3,6 +3,8 @@ package com.example.petShelter.service;
 import com.example.petShelter.model.Animals;
 import com.example.petShelter.repository.AnimalsRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ public class AnimalsService {
     @Autowired
     private final AnimalsRepository animalsRepository;
 
+    private Logger log = LoggerFactory.getLogger(AnimalsService.class);
 
     public AnimalsService(AnimalsRepository animalsRepository) {
         this.animalsRepository = animalsRepository;
@@ -31,11 +34,11 @@ public class AnimalsService {
      * @param shelterId the identifier of the shelter whose animals are to be found
      * @return a list of animals belonging to the specified shelter
      */
-    public List<Animals> findAllAnimalsOfCertainShelter(long shelterId) {
-        log.info("Was invoked method for findAllAnimalsOfCertainShelter");
-        return animalsRepository.findAllByByShelterId(shelterId);
-
-    }
+//    public List<Animals> findAllAnimalsOfCertainShelter(long shelterId) {
+//        log.info("Was invoked method for findAllAnimalsOfCertainShelter");
+//        return animalsRepository.findAllByByShelterId(shelterId);
+//
+//    }
 
     /**
      * Method to find an animal by its identifier.
@@ -62,7 +65,7 @@ public class AnimalsService {
 
     public Collection<Animals> findAnimalsByStatus(boolean busyAnimalStatus) {
         log.info("Was invoked method for findAnimalsByStatus");
-        return animalsRepository.findAnimalsByStatus(busyAnimalStatus);
+        return animalsRepository.findAnimalsByBusyFree(busyAnimalStatus);
     }
 
     /**

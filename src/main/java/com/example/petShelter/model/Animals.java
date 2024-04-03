@@ -9,8 +9,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @ToString
 @EqualsAndHashCode
 @Entity(name = "animals")
