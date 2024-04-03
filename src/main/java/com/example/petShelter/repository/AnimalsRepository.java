@@ -14,4 +14,5 @@ public interface AnimalsRepository extends JpaRepository<Animals, Long> {
     public Collection<Animals> findAnimalsByBusyFree(boolean busyAnimalStatus);
 
     public Collection<Animals> findAnimalsByType(String animalType);
+
 }
