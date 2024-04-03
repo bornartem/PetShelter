@@ -44,6 +44,7 @@ public class AnimalsService {
         return animalsRepository.findAllByByShelterId(shelterId);
     }
 
+
     /**
      * Method to find an animal by its identifier.
      *
