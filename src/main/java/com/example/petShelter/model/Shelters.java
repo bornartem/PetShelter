@@ -31,5 +31,4 @@ public class Shelters {
     private String drillingDirector;
     @Column(name = "security_contact")
     private String securityContact;
-
 }

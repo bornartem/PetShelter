@@ -19,5 +19,4 @@ public class AnimalAvatar {
     private byte[] data;
     @OneToOne
     private Animals animal;
-
 }
