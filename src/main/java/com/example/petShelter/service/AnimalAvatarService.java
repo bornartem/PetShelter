@@ -136,5 +136,4 @@ public class AnimalAvatarService {
     private String getExtension(String filename){
         return filename.substring(filename.lastIndexOf(".") + 1);
     }
-
 }
