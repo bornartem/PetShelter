@@ -65,7 +65,7 @@ public class ConversationServiceMain {
         Integer countAllVolunteers = 0;
 
         /*
-            make check on count waiting client at table
+            find count waiting client at table
             countWaitingClients =
             find count all volunteers
             countAllVolunteers =
