@@ -75,6 +75,10 @@ public class ConvService {
             telegramBot.execute(new SendMessage(clientChatId, SendMessageInConv.CROWDED_TABLE));
         } else {
             telegramBot.execute(new SendMessage(clientChatId, SendMessageInConv.PLEASE_WAIT));
+
+            /*
+                метод добавит клиента в таблицу с ожидающими пользователями
+             */
         }
 
     }
