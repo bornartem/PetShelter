@@ -1,5 +1,7 @@
 package com.example.petShelter.conversationServices;
 
+import com.example.petShelter.service.ClientsService;
+import com.example.petShelter.service.VolunteersService;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -8,21 +10,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
+
+
 @Service
 public class StartService {
 
     @Autowired
-    VolunteerService volunteerService;
+    VolunteersService volunteerService;
 
     @Autowired
-    ClientService clientService;
+    ClientsService clientService;
 
     private TelegramBot telegramBot;
-    SendMessageInConversation sendMessageInConversation;
 
-    private String HIMESSAGE = "поприветствуйте клиента, пердставтесь и ответьте на вопрос.";
-    private String STOPMESSAGE = "Диалог завершен";
-    private String WEFINDVOLUNTEER = "Ищем свободного волонтера для вас";
 
     /**
      * метод в начале когда пришло сообщение
@@ -34,13 +34,23 @@ public class StartService {
         Long ClientId = update.message().chat().id();
         String clientText = update.message().text();
 
+        telegramBot.execute(new SendMessage(
+                ClientId,
+                SendMessageInConv.WE_FIND_VOLUNTEER
+        ));
+
         Long volId;
         volId = findRelaxVolunteers();
+
         if (volId == null) {
             //добавляем в ожидающих
+
         } else {
 
-            telegramBot.execute(new SendMessage(ClientId, WEFINDVOLUNTEER));
+            telegramBot.execute(new SendMessage(
+                    ClientId,
+                    SendMessageInConv.FINISH_FIND
+            ));
 
             //делает волонтера неактивным
             volunteerService.disactiveVolunteer(volId);
@@ -49,11 +59,10 @@ public class StartService {
             usersToConversationTable(ClientId, volId);
 
 
-
             //отправить волонтеру что он должен первое написать
             telegramBot.execute(new SendMessage(
                     volId,
-                    HIMESSAGE
+                    SendMessageInConv.HI_MESSAGE
             ));
 
         }
@@ -91,11 +100,11 @@ public class StartService {
      * @param update      пользователь написавший сообщение
      * @param isVolunteer является пользователь волонтером
      */
-    public void method(Update update, Boolean isVolunteer) {
+    public void continueConversation(Update update, Boolean isVolunteer) {
         Long updateId = update.message().chat().id();
         String message = update.message().text();
         if (isVolunteer && Objects.equals(message, "/stop")) {
-            telegramBot.execute(new SendMessage(updateId, STOPMESSAGE));
+            telegramBot.execute(new SendMessage(updateId, SendMessageInConv.STOP_MESSAGE));
             //найти в таблице по updateId с кем общается и ему тоже отправить
             //удалить из общающихся таблицы обоих
 
