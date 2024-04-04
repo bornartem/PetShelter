@@ -1,4 +1,4 @@
-package com.example.petShelter.conversationServices;
+package com.example.petShelter.conversations;
 
 import com.example.petShelter.service.ClientsService;
 import com.example.petShelter.service.VolunteersService;
@@ -13,7 +13,7 @@ import java.util.Objects;
 
 
 @Service
-public class ConvService {
+public class ConversationServiceMain {
 
     @Autowired
     VolunteersService volunteerService;

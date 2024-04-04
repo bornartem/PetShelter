@@ -1,6 +1,4 @@
-package com.example.petShelter.conversationServices;
-
-import org.springframework.stereotype.Service;
+package com.example.petShelter.conversations;
 
 
 public class SendMessageInConv {
