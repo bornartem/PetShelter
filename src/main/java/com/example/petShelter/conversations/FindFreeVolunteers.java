@@ -1,10 +1,14 @@
 package com.example.petShelter.conversations;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
 public class FindFreeVolunteers {
+
+    @Autowired
+    private ConversationServiceMain conversationService;
 
 
     /**
@@ -22,11 +26,9 @@ public class FindFreeVolunteers {
             countFreeVolunteers =
          */
 
-        if (countWaitingClients == 0 || countFreeVolunteers == 0) {
-            break;
-        } else {
-            Long clientChatId;
-            Long volChatId;
+        if (countWaitingClients != 0 && countFreeVolunteers != 0) {
+            Long clientChatId = 0L;
+            Long volChatId = 0L;
 
             /*
                 найти любого волонтера
@@ -35,9 +37,8 @@ public class FindFreeVolunteers {
              */
 
 
-            /*
-            нужно использовать метод если найден волонтер
-             */
+
+            conversationService.volunteerReady(clientChatId, volChatId);
 
 
         }

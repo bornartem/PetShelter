@@ -40,7 +40,7 @@ public class ConversationServiceMain {
                 SendMessageInConv.WE_FIND_VOLUNTEER
         ));
 
-        Long volId;
+        Long volId = null;
         volId = findRelaxVolunteers();
 
         if (volId == null) {
@@ -90,7 +90,7 @@ public class ConversationServiceMain {
      * @param clientChatId client chat id in telegram
      * @param volChatId volunteer chat id in telegram
      */
-    private void volunteerReady(Long clientChatId, Long volChatId) {
+    public void volunteerReady(Long clientChatId, Long volChatId) {
         telegramBot.execute(new SendMessage(
                 clientChatId,
                 SendMessageInConv.FINISH_FIND
@@ -140,7 +140,16 @@ public class ConversationServiceMain {
      * @return id свободного волнтера или null
      */
     private Long findRelaxVolunteers() {
-        // поиск по таблице(ее пока что нет)
+        /*
+        сначало делаю проверку есть ли ожидающие пользователи
+        и если да то возвращаю null
+         */
+
+        Long volChatId;
+
+        /*
+        поиск свободного волонтера
+         */
         return null;
     }
 
@@ -157,10 +166,6 @@ public class ConversationServiceMain {
         Long updateId = update.message().chat().id();
         String message = update.message().text();
         if (isVolunteer && Objects.equals(message, "/stop")) {
-            /*
-                удалить из общающихся таблицы обоих
-            */
-
             telegramBot.execute(new SendMessage(updateId, SendMessageInConv.STOP_MESSAGE_FOR_VOL));
 
             /*
@@ -168,6 +173,10 @@ public class ConversationServiceMain {
                 telegramBot.execute(new SendMessage(updateId, SendMessageInConv.STOP_MESSAGE));
 
              */
+
+            /*
+                удалить из общающихся таблицы обоих
+            */
         } else {
             Long opponentChatId;
             /*
