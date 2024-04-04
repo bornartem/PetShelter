@@ -13,7 +13,7 @@ import java.util.Objects;
 
 
 @Service
-public class StartService {
+public class ConvService {
 
     @Autowired
     VolunteersService volunteerService;
@@ -52,8 +52,11 @@ public class StartService {
                     SendMessageInConv.FINISH_FIND
             ));
 
+            /*
             //делает волонтера неактивным
-            volunteerService.disactiveVolunteer(volId);
+            volunteerService.inactiveVolunteer(volId);
+            */
+
 
             //добавил их в таблицу общающихся
             usersToConversationTable(ClientId, volId);
@@ -77,8 +80,13 @@ public class StartService {
      */
     private void usersToConversationTable(Long clientId, Long volId) {
 //        id генерируется само
-        conversationPeopleService.addPeople(clientId, volId);
-        conversationPeopleService.addPeople(volId, clientId);
+
+        /*
+            методы
+            conversationPeopleService.addPeople(clientId, volId);
+            conversationPeopleService.addPeople(volId, clientId);
+        */
+
     }
 
     /**
@@ -104,10 +112,29 @@ public class StartService {
         Long updateId = update.message().chat().id();
         String message = update.message().text();
         if (isVolunteer && Objects.equals(message, "/stop")) {
-            telegramBot.execute(new SendMessage(updateId, SendMessageInConv.STOP_MESSAGE));
-            //найти в таблице по updateId с кем общается и ему тоже отправить
-            //удалить из общающихся таблицы обоих
+            /*
+                удалить из общающихся таблицы обоих
+            */
 
+            telegramBot.execute(new SendMessage(updateId, SendMessageInConv.STOP_MESSAGE_FOR_VOL));
+
+            /*
+                найти в таблице по updateId с кем общается и ему тоже отправить
+                telegramBot.execute(new SendMessage(updateId, SendMessageInConv.STOP_MESSAGE));
+
+             */
+        } else {
+            Long opponentChatId;
+            /*
+                метод поиска по таблице с кем общается
+                opponentChatId =
+            */
+            // инициализация для того чтобы не было ошибок, потом убрать,
+            // когда код сверху будет готов
+            opponentChatId = 0L;
+
+            telegramBot.execute(new SendMessage(opponentChatId, message));
         }
+
     }
 }
