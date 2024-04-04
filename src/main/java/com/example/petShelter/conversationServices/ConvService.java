@@ -26,16 +26,17 @@ public class ConvService {
 
     /**
      * метод в начале когда пришло сообщение
-     * о том что пользователь вызывает волонтера
-     *
+     * о том что пользователь вызывает волонтера<br>
+     * либо отправляем его в таблицу ожидающих, либо создаем
+     * общение между клиентом и волонтером
      * @param update пользователь который просит о помощи
      */
     public void firstGivingUsers(Update update) {
-        Long ClientId = update.message().chat().id();
-        String clientText = update.message().text();
+        Long clientChatId = update.message().chat().id();
+//        String clientText = update.message().text();
 
         telegramBot.execute(new SendMessage(
-                ClientId,
+                clientChatId,
                 SendMessageInConv.WE_FIND_VOLUNTEER
         ));
 
@@ -44,13 +45,52 @@ public class ConvService {
 
         if (volId == null) {
             //добавляем в ожидающих
-
+            volunteerNotFound(clientChatId);
         } else {
+            volunteerReady(clientChatId, volId);
+        }
+    }
 
-            telegramBot.execute(new SendMessage(
-                    ClientId,
-                    SendMessageInConv.FINISH_FIND
-            ));
+
+
+
+    /**
+     * add client to table for waiting in queue.
+     *
+     * @param clientChatId is client chat id in telegram
+     */
+    private void volunteerNotFound(Long clientChatId) {
+
+        Integer countWaitingClients = 0;
+        Integer countAllVolunteers = 0;
+
+        /*
+            make check on count waiting client at table
+            countWaitingClients =
+            find count all volunteers
+            countAllVolunteers =
+         */
+
+        if (countWaitingClients > 2 * countAllVolunteers) {
+            telegramBot.execute(new SendMessage(clientChatId, SendMessageInConv.CROWDED_TABLE));
+        } else {
+            telegramBot.execute(new SendMessage(clientChatId, SendMessageInConv.PLEASE_WAIT));
+        }
+
+    }
+
+    
+
+    /**
+     * method for create conversation between client and volunteer
+     * @param clientChatId client chat id in telegram
+     * @param volChatId volunteer chat id in telegram
+     */
+    private void volunteerReady(Long clientChatId, Long volChatId) {
+        telegramBot.execute(new SendMessage(
+                clientChatId,
+                SendMessageInConv.FINISH_FIND
+        ));
 
             /*
             //делает волонтера неактивным
@@ -58,18 +98,18 @@ public class ConvService {
             */
 
 
-            //добавил их в таблицу общающихся
-            usersToConversationTable(ClientId, volId);
+        //добавил их в таблицу общающихся
+        usersToConversationTable(clientChatId, volChatId);
 
 
-            //отправить волонтеру что он должен первое написать
-            telegramBot.execute(new SendMessage(
-                    volId,
-                    SendMessageInConv.HI_MESSAGE
-            ));
-
-        }
+        //отправить волонтеру что он должен первое написать
+        telegramBot.execute(new SendMessage(
+                volChatId,
+                SendMessageInConv.HI_MESSAGE
+        ));
     }
+
+
 
     /**
      * добавляем в таблицу общающихся пользователей
@@ -88,6 +128,7 @@ public class ConvService {
         */
 
     }
+
 
     /**
      * метод который ищет свободного волонтера

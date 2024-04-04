@@ -14,6 +14,10 @@ public class SendMessageInConv {
 
     public static final String FINISH_FIND = "Волонтер найден, ожидайте ответа от него.";
 
+    public static final String CROWDED_TABLE = "Система нагруженна, попробуйте позже, или...";
+    public static final String PLEASE_WAIT = "В данный момент нет свободных волонтеров. " +
+            "Пожалуйста подождите, скоро найдем его вам.";
+
 
 
 }
