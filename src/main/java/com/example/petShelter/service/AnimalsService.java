@@ -12,13 +12,15 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * The class consists of logic of the project, which has the methods  to work with "Animals" entity
+ * The class consists of logic of the project, which has
+ the methods  to work with "Animals" entity
  *
  * @author Khilola Kushbakova
  */
 @Slf4j
 @Service
 public class AnimalsService {
+
     @Autowired
     private final AnimalsRepository animalsRepository;
 

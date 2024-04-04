@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SheltersRepository extends JpaRepository<Shelters, Long> {
-
-
 }
 
 //ContainsIgnoreCase

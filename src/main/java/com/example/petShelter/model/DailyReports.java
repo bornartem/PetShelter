@@ -6,6 +6,11 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * The class consists of logic of the project, which create "DailyReports" entity
+ *
+ * @author Khilola Kushbakova
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

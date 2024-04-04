@@ -3,7 +3,11 @@ package com.example.petShelter.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-
+/**
+ * The class consists of logic of the project, which create "Animal Avatar" entity
+ *
+ * @author Khilola Kushbakova
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

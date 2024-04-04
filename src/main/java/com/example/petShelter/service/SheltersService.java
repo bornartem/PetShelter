@@ -9,15 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-/**
- * The class consists of logic of the project, which has the methods  to work with "Shelters" entity
- * @author Khilola Kushbakova
 
+/**
+ * The class consists of logic of the project, which has
+ the methods  to work with "Shelters" entity
+ *
+ * @author Khilola Kushbakova
  */
 
 @Service
 @Slf4j
 public class SheltersService {
+
     @Autowired
     private final SheltersRepository sheltersRepository;
 
@@ -46,7 +49,7 @@ public class SheltersService {
         return shelters;
     }
 
-    public Shelters addShelter(Shelters shelter){
+    public Shelters addShelter(Shelters shelter) {
         log.info("Was invoked method for addShelter");
         return sheltersRepository.save(shelter);
     }
@@ -88,12 +91,13 @@ public class SheltersService {
      * @param shelterId The unique identifier of the shelter
      * @return The contact information of the shelter
      */
-    public String showContacts (long shelterId){
+    public String showContacts(long shelterId) {
         log.info("Was invoked method for showContacts");
         return sheltersRepository.getReferenceById(shelterId).getContact();
 
     }
-    public String showAddress (long shelterId) {
+
+    public String showAddress(long shelterId) {
         log.info("Was invoked method for showAddress");
         return sheltersRepository.getReferenceById(shelterId).getAddress();
     }
@@ -101,7 +105,7 @@ public class SheltersService {
     /**
      * This method generates a string representation of a location based on the provided latitude and longitude.
      *
-     * @param latitude The latitude of the location
+     * @param latitude  The latitude of the location
      * @param longitude The longitude of the location
      * @return A string representing the location in the format "Latitude: [latitude], Longitude: [longitude]"
      */
@@ -111,7 +115,7 @@ public class SheltersService {
     }
 
 
-    public String showSecurityNumber (long shelterId) {
+    public String showSecurityNumber(long shelterId) {
         log.info("Was invoked method for giveSecurityNumber");
         return sheltersRepository.getReferenceById(shelterId).getSecurityContact();
     }

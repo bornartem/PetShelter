@@ -5,7 +5,11 @@ import com.pengrad.telegrambot.model.CallbackQuery;
 import com.pengrad.telegrambot.model.Message;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * The class consists of logic of the project, which has
+ the methods to send messages with "TelegramBot"
+ * @author Maria Sinyavskaya
+ */
 @Component("/start")
 public class StartCommand implements Command{
     private final static String START_MESSAGE = "Привет! Это приют \"Пушистый друг\". " +

@@ -19,16 +19,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
-/**
- * The class consists of logic of the project, which has the method of download and upload the photos of animals
- * @author Khilola Kushbakova
 
+/**
+ * The class consists of logic of the project, which has
+ the method of download and upload the photos of animals
+ *
+ * @author Khilola Kushbakova
  */
 @Service
 @Transactional
 @Slf4j
 public class AnimalAvatarService {
-
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
 
@@ -47,7 +48,7 @@ public class AnimalAvatarService {
      * Uploads an image for a specific animal.
      *
      * @param animalId The ID of the animal
-     * @param file The image file to upload
+     * @param file     The image file to upload
      * @throws IOException If an I/O error occurs
      */
     public void uploadImage(Long animalId, MultipartFile file) throws IOException {
@@ -67,8 +68,8 @@ public class AnimalAvatarService {
         }
 
         AnimalAvatar animalAvatar = findAnimalAvatarById(animalId);
-        if (animalAvatar==null){
-            animalAvatar= new AnimalAvatar();
+        if (animalAvatar == null) {
+            animalAvatar = new AnimalAvatar();
         }
         animalAvatar.setAnimal(animal);
         animalAvatar.setFilePath(filePath.toString());
@@ -88,7 +89,7 @@ public class AnimalAvatarService {
      * @return The found animal avatar, or null if not found
      */
     public AnimalAvatar findAnimalAvatarById(Long animalId) {
-        AnimalAvatar animalAvatar =  animalAvatarRepository.findById(animalId).orElse(null);
+        AnimalAvatar animalAvatar = animalAvatarRepository.findById(animalId).orElse(null);
         log.info("Was invoked method for findAnimalAvatarById");
         if (animalAvatar == null) {
             log.error("There is no animal avatar with id = {}", animalId);
@@ -96,7 +97,6 @@ public class AnimalAvatarService {
 
         return animalAvatar;
     }
-
 
 
     /**
@@ -108,16 +108,15 @@ public class AnimalAvatarService {
      */
     private byte[] generateImagePreview(Path filePath) throws IOException {
 
-        try ( InputStream is = Files.newInputStream(filePath);
-              BufferedInputStream bis = new BufferedInputStream(is, 1024);
-              ByteArrayOutputStream baos = new ByteArrayOutputStream())
-        {
+        try (InputStream is = Files.newInputStream(filePath);
+             BufferedInputStream bis = new BufferedInputStream(is, 1024);
+             ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             BufferedImage image = ImageIO.read(bis);
 
-            int height  = image.getHeight() / (image.getWidth()/100);
-            BufferedImage preview  = new BufferedImage(100, height, image.getType());
+            int height = image.getHeight() / (image.getWidth() / 100);
+            BufferedImage preview = new BufferedImage(100, height, image.getType());
             Graphics2D graphics = preview.createGraphics();
-            graphics.drawImage(image, 0,0,100, height, null);
+            graphics.drawImage(image, 0, 0, 100, height, null);
             graphics.dispose();
 
             ImageIO.write(preview, getExtension(filePath.getFileName().toString()), baos);
@@ -126,14 +125,13 @@ public class AnimalAvatarService {
     }
 
 
-
     /**
      * Gets the file extension from a filename.
      *
      * @param filename The filename to get the extension for
      * @return The file extension
      */
-    private String getExtension(String filename){
+    private String getExtension(String filename) {
         return filename.substring(filename.lastIndexOf(".") + 1);
     }
 }

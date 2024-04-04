@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ * The class consists of methods for REST API in order to make CRUD and
+ other commands for the entity "Clients"
+ *
  * @author bornartem
  */
 @RestController
 @RequestMapping("/client")
 public class ClientsController {
-    private final ClientsService clientService ;
+    private final ClientsService clientService;
 
     @Autowired
     public ClientsController(ClientsService clientService) {
@@ -57,11 +60,30 @@ public class ClientsController {
         return clientService.read(id);
     }
 
+    @Operation(
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "update client",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = Clients.class)
+                    )
+            )
+    )
     @PutMapping("/update")
     public Clients update(@RequestBody Clients clients) {
         return clientService.update(clients);
     }
 
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "delete client from db by id",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = Clients.class)
+                    )
+            )
+    })
     @DeleteMapping("/delete{id}")
     public void delete(@PathVariable long id) {
         clientService.delete(id);

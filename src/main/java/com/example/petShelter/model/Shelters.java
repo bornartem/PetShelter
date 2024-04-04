@@ -5,6 +5,11 @@ import lombok.*;
 
 import java.util.List;
 
+/**
+ * The class consists of logic of the project, which create "Shelters" entity
+ *
+ * @author Khilola Kushbakova
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
