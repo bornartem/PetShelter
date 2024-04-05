@@ -122,7 +122,6 @@ public class SheltersService {
     }
 
 
-
     /**
      * This method is used to change the information of a shelter in the database.
      *

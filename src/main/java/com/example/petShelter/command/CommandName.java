@@ -18,7 +18,7 @@ public enum CommandName {
     GET_HOME_IMPROVEMENT_FOR_DOG("/getHomeImprovementForDog"),
     NO("noCommand");
 
-    public final String commandName;
+    private final String commandName;
 
     CommandName(String commandName) {
         this.commandName = commandName;
