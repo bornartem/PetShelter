@@ -21,9 +21,12 @@ import java.nio.file.Path;
 
 /**
  * The class consists of codes in order to upload and download the photos of animals for REST API
+ *
  * @author Khilola Kushbakova
-
  */
+
+
+
 @RestController
 @RequestMapping("avatar")
 public class AnimalAvatarController {
@@ -32,10 +35,6 @@ public class AnimalAvatarController {
     public AnimalAvatarController(AnimalAvatarService animalAvatarService) {
         this.animalAvatarService = animalAvatarService;
     }
-
-
-
-
 
     @Operation(summary = "Upload an image for a specific animal")
     @ApiResponses(value = {
@@ -52,8 +51,11 @@ public class AnimalAvatarController {
     }
 
 
-
-
+    @Operation(summary = "Download Animal Image")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Image data retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Animal avatar not found")
+    })
     @GetMapping(value = "/{id}/image/preview")
     public ResponseEntity<byte[]> downloadImage(@PathVariable Long animalId) {
         AnimalAvatar animalAvatar = animalAvatarService.findAnimalAvatarById(animalId);
@@ -64,9 +66,7 @@ public class AnimalAvatarController {
 
 
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(animalAvatar.getData());
-
     }
-
 
     @Operation(summary = "Download animal avatar image from file by ID")
     @ApiResponses(value = {

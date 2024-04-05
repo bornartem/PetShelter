@@ -14,6 +14,8 @@ import java.util.List;
  *
  * @author Khilola Kushbakova
  */
+
+
 @Slf4j
 @Service
 public class AnimalsService {
@@ -34,7 +36,6 @@ public class AnimalsService {
     public List<Animals> findAllAnimalsOfCertainShelter(long shelterId) {
         log.info("Was invoked method for findAllAnimalsOfCertainShelter");
         return animalsRepository.findAllByByShelterId(shelterId);
-
     }
 
     /**
