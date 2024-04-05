@@ -8,6 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+/**
+ * The class consists of logic of the project, which has
+ * the method to work with "TelegramBot"
+ * @author Maria Sinyavskaya
+ */
 @Service
 public class TelegramBotClientImpl implements TelegramBotClient {
 
@@ -28,4 +33,5 @@ public class TelegramBotClientImpl implements TelegramBotClient {
             logger.error("Error sending message {}", sendResponse.description());
         }
     }
+
 }

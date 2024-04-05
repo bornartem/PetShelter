@@ -13,7 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 /**
+ * The class consists of methods for REST API in order to make CRUD and
+ other commands for the entity "Volunteers"
+ *
  * @author bornartem
  */
 @RestController
@@ -26,11 +30,30 @@ public class VolunteersController {
         this.volunteersService = volunteersService;
     }
 
+    @Operation(
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "create volunteer",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = Volunteers.class)
+                    )
+            )
+    )
     @PostMapping("/create")
     public Volunteers create(@RequestBody Volunteers volunteers) {
         return volunteersService.create(volunteers);
     }
 
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "find volunteer from db by id",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = Volunteers.class)
+                    )
+            )
+    })
     @GetMapping("/read{id}")
     public Volunteers read(@PathVariable long id) {
         return volunteersService.read(id);
@@ -65,8 +88,19 @@ public class VolunteersController {
         volunteersService.delete(id);
     }
 
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "find all volunteers from db",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = Volunteers[].class)
+                    )
+            )
+    })
     @GetMapping("/all")
     public List<Volunteers> getAll() {
         return volunteersService.getAll();
     }
+
 }

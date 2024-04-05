@@ -14,6 +14,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * The class consists of logic of the project, which has
+ * the methods to send messages with "TelegramBot"
+ * @author Maria Sinyavskaya
+ */
 @Service
 public class TelegramBotUpdatesListener implements UpdatesListener {
 
@@ -52,4 +57,5 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }
+
 }

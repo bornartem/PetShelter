@@ -20,7 +20,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- * The class consists of codes in order to upload and download the photos of animals for REST API
+ * The class consists of codes in order to upload and
+ download the photos of animals for REST API
+
  *
  * @author Khilola Kushbakova
  */
@@ -50,12 +52,12 @@ public class AnimalAvatarController {
         return ResponseEntity.ok().build();
     }
 
-
     @Operation(summary = "Download Animal Image")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Image data retrieved successfully"),
             @ApiResponse(responseCode = "404", description = "Animal avatar not found")
     })
+
     @GetMapping(value = "/{id}/image/preview")
     public ResponseEntity<byte[]> downloadImage(@PathVariable Long animalId) {
         AnimalAvatar animalAvatar = animalAvatarService.findAnimalAvatarById(animalId);
@@ -87,4 +89,5 @@ public class AnimalAvatarController {
             is.transferTo(os);
         }
     }
+
 }

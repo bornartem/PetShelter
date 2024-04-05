@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-
+/**
+ * The class consists of logic of the project, which has
+ the method to find and send messages with "TelegramBot"
+ * @author Maria Sinyavskaya
+ */
 @Service
 public class CommandContainer {
 
@@ -26,4 +30,5 @@ public class CommandContainer {
             commandMap.get(commandName).execute(message, callbackQuery);
         }
     }
+
 }

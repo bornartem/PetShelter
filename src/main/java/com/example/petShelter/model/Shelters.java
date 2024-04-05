@@ -5,6 +5,11 @@ import lombok.*;
 
 import java.util.List;
 
+/**
+ * The class consists of logic of the project, which create "Shelters" entity
+ *
+ * @author Khilola Kushbakova
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -30,5 +35,5 @@ public class Shelters {
     @Column(name = "drilling_director")
     private String drillingDirector;
     @Column(name = "security_contact")
-    private String security_contact;
+    private String securityContact;
 }

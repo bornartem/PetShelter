@@ -5,6 +5,8 @@ import com.example.petShelter.model.Animals;
 import com.example.petShelter.repository.AnimalAvatarRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,9 +31,10 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Transactional
 @Slf4j
 public class AnimalAvatarService {
-
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
+
+    private Logger log = LoggerFactory.getLogger(AnimalAvatarService.class);
 
     private final AnimalsService animalsService;
     private final AnimalAvatarRepository animalAvatarRepository;
@@ -132,5 +135,4 @@ public class AnimalAvatarService {
     private String getExtension(String filename) {
         return filename.substring(filename.lastIndexOf(".") + 1);
     }
-
 }

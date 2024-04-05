@@ -17,7 +17,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * The class consists of methods for REST API in order to make CRUD and other commands for the entity "Animals"
+ * The class consists of methods for REST API in order to make CRUD and
+ other commands for the entity "Animals"
+
  *
  * @author Khilola Kushbakova
  */
@@ -51,6 +53,22 @@ public class AnimalsController {
         return animalsService.findAllAnimalsOfCertainShelter(shelterId);
     }
 
+=======
+//    @Operation(summary = "Find all animals of a certain shelter",
+//            description = "Returns a list of animals belonging to a specific shelter based on the shelterId provided")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of animals"),
+//            @ApiResponse(responseCode = "404", description = "Shelter with the provided shelterId not found",
+//                    content = @Content(
+//                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+//                            schema = @Schema(implementation = Shelters.class)
+//                    )
+//            )
+//    })
+//    @GetMapping("{shelterId}")
+//    public List<Animals> findAllAnimalsOfCertainShelter(@PathVariable Long shelterId) {
+//        return animalsService.findAllAnimalsOfCertainShelter(shelterId);
+//    }
 
     @Operation(summary = "Remove an animal from the list",
             description = "Deletes the animal with the specified animalId")
@@ -62,7 +80,6 @@ public class AnimalsController {
         animalsService.removeAnimal(animalId);
         return ResponseEntity.ok().build();
     }
-
 
     @Operation(summary = "Find animal by ID",
             description = "Returns the animal with the specified animalId")
@@ -79,7 +96,6 @@ public class AnimalsController {
         return ResponseEntity.ok(animal);
     }
 
-
     @Operation(summary = "Find animals by status",
             description = "Returns a collection of animals with a specific busy status")
     @ApiResponses(value = {
@@ -90,7 +106,6 @@ public class AnimalsController {
         return animalsService.findAnimalsByStatus(busyAnimalStatus);
 
     }
-
 
     @Operation(summary = "Find animals by type",
             description = "Returns a collection of animals of a specified type")
@@ -136,7 +151,6 @@ public class AnimalsController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(changeAnimalInfo);
-
     }
 
 }
