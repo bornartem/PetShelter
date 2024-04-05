@@ -15,11 +15,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+
 /**
  * The class consists of methods for REST API in order to make CRUD and other commands for the entity "Shelters"
+ *
  * @author Khilola Kushbakova
-
  */
+
+
 @RestController
 @RequestMapping("/shelters")
 public class SheltersController {
@@ -30,12 +33,10 @@ public class SheltersController {
         this.sheltersService = sheltersService;
     }
 
-
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
                     description = "a location based on the provided latitude and longitude"
-
             )
     })
     @GetMapping("/showLocation")
@@ -47,7 +48,6 @@ public class SheltersController {
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
 
-
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved list of shelters"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
@@ -58,7 +58,6 @@ public class SheltersController {
     }
 
 
-
     @Operation(summary = "Add a new shelter")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Shelter added successfully"),
@@ -66,7 +65,7 @@ public class SheltersController {
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = Shelters.class)
-            )
+                    )
             )
     })
     @PostMapping
@@ -101,20 +100,20 @@ public class SheltersController {
 
     @GetMapping("/show-contacts")
     public String showContacts(@Parameter(description = "the contact details of Shelter", example = "shelter@gmail.com, 8935-888-9999")
-                                   @PathVariable long shelterId) {
+                               @PathVariable long shelterId) {
         return sheltersService.showContacts(shelterId);
     }
 
     @GetMapping("/show-address")
     public String showAddress(@Parameter(description = "the address of Shelter", example = "15-37,Maskavas street," +
             " Riga, Latvia , LV-1236")
-                                  @PathVariable long shelterId) {
+                              @PathVariable long shelterId) {
         return sheltersService.showAddress(shelterId);
     }
 
     @GetMapping("/show-security-number")
     public String showSecurityNumber(@Parameter(description = "Shelter's security number", example = "8935-888-9999")
-                                         @PathVariable long shelterId) {
+                                     @PathVariable long shelterId) {
         return sheltersService.showSecurityNumber(shelterId);
     }
 

@@ -12,13 +12,17 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * The class consists of logic of the project, which has the methods  to work with "Animals" entity
+ * The class consists of logic of the project, which has
+ the methods  to work with "Animals" entity
  *
  * @author Khilola Kushbakova
  */
+
+
 @Slf4j
 @Service
 public class AnimalsService {
+
     @Autowired
     private final AnimalsRepository animalsRepository;
 
@@ -34,12 +38,11 @@ public class AnimalsService {
      * @param shelterId the identifier of the shelter whose animals are to be found
      * @return a list of animals belonging to the specified shelter
      */
-//    public List<Animals> findAllAnimalsOfCertainShelter(long shelterId) {
-//        log.info("Was invoked method for findAllAnimalsOfCertainShelter");
-//        return animalsRepository.findAllByByShelterId(shelterId);
-//
-//    }
 
+    public List<Animals> findAllAnimalsOfCertainShelter(long shelterId) {
+        log.info("Was invoked method for findAllAnimalsOfCertainShelter");
+        return animalsRepository.findAllByByShelterId(shelterId);
+    }
 
     /**
      * Method to find an animal by its identifier.

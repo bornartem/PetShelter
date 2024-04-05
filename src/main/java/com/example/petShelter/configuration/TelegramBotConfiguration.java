@@ -6,6 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * The class consists of logic of the project, which has
+ * "TelegramBot, token, name"
+ * @author Maria Sinyavskaya
+ */
 @Configuration
 public class TelegramBotConfiguration {
 

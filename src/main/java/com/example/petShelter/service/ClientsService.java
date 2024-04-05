@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * The class consists of logic of the project, which has
+ the methods  to work with "Clients" entity
+ *
  * @author bornartem
  */
 @Service
@@ -40,11 +43,22 @@ public class ClientsService {
     public Clients read(long id) {
         return clientsRepository.findById(id).orElseThrow();
     }
-
+    /**
+     * update client in db
+     * called method of repository {@link JpaRepository#save(Object)}
+     *
+     * @param clients contain id, name, contact, can't be null
+     * @return update and save client in db
+     */
     public Clients update(Clients clients) {
         return clientsRepository.save(clients);
     }
-
+    /**
+     * delete client by id in db
+     * called method of repository {@link JpaRepository#findById(Object)}
+     * @param id identifier of client, can't be null
+     * @return delete client from db by id
+     */
     public void delete(long id) {
         clientsRepository.deleteById(id);
     }

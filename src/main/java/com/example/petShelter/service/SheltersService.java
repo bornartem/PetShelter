@@ -15,11 +15,14 @@ import java.util.Optional;
  * The class consists of logic of the project, which has the methods  to work with "Shelters" entity
  *
  * @author Khilola Kushbakova
+
  */
+
 
 @Service
 @Slf4j
 public class SheltersService {
+
     @Autowired
     private final SheltersRepository sheltersRepository;
 
@@ -115,11 +118,11 @@ public class SheltersService {
         return location;
     }
 
-
     public String showSecurityNumber(long shelterId) {
         log.info("Was invoked method for giveSecurityNumber");
         return sheltersRepository.getReferenceById(shelterId).getSecurityContact();
     }
+
 
 
     /**

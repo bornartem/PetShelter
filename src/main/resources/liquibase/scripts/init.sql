@@ -10,6 +10,7 @@ CREATE TABLE daily_report (
   is_check BOOLEAN NOT NULL,
   FOREIGN KEY (id_animal) REFERENCES Animals(id_animal)
 );
+
 CREATE TABLE animals (
   id_animal BIGINT PRIMARY KEY,
   id_shelter BIGINT,

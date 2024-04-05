@@ -7,6 +7,11 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * The class consists of logic of the project, which create "Animals" entity
+ *
+ * @author Khilola Kushbakova
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -19,7 +24,7 @@ public class Animals {
 //    @JoinColumn(name = "id_shelter")
     private Shelters shelter;
 
-//    @OneToMany(mappedBy = "daily_report")
+    //    @OneToMany(mappedBy = "daily_report")
     @OneToMany(mappedBy = "animal")
     private List<DailyReports> dailyReport;
 

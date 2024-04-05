@@ -2,12 +2,15 @@ package com.example.petShelter.model;
 
 import com.pengrad.telegrambot.model.Chat;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * The class consists of logic of the project, which create "NotificationTask" entity
+ *
+ * @author Maria Sinyavskaya
+ */
 //@Entity
 //@Table(name = "notification_task")
 //@Entity
