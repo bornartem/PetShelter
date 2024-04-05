@@ -10,12 +10,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
+
 /**
- * The class consists of logic of the project, which has
- the methods  to work with "Shelters" entity
+ * The class consists of logic of the project, which has the methods  to work with "Shelters" entity
  *
  * @author Khilola Kushbakova
  */
+
 
 @Service
 @Slf4j
@@ -114,11 +115,11 @@ public class SheltersService {
         return location;
     }
 
-
     public String showSecurityNumber(long shelterId) {
         log.info("Was invoked method for giveSecurityNumber");
-        return sheltersRepository.getReferenceById(shelterId).getSecurityContact();
+        return sheltersRepository.getReferenceById(shelterId).getSecurity_contact();
     }
+  
 
 
     /**

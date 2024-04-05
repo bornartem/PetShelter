@@ -21,11 +21,12 @@ import java.nio.file.Path;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 /**
- * The class consists of logic of the project, which has
- the method of download and upload the photos of animals
+ * The class consists of logic of the project, which has the method of download and upload the photos of animals
  *
  * @author Khilola Kushbakova
  */
+
+
 @Service
 @Transactional
 @Slf4j

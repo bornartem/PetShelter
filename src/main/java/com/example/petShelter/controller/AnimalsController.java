@@ -19,9 +19,12 @@ import java.util.List;
 /**
  * The class consists of methods for REST API in order to make CRUD and
  other commands for the entity "Animals"
+
  *
  * @author Khilola Kushbakova
  */
+
+
 @RestController
 @RequestMapping("/animals")
 public class AnimalsController {
@@ -34,6 +37,23 @@ public class AnimalsController {
     }
 
 
+    @Operation(summary = "Find all animals of a certain shelter",
+            description = "Returns a list of animals belonging to a specific shelter based on the shelterId provided")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of animals"),
+            @ApiResponse(responseCode = "404", description = "Shelter with the provided shelterId not found",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = Shelters.class)
+                    )
+            )
+    })
+    @GetMapping("{shelterId}")
+    public List<Animals> findAllAnimalsOfCertainShelter(@PathVariable Long shelterId) {
+        return animalsService.findAllAnimalsOfCertainShelter(shelterId);
+    }
+
+=======
 //    @Operation(summary = "Find all animals of a certain shelter",
 //            description = "Returns a list of animals belonging to a specific shelter based on the shelterId provided")
 //    @ApiResponses(value = {
@@ -96,6 +116,7 @@ public class AnimalsController {
     public Collection<Animals> findAnimalsByType(String animalType) {
         return animalsService.findAnimalsByType(animalType);
     }
+
 
     @Operation(summary = "Add a new animal",
             description = "Creates and adds a new animal to the list")

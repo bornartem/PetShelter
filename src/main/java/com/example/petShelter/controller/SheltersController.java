@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 /**
- * The class consists of methods for REST API in order to make CRUD and
- other commands for the entity "Shelters"
+ * The class consists of methods for REST API in order to make CRUD and other commands for the entity "Shelters"
  *
  * @author Khilola Kushbakova
  */
+
+
 @RestController
 @RequestMapping("/shelters")
 public class SheltersController {
@@ -31,11 +32,11 @@ public class SheltersController {
     public SheltersController(SheltersService sheltersService) {
         this.sheltersService = sheltersService;
     }
+
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
                     description = "a location based on the provided latitude and longitude"
-
             )
     })
     @GetMapping("/showLocation")
@@ -46,7 +47,6 @@ public class SheltersController {
         String location = sheltersService.showLocation(latitude, longitude);
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
-
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved list of shelters"),

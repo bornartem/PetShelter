@@ -17,6 +17,8 @@ import java.util.List;
  *
  * @author Khilola Kushbakova
  */
+
+
 @Slf4j
 @Service
 public class AnimalsService {
@@ -36,12 +38,11 @@ public class AnimalsService {
      * @param shelterId the identifier of the shelter whose animals are to be found
      * @return a list of animals belonging to the specified shelter
      */
-//    public List<Animals> findAllAnimalsOfCertainShelter(long shelterId) {
-//        log.info("Was invoked method for findAllAnimalsOfCertainShelter");
-//        return animalsRepository.findAllByByShelterId(shelterId);
-//
-//    }
 
+    public List<Animals> findAllAnimalsOfCertainShelter(long shelterId) {
+        log.info("Was invoked method for findAllAnimalsOfCertainShelter");
+        return animalsRepository.findAllByByShelterId(shelterId);
+    }
 
     /**
      * Method to find an animal by its identifier.
