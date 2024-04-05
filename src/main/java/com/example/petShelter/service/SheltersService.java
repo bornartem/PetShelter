@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-
+import java.util.Optional;
 
 /**
  * The class consists of logic of the project, which has the methods  to work with "Shelters" entity
@@ -98,7 +98,9 @@ public class SheltersService {
 
     public String showAddress(long shelterId) {
         log.info("Was invoked method for showAddress");
-        return sheltersRepository.getReferenceById(shelterId).getAddress();
+
+        final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(shelterId);
+        return byIdOptionalShelters.isPresent() ? byIdOptionalShelters.get().getAddress() : null;
     }
 
     /**
@@ -117,7 +119,7 @@ public class SheltersService {
         log.info("Was invoked method for giveSecurityNumber");
         return sheltersRepository.getReferenceById(shelterId).getSecurityContact();
     }
-  
+
 
 
     /**

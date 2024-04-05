@@ -10,10 +10,10 @@ public enum CommandName {
     INFO("/info"),
     VOLUNTEER_HELP("/volunteerHelp"),
     SEND_REPORT("/sendReport"),
-    TO_SHELTER("/toShelter"),
+    GET_ADDRESS_OF_DOG_SHELTER("/getAddressOfDogShelter"),
     NO("noCommand");
 
-    private final String commandName;
+    public final String commandName;
 
     CommandName(String commandName) {
         this.commandName = commandName;

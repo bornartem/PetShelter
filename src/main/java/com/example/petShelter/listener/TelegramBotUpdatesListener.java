@@ -31,10 +31,13 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
     private final TelegramBotClient telegramBotClient;
 
-    public TelegramBotUpdatesListener(TelegramBot telegramBot, CommandContainer commandContainer, TelegramBotClient telegramBotClient) {
+    private final BotMenu botMenu;
+
+    public TelegramBotUpdatesListener(TelegramBot telegramBot, CommandContainer commandContainer, TelegramBotClient telegramBotClient, BotMenu botMenu) {
         this.telegramBot = telegramBot;
         this.commandContainer = commandContainer;
         this.telegramBotClient = telegramBotClient;
+        this.botMenu = botMenu;
     }
 
     @PostConstruct
@@ -44,15 +47,28 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
     @Override
     public int process(List<Update> updates) {
+        //BotMenu botMenu = new BotMenu(telegramBot);
         updates.forEach(update -> {
             logger.info("Processing update: {}", update);
             Message message = update.message();
-            String userText = message.text();
 
-            if (userText.startsWith(COMMAND_PREFIX)) {
-                commandContainer.process(userText, message, update.callbackQuery());
+            if (message != null) {
+                String userText = message.text();
+                if (update.message().text().equals("/menu")) {
+                    botMenu.sendMenuMessage(update.message().chat().id());
+                }
+                if (userText.startsWith(COMMAND_PREFIX)) {
+                    commandContainer.process(userText, message, update.callbackQuery());
+                } else {
+                    telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
+                }
             } else {
-                telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
+                if (update.callbackQuery() != null) {
+                    String userText = update.callbackQuery().data();
+                    commandContainer.process(userText, message, update.callbackQuery());
+//                    if (callbackData.equals("/getInfo")) { // Выполните действие для /getInfo здесь } }
+//                    }
+                }
             }
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
