@@ -12,7 +12,7 @@ public enum CommandName {
     SEND_REPORT("/sendReport"),
     TO_SHELTER("/toShelter"),
     NO("noCommand");
-Enum
+
     private final String commandName;
 
     CommandName(String commandName) {
