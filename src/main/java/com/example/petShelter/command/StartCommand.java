@@ -1,5 +1,6 @@
 package com.example.petShelter.command;
 
+import com.example.petShelter.listener.ChoosingShelterMenu;
 import com.example.petShelter.service.TelegramBotClient;
 import com.pengrad.telegrambot.model.CallbackQuery;
 import com.pengrad.telegrambot.model.Message;
@@ -13,17 +14,21 @@ import org.springframework.stereotype.Component;
 @Component("/start")
 public class StartCommand implements Command{
     private final static String START_MESSAGE = "Привет! Это приют \"Пушистый друг\". " +
-            "Мы помогаем бездомным животным найти новый дом";
+            "\nМы помогаем бездомным животным найти новый дом.";
 
-    private TelegramBotClient telegramBotClient;
+    private final TelegramBotClient telegramBotClient;
 
-    public StartCommand(TelegramBotClient telegramBotClient) {
+    private final ChoosingShelterMenu choosingShelterMenu;
+
+    public StartCommand(TelegramBotClient telegramBotClient, ChoosingShelterMenu choosingShelterMenu) {
         this.telegramBotClient = telegramBotClient;
+        this.choosingShelterMenu = choosingShelterMenu;
     }
 
     @Override
-    public void execute(Message message, CallbackQuery callbackQuery) {
-        telegramBotClient.sendMessage(message.chat().id(), START_MESSAGE);
+    public void execute(Long chatId) {
+        telegramBotClient.sendMessage(chatId, START_MESSAGE);
+        choosingShelterMenu.sendMenuMessage(chatId);
     }
 
 }

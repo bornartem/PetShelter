@@ -1,6 +1,6 @@
 package com.example.petShelter.command;
 
-import com.example.petShelter.listener.BotMenu;
+import com.example.petShelter.listener.InfoAboutDogShelterMenu;
 import com.example.petShelter.service.SheltersService;
 import com.example.petShelter.service.TelegramBotClient;
 import com.pengrad.telegrambot.model.CallbackQuery;
@@ -14,20 +14,17 @@ public class GetAddressOfDogShelterCommand implements Command{
 
     private final SheltersService sheltersService;
 
-    private final BotMenu botMenu;
-
     private final static long DOG_SHELTER_ID = 1;
 
-    public GetAddressOfDogShelterCommand(TelegramBotClient telegramBotClient, SheltersService sheltersService, BotMenu botMenu) {
+    public GetAddressOfDogShelterCommand(TelegramBotClient telegramBotClient,
+                                         SheltersService sheltersService) {
         this.telegramBotClient = telegramBotClient;
         this.sheltersService = sheltersService;
-        this.botMenu = botMenu;
     }
 
     @Override
-    public void execute(Message message, CallbackQuery callbackQuery) {
+    public void execute(Long chatId) {
         String address = sheltersService.showAddress(DOG_SHELTER_ID);
-        //telegramBotClient.sendMessage(callbackQuery.message().chat().id(), address);
-        botMenu.sendMenuMessage(callbackQuery.message().chat().id());
+        telegramBotClient.sendMessage(chatId, address);
     }
 }
