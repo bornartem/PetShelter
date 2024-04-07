@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * The class consists of methods for REST API in order to make CRUD and
- other commands for the entity "Volunteers"
+ * other commands for the entity "Volunteers"
  *
  * @author bornartem
  */
@@ -103,4 +103,8 @@ public class VolunteersController {
         return volunteersService.getAll();
     }
 
+    @GetMapping("/count")
+    public Integer getCountVolunteer() {
+        return volunteersService.getCountVolunteers();
+    }
 }

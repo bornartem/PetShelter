@@ -35,4 +35,6 @@ public class Volunteers {
     @Column(name = "contact")
     private String contact;
 
+    @Column(name = "activity")
+    private boolean activity;
 }
