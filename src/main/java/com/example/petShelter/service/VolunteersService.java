@@ -76,4 +76,8 @@ public class VolunteersService {
         return volunteersRepository.findAll();
     }
 
+    public Integer getCountVolunteers(){
+        return volunteersRepository.getCountVolunteers();
+    }
+
 }
