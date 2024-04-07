@@ -41,7 +41,7 @@ public class AnimalsService {
 
     public List<Animals> findAllAnimalsOfCertainShelter(long shelterId) {
         log.info("Was invoked method for findAllAnimalsOfCertainShelter");
-        return animalsRepository.findAllByByShelterId(shelterId);
+        return animalsRepository.findAllByShelterId(shelterId);
     }
 
     /**

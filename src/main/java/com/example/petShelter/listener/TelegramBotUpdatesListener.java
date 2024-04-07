@@ -5,6 +5,7 @@ import com.example.petShelter.command.CommandContainer;
 import com.example.petShelter.service.TelegramBotClient;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
+import com.pengrad.telegrambot.model.CallbackQuery;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import jakarta.annotation.PostConstruct;
@@ -17,6 +18,7 @@ import java.util.List;
 /**
  * The class consists of logic of the project, which has
  * the methods to send messages with "TelegramBot"
+ *
  * @author Maria Sinyavskaya
  */
 @Service
@@ -31,13 +33,16 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
     private final TelegramBotClient telegramBotClient;
 
-    private final BotMenu botMenu;
+    private final ChoosingShelterMenu choosingShelterMenu;
 
-    public TelegramBotUpdatesListener(TelegramBot telegramBot, CommandContainer commandContainer, TelegramBotClient telegramBotClient, BotMenu botMenu) {
+    public TelegramBotUpdatesListener(TelegramBot telegramBot,
+                                      CommandContainer commandContainer,
+                                      TelegramBotClient telegramBotClient,
+                                      ChoosingShelterMenu choosingShelterMenu) {
         this.telegramBot = telegramBot;
         this.commandContainer = commandContainer;
         this.telegramBotClient = telegramBotClient;
-        this.botMenu = botMenu;
+        this.choosingShelterMenu = choosingShelterMenu;
     }
 
     @PostConstruct
@@ -47,27 +52,27 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
     @Override
     public int process(List<Update> updates) {
-        //BotMenu botMenu = new BotMenu(telegramBot);
         updates.forEach(update -> {
             logger.info("Processing update: {}", update);
             Message message = update.message();
 
             if (message != null) {
                 String userText = message.text();
-                if (update.message().text().equals("/menu")) {
-                    botMenu.sendMenuMessage(update.message().chat().id());
-                }
+//                if (update.message().text().equals("/menu")) {
+//                    choosingShelterMenu.sendMenuMessage(update.message().chat().id());
+//                }
                 if (userText.startsWith(COMMAND_PREFIX)) {
-                    commandContainer.process(userText, message, update.callbackQuery());
+                    //final CallbackQuery callbackQuery = new CallbackQuery();
+                    Long chatId = update.callbackQuery() != null ?
+                            update.callbackQuery().message().chat().id() : message.chat().id();
+                    commandContainer.process(userText, chatId);
                 } else {
                     telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
                 }
             } else {
                 if (update.callbackQuery() != null) {
                     String userText = update.callbackQuery().data();
-                    commandContainer.process(userText, message, update.callbackQuery());
-//                    if (callbackData.equals("/getInfo")) { // Выполните действие для /getInfo здесь } }
-//                    }
+                    commandContainer.process(userText, update.callbackQuery().message().chat().id());
                 }
             }
         });

@@ -11,6 +11,11 @@ public enum CommandName {
     VOLUNTEER_HELP("/volunteerHelp"),
     SEND_REPORT("/sendReport"),
     GET_ADDRESS_OF_DOG_SHELTER("/getAddressOfDogShelter"),
+    GET_INFO_ABOUT_DOG_SHELTER("/getInfoAboutDogShelter"),
+    BACK_TO_CHOOSING_SHELTER("/backToChoosingShelter"),
+    GET_INFO_ABOUT_CAT_SHELTER("/getInfoAboutCatShelter"),
+    GET_INFO_ABOUT_DOG("/getInfoAboutDog"),
+    GET_HOME_IMPROVEMENT_FOR_DOG("/getHomeImprovementForDog"),
     NO("noCommand");
 
     public final String commandName;

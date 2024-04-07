@@ -11,12 +11,7 @@ import java.util.Objects;
  *
  * @author Maria Sinyavskaya
  */
-//@Entity
-//@Table(name = "notification_task")
-//@Entity
-//@Table(name = "notification_task")
 @Entity(name = "notification_task")
-//@Table(name = "notification_task")
 public class NotificationTask {
 
     @Id

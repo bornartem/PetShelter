@@ -53,7 +53,7 @@ public class AnimalsController {
 //        return animalsService.findAllAnimalsOfCertainShelter(shelterId);
 //    }
 
-=======
+
 //    @Operation(summary = "Find all animals of a certain shelter",
 //            description = "Returns a list of animals belonging to a specific shelter based on the shelterId provided")
 //    @ApiResponses(value = {
