@@ -1,8 +1,7 @@
 package com.example.petShelter.command;
 
+import com.example.petShelter.command.ShelterDogInnerButtons.GetAddressOfDogShelterCommand;
 import com.example.petShelter.service.TelegramBotClient;
-import com.pengrad.telegrambot.model.CallbackQuery;
-import com.pengrad.telegrambot.model.Message;
 
 import org.springframework.stereotype.Service;
 

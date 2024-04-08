@@ -31,10 +31,10 @@ CREATE TABLE clients (
 CREATE TABLE shelter (
   id_shelter BIGINT PRIMARY KEY,
   name VARCHAR(255),
-  operation_mode VARCHAR(255),
+  working_hours VARCHAR(255),
   contact VARCHAR(255),
   address VARCHAR(255),
-  drilling_director VARCHAR(255),
+  location VARCHAR(255),
   security_contact VARCHAR(255)
 );
 CREATE TABLE volunteers (

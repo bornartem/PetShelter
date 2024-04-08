@@ -134,5 +134,23 @@ public class SheltersService {
         return sheltersRepository.save(shelter);
 
     }
+    public String showAnimalInfoById(long id, String shelterInfo) {
+        log.info("Was invoked method for change showDogInfoById");
+        return sheltersRepository.showAnimalInfoById(id, shelterInfo);
+    }
 
+    public String showSchedule(long id, String operationMode ) {
+        log.info("Was invoked method for change showSchedule");
+        return sheltersRepository.showSchedule(id, operationMode);
+    }
+
+    public String showSecurityContact(long id, String securityContact) {
+        log.info("Was invoked method for change showSecurityContact");
+        return sheltersRepository.showSecurityContact(id, securityContact);
+    }
+
+    public String showShelterRules(long id, String dogShelterRules) {
+        return sheltersRepository.showShelterRules(id, dogShelterRules);
+    }
 }
+
