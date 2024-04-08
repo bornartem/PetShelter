@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SheltersRepository extends JpaRepository<Shelters, Long> {
-}
+    String showAnimalInfoById(long id, String shelterInfo);
 
-//ContainsIgnoreCase
+    String showSchedule(long id, String contact);
+
+    String showSecurityContact(long id, String securityContact);
+
+    String showShelterRules(long id, String dogShelterRules);
+}

@@ -1,5 +1,6 @@
-package com.example.petShelter.command;
+package com.example.petShelter.command.ShelterDogInnerButtons;
 
+import com.example.petShelter.command.Command;
 import com.example.petShelter.listener.InfoAboutDogShelterMenu;
 import com.example.petShelter.service.SheltersService;
 import com.example.petShelter.service.TelegramBotClient;
@@ -8,7 +9,7 @@ import com.pengrad.telegrambot.model.Message;
 import org.springframework.stereotype.Component;
 
 @Component("/getAddressOfDogShelter")
-public class GetAddressOfDogShelterCommand implements Command{
+public class GetAddressOfDogShelterCommand implements Command {
 
     private final TelegramBotClient telegramBotClient;
 
