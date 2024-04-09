@@ -17,17 +17,17 @@ public class InfoAboutDogShelterMenu {
     }
 
     public void sendMenuMessage(long chatId) {
-        InlineKeyboardButton button1 = new InlineKeyboardButton("О нас").callbackData("1");
-        InlineKeyboardButton button2 = new InlineKeyboardButton("Адрес")
+        InlineKeyboardButton button1 = new InlineKeyboardButton("О нас").callbackData("/getDogShelterInfo");
+        InlineKeyboardButton button2 = new InlineKeyboardButton("/getAddressOfDogShelter")
                 .callbackData("/getAddressOfDogShelter");
 
-        InlineKeyboardButton button3 = new InlineKeyboardButton("Схема проезда").callbackData("1");
-        InlineKeyboardButton button4 = new InlineKeyboardButton("Расписание работы").callbackData("1");
+        InlineKeyboardButton button3 = new InlineKeyboardButton("Схема проезда").callbackData("/getDogShelterLocation");
+        InlineKeyboardButton button4 = new InlineKeyboardButton("Расписание работы").callbackData("/getDogShelterSchedule");
 
-        InlineKeyboardButton button5 = new InlineKeyboardButton("Пропуск на машину").callbackData("1");
-        InlineKeyboardButton button6 = new InlineKeyboardButton("Техника безопасности").callbackData("1");
+        InlineKeyboardButton button5 = new InlineKeyboardButton("Пропуск на машину").callbackData("/CarPermissionNumber");
+        InlineKeyboardButton button6 = new InlineKeyboardButton("Техника безопасности").callbackData("/ShelterSecurityRulesForDogs");
 
-        InlineKeyboardButton button7 = new InlineKeyboardButton("Регистрация пользователя").callbackData("1");
+        InlineKeyboardButton button7 = new InlineKeyboardButton("Регистрация пользователя").callbackData("/registerUserInCatShelter");
         InlineKeyboardButton button8 = new InlineKeyboardButton("Как усыновить собаку")
                 .callbackData("/getInfoAboutDog");
 
