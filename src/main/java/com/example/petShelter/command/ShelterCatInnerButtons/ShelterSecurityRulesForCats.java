@@ -20,7 +20,6 @@ public class ShelterSecurityRulesForCats implements Command {
     private final SheltersService sheltersService;
 
     private final static long CAT_SHELTER_ID = 1;
-    private final static String CAT_SHELTER_RULES = "важный момент: перед тем, как ловить животное, озаботьтесь поиском хорошего ветеринарного врача. Поспрашивайте опытных волонтеров, оцените оснащение клиники (какие обследования там могут провести – рентген, УЗИ и т.д.), выясните график работы, порядок записи и приема. Поверьте, потом, с испуганной кошкой на руках, вы будете горько сожалеть, если проигнорируете этот шаг.";
 
     public ShelterSecurityRulesForCats(TelegramBotClient telegramBotClient,
                                        SheltersService sheltersService) {
@@ -30,7 +29,7 @@ public class ShelterSecurityRulesForCats implements Command {
 
     @Override
     public void execute(Long chatId) {
-        String rules = sheltersService.showShelterRules(CAT_SHELTER_ID, CAT_SHELTER_RULES);
+        String rules = sheltersService.showShelterRules(CAT_SHELTER_ID);
         telegramBotClient.sendMessage(chatId, rules);
     }
 }

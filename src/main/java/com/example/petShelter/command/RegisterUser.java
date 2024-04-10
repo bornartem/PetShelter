@@ -24,9 +24,10 @@ public class RegisterUser implements Command {
         this.telegramBotClient = telegramBotClient;
     }
 
-    @Override
     public void execute(Long chatId) {
-        Clients registerUser = clientsService.create();
-        telegramBotClient.sendMessage(chatId,  "User registered successfully in cat shelter");
+        Clients client = new Clients();
+        clientsService.create(client);
+
+        telegramBotClient.sendMessage(chatId, "User registered successfully in shelter");
     }
 }

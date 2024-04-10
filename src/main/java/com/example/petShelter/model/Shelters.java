@@ -36,4 +36,6 @@ public class Shelters {
     private String location;
     @Column(name = "security_contact")
     private String securityContact;
+    @Column(name = "rules")
+    private String shelterRules;
 }

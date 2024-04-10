@@ -20,7 +20,7 @@ public class GetShelterCarPermission implements Command {
     private final SheltersService sheltersService;
 
     private final static long DOG_SHELTER_ID = 1;
-    private final static String DOG_SHELTER_SECURITY_CONTACT= "258484844151";
+
 
     public GetShelterCarPermission(TelegramBotClient telegramBotClient,
                                    SheltersService sheltersService) {
@@ -30,7 +30,7 @@ public class GetShelterCarPermission implements Command {
 
     @Override
     public void execute(Long chatId) {
-        String securityContact = sheltersService.showSecurityContact(DOG_SHELTER_ID, DOG_SHELTER_SECURITY_CONTACT );
+        String securityContact = sheltersService.showSecurityContact(DOG_SHELTER_ID );
         telegramBotClient.sendMessage(chatId, securityContact);
     }
 }

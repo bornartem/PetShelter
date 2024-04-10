@@ -19,7 +19,6 @@ public class CatShelterSchedule implements Command {
     private final SheltersService sheltersService;
 
     private final static long CAT_SHELTER_ID = 1;
-    private final static String CAT_SHELTER_SCHEDULE = " Мы работаем с пн -пт с 9:00-18:00 ";
 
     public CatShelterSchedule(TelegramBotClient telegramBotClient,
                               SheltersService sheltersService) {
@@ -29,7 +28,7 @@ public class CatShelterSchedule implements Command {
 
     @Override
     public void execute(Long chatId) {
-        String schedule = sheltersService.showSchedule(CAT_SHELTER_ID, CAT_SHELTER_SCHEDULE);
+        String schedule = sheltersService.showSchedule(CAT_SHELTER_ID);
         telegramBotClient.sendMessage(chatId, schedule);
     }
 }
