@@ -18,8 +18,8 @@ public class InfoAboutCatShelterMenu {
 
     public void sendMenuMessage(long chatId) {
         InlineKeyboardButton button1 = new InlineKeyboardButton("О нас").callbackData("/getCatInfo");
-        InlineKeyboardButton button2 = new InlineKeyboardButton("/getAddressOfCatShelter")
-                .callbackData("1");
+        InlineKeyboardButton button2 = new InlineKeyboardButton("адрес")
+                .callbackData("/getAddressOfCatShelter");
 
         InlineKeyboardButton button3 = new InlineKeyboardButton("Схема проезда").callbackData("/getCatShelterLocation");
         InlineKeyboardButton button4 = new InlineKeyboardButton("Расписание работы").callbackData("/getCatShelterSchedule");
