@@ -17,17 +17,17 @@ public class InfoAboutCatShelterMenu {
     }
 
     public void sendMenuMessage(long chatId) {
-        InlineKeyboardButton button1 = new InlineKeyboardButton("О нас").callbackData("1");
-        InlineKeyboardButton button2 = new InlineKeyboardButton("Адрес")
+        InlineKeyboardButton button1 = new InlineKeyboardButton("О нас").callbackData("/getCatInfo");
+        InlineKeyboardButton button2 = new InlineKeyboardButton("/getAddressOfCatShelter")
                 .callbackData("1");
 
-        InlineKeyboardButton button3 = new InlineKeyboardButton("Схема проезда").callbackData("1");
-        InlineKeyboardButton button4 = new InlineKeyboardButton("Расписание работы").callbackData("1");
+        InlineKeyboardButton button3 = new InlineKeyboardButton("Схема проезда").callbackData("/getCatShelterLocation");
+        InlineKeyboardButton button4 = new InlineKeyboardButton("Расписание работы").callbackData("/getCatShelterSchedule");
 
-        InlineKeyboardButton button5 = new InlineKeyboardButton("Пропуск на машину").callbackData("1");
-        InlineKeyboardButton button6 = new InlineKeyboardButton("Техника безопасности").callbackData("1");
+        InlineKeyboardButton button5 = new InlineKeyboardButton("Пропуск на машину").callbackData("/CarPermissionNumberCatShelter");
+        InlineKeyboardButton button6 = new InlineKeyboardButton("Техника безопасности").callbackData("/ShelterSecurityRulesForCats");
 
-        InlineKeyboardButton button7 = new InlineKeyboardButton("Регистрация пользователя").callbackData("1");
+        InlineKeyboardButton button7 = new InlineKeyboardButton("Регистрация пользователя").callbackData("/registerUserInCatShelter");
         InlineKeyboardButton button8 = new InlineKeyboardButton("Как усыновить кошку").callbackData("1");
 
         InlineKeyboardButton button9 = new InlineKeyboardButton("Позвать волонтера").callbackData("1");

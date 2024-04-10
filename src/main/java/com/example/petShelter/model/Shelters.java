@@ -26,14 +26,16 @@ public class Shelters {
     private long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "operation_mode")
-    private String operationMode;
+    @Column(name = "working_hours")
+    private String workingHours;
     @Column(name = "contact")
     private String contact;
     @Column(name = "address")
     private String address;
-    @Column(name = "drilling_director")
-    private String drillingDirector;
+    @Column(name = "location")
+    private String location;
     @Column(name = "security_contact")
     private String securityContact;
+    @Column(name = "rules")
+    private String shelterRules;
 }

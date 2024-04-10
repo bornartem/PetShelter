@@ -3,19 +3,18 @@ package com.example.petShelter.service;
 import com.example.petShelter.model.Shelters;
 import com.example.petShelter.repository.SheltersRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Optional;
 
-import java.util.Optional;
-
 /**
  * The class consists of logic of the project, which has the methods  to work with "Shelters" entity
  *
  * @author Khilola Kushbakova
-
  */
 
 
@@ -25,7 +24,7 @@ public class SheltersService {
     @Autowired
     private final SheltersRepository sheltersRepository;
 
-
+    private Logger log = LoggerFactory.getLogger(SheltersService.class);
 
     public SheltersService(SheltersRepository sheltersRepository) {
         this.sheltersRepository = sheltersRepository;
@@ -123,7 +122,6 @@ public class SheltersService {
     }
 
 
-
     /**
      * This method is used to change the information of a shelter in the database.
      *
@@ -132,9 +130,37 @@ public class SheltersService {
      */
 
     public Shelters changeShelterInfo(Shelters shelter) {
-        log.info("Was invoked method for change changeShelterInfo");
+        log.info("Was invoked method for  changeShelterInfo");
         return sheltersRepository.save(shelter);
 
     }
 
+    public String showAnimalInfoById(long id) {
+        log.info("Was invoked method for  showAnimalInfoById");
+        final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);
+
+        return byIdOptionalShelters.map(shelters -> shelters.getName() + " "
+                + shelters.getAddress() + " "
+                + shelters.getContact()).orElse(null);
+    }
+
+    public String showSchedule(long id) {
+        log.info("Was invoked method for showSchedule");
+        final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);
+        return byIdOptionalShelters.map(Shelters::getWorkingHours).orElse(null);
+    }
+
+    public String showSecurityContact(long id) {
+        log.info("Was invoked method for  showSecurityContact");
+        final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);
+        return byIdOptionalShelters.map(Shelters::getSecurityContact).orElse(null);
+    }
+
+    public String showShelterRules(long id) {
+        log.info("Was invoked method for showShelterRules");
+        final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);
+
+        return byIdOptionalShelters.map(Shelters::getShelterRules).orElse(null);
+    }
 }
+
