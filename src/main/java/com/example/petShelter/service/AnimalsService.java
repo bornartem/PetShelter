@@ -19,18 +19,18 @@ import java.util.List;
  */
 
 
-@Slf4j
+
 @Service
+@Slf4j
 public class AnimalsService {
 
     @Autowired
     private final AnimalsRepository animalsRepository;
 
-    private Logger log = LoggerFactory.getLogger(AnimalsService.class);
-
     public AnimalsService(AnimalsRepository animalsRepository) {
         this.animalsRepository = animalsRepository;
     }
+
 
     /**
      * Method to find all animals belonging to a certain shelter.
@@ -38,13 +38,10 @@ public class AnimalsService {
      * @param shelterId the identifier of the shelter whose animals are to be found
      * @return a list of animals belonging to the specified shelter
      */
-
     public List<Animals> findAllAnimalsOfCertainShelter(long shelterId) {
         log.info("Was invoked method for findAllAnimalsOfCertainShelter");
         return animalsRepository.findAllByShelterId(shelterId);
     }
-
-
 
 
     /**

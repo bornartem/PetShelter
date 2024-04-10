@@ -130,27 +130,37 @@ public class SheltersService {
      */
 
     public Shelters changeShelterInfo(Shelters shelter) {
-        log.info("Was invoked method for change changeShelterInfo");
+        log.info("Was invoked method for  changeShelterInfo");
         return sheltersRepository.save(shelter);
 
     }
-    public String showAnimalInfoById(long id, String shelterInfo) {
-        log.info("Was invoked method for change showDogInfoById");
-        return sheltersRepository.showAnimalInfoById(id, shelterInfo);
+
+    public String showAnimalInfoById(long id) {
+        log.info("Was invoked method for  showAnimalInfoById");
+        final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);
+
+        return byIdOptionalShelters.map(shelters -> shelters.getName() + " "
+                + shelters.getAddress() + " "
+                + shelters.getContact()).orElse(null);
     }
 
-    public String showSchedule(long id, String operationMode ) {
-        log.info("Was invoked method for change showSchedule");
-        return sheltersRepository.showSchedule(id, operationMode);
+    public String showSchedule(long id) {
+        log.info("Was invoked method for showSchedule");
+        final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);
+        return byIdOptionalShelters.map(Shelters::getWorkingHours).orElse(null);
     }
 
-    public String showSecurityContact(long id, String securityContact) {
-        log.info("Was invoked method for change showSecurityContact");
-        return sheltersRepository.showSecurityContact(id, securityContact);
+    public String showSecurityContact(long id) {
+        log.info("Was invoked method for  showSecurityContact");
+        final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);
+        return byIdOptionalShelters.map(Shelters::getSecurityContact).orElse(null);
     }
 
-    public String showShelterRules(long id, String dogShelterRules) {
-        return sheltersRepository.showShelterRules(id, dogShelterRules);
+    public String showShelterRules(long id) {
+        log.info("Was invoked method for showShelterRules");
+        final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);
+
+        return byIdOptionalShelters.map(Shelters::getShelterRules).orElse(null);
     }
 }
 

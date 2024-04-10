@@ -36,6 +36,7 @@ CREATE TABLE shelter (
   address VARCHAR(255),
   location VARCHAR(255),
   security_contact VARCHAR(255)
+  rules VARCHAR(255)
 );
 CREATE TABLE volunteers (
   id_volunteer BIGINT PRIMARY KEY,
