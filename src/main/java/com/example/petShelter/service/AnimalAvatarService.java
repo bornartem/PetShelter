@@ -29,7 +29,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 @Transactional
-@Slf4j
+//@Slf4j
 public class AnimalAvatarService {
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
@@ -39,6 +39,7 @@ public class AnimalAvatarService {
     private final AnimalsService animalsService;
     private final AnimalAvatarRepository animalAvatarRepository;
 
+    // а тут точно не нужно автовайред???
     public AnimalAvatarService(AnimalsService animalsService, AnimalAvatarRepository animalAvatarRepository) {
         this.animalsService = animalsService;
         this.animalAvatarRepository = animalAvatarRepository;

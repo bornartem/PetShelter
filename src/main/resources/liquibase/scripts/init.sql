@@ -44,3 +44,5 @@ CREATE TABLE volunteers (
   name VARCHAR(255),
   contact VARCHAR(255)
 );
+
+select * from animals

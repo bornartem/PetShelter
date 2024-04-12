@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/animals")
+@Slf4j
 public class AnimalsController {
 
     @Autowired
@@ -48,7 +50,7 @@ public class AnimalsController {
                     )
             )
     })
-    @GetMapping("{shelterId}")
+    @GetMapping("/getByShelterID/{shelterId}")
     public List<Animals> findAllAnimalsOfCertainShelter(@PathVariable Long shelterId) {
         return animalsService.findAllAnimalsOfCertainShelter(shelterId);
     }
@@ -70,6 +72,7 @@ public class AnimalsController {
 //        return animalsService.findAllAnimalsOfCertainShelter(shelterId);
 //    }
 
+
     @Operation(summary = "Remove an animal from the list",
             description = "Deletes the animal with the specified animalId")
     @ApiResponses(value = {
@@ -81,20 +84,26 @@ public class AnimalsController {
         return ResponseEntity.ok().build();
     }
 
+
     @Operation(summary = "Find animal by ID",
             description = "Returns the animal with the specified animalId")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the animal"),
             @ApiResponse(responseCode = "404", description = "Animal with the provided animalId not found")
     })
-    @GetMapping("{animalId}")
-    public ResponseEntity<Animals> findAnimalById(@PathVariable long animalId) {
+    @GetMapping("/getByAnimalID/{animalId}")
+    public /*ResponseEntity<Animals>*/ String findAnimalById(@PathVariable long animalId) {
+        log.info("animal id is {}", animalId);
         Animals animal = animalsService.findAnimalById(animalId);
         if (animal == null) {
-            return ResponseEntity.notFound().build();
+//            return ResponseEntity.notFound().build();
+            return null;
         }
-        return ResponseEntity.ok(animal);
+        log.info("found animal is {}", animal);
+//        return ResponseEntity.ok(animal);
+        return animal.toString();
     }
+
 
     @Operation(summary = "Find animals by status",
             description = "Returns a collection of animals with a specific busy status")
@@ -118,16 +127,16 @@ public class AnimalsController {
     }
 
 
-    @Operation(summary = "Add a new animal",
-            description = "Creates and adds a new animal to the list")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "New animal added successfully",
-                    content = @Content(
-                            mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Shelters.class)
-                    )
-            )
-    })
+//    @Operation(summary = "Add a new animal",
+//            description = "Creates and adds a new animal to the list")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "New animal added successfully",
+//                    content = @Content(
+//                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+//                            schema = @Schema(implementation = Shelters.class)
+//                    )
+//            )
+//    })
     @PostMapping
     public Animals addNewAnimal(@RequestBody Animals animal) {
         return animalsService.addNewAnimal(animal);

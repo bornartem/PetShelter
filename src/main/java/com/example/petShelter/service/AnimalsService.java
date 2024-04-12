@@ -2,6 +2,7 @@ package com.example.petShelter.service;
 
 import com.example.petShelter.model.Animals;
 import com.example.petShelter.repository.AnimalsRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import java.util.List;
 
 
 @Service
+@Transactional
 @Slf4j
 public class AnimalsService {
 
@@ -38,9 +40,9 @@ public class AnimalsService {
      * @param shelterId the identifier of the shelter whose animals are to be found
      * @return a list of animals belonging to the specified shelter
      */
-    public List<Animals> findAllAnimalsOfCertainShelter(long shelterId) {
+    public List<Animals> findAllAnimalsOfCertainShelter(Long shelterId) {
         log.info("Was invoked method for findAllAnimalsOfCertainShelter");
-        return animalsRepository.findAllByShelterId(shelterId);
+        return animalsRepository.findBySheltersId(shelterId);
     }
 
 
@@ -50,7 +52,7 @@ public class AnimalsService {
      * @param animalId the identifier of the animal to find
      * @return the found animal or null if the animal was not found
      */
-    public Animals findAnimalById(long animalId) {
+    public Animals findAnimalById(Long animalId) {
         Animals animal = animalsRepository.findById(animalId).orElse(null);
         log.info("Was invoked method for findAnimalById");
         if (animal == null) {
