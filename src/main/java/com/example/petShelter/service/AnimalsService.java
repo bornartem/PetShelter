@@ -82,7 +82,7 @@ public class AnimalsService {
      */
     public Collection<Animals> findAnimalsByType(String animalType) {
         log.info("Was invoked method for findAnimalsByType");
-        Collection<Animals> animals = findAnimalsByType(animalType);
+        Collection<Animals> animals = animalsRepository.findAnimalsByType(animalType);
         if (animals == null) {
             log.error("There is no animal with type = {}", animalType);
         }

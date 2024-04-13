@@ -92,16 +92,16 @@ public class AnimalsController {
             @ApiResponse(responseCode = "404", description = "Animal with the provided animalId not found")
     })
     @GetMapping("/getByAnimalID/{animalId}")
-    public /*ResponseEntity<Animals>*/ String findAnimalById(@PathVariable long animalId) {
+    public ResponseEntity<Animals> findAnimalById(@PathVariable long animalId) {
         log.info("animal id is {}", animalId);
         Animals animal = animalsService.findAnimalById(animalId);
         if (animal == null) {
-//            return ResponseEntity.notFound().build();
-            return null;
+            return ResponseEntity.notFound().build();
+//            return null;
         }
         log.info("found animal is {}", animal);
-//        return ResponseEntity.ok(animal);
-        return animal.toString();
+        return ResponseEntity.ok(animal);
+//        return animal.toString();
     }
 
 

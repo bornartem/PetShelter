@@ -15,6 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 //@ToString
+@Getter
+@Setter
 @EqualsAndHashCode
 @Entity
 public class Animals {

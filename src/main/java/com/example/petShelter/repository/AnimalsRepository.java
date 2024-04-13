@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface AnimalsRepository extends JpaRepository<Animals, Long> {
     List<Animals> findBySheltersId(Long sheltersId);
-    public Collection<Animals> findAnimalsByBusyFree(Boolean busyAnimalStatus);
+    Collection<Animals> findAnimalsByBusyFree(Boolean busyAnimalStatus);
 
-    public Collection<Animals> findAnimalsByType(String animalType);
+    Collection<Animals> findAnimalsByType(String animalType);
 }
