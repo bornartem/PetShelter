@@ -3,6 +3,7 @@ package com.example.petShelter.service;
 import com.example.petShelter.model.AnimalAvatar;
 import com.example.petShelter.model.Animals;
 import com.example.petShelter.repository.AnimalAvatarRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -88,13 +89,15 @@ public class AnimalAvatarServiceTest {
         }
 
         verify(animalAvatarRepository, times(1)).save(any());
+        verify(animalsService, times(1)).findAnimalById(any());
 
+
+
+        Throwable exception = assertThrows(NullPointerException.class, () -> {
+            // вызов метода или блок кода, который должен выбрасывать исключение
+            out.uploadImage(animalId,null);
+        });
 
     }
-
-
-    /*
-    create checking
-     */
 
 }
