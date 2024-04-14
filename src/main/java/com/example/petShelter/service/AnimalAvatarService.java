@@ -4,6 +4,7 @@ import com.example.petShelter.model.AnimalAvatar;
 import com.example.petShelter.model.Animals;
 import com.example.petShelter.repository.AnimalAvatarRepository;
 import jakarta.transaction.Transactional;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 
 @Service
+@Setter
 @Transactional
 //@Slf4j
 public class AnimalAvatarService {
@@ -137,4 +139,8 @@ public class AnimalAvatarService {
     private String getExtension(String filename) {
         return filename.substring(filename.lastIndexOf(".") + 1);
     }
+
+
 }
+
+
