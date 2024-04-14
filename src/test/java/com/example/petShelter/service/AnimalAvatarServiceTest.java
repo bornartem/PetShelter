@@ -49,19 +49,8 @@ public class AnimalAvatarServiceTest {
                 animalAvatarRepository
         );
         out.setAvatarsDir("/avatar");
-
-//        // Инициализация mock-объектов
-//        MockitoAnnotations.initMocks(this);
-//
-//        // Устанавливаем новое значение для поля avatarsDir с помощью рефлексии
-//        Field field = out.getClass().getDeclaredField("avatarsDir");
-//        field.setAccessible(true);
-//        field.set(out, "новый/путь/к/аватаркам");
     }
-//
-//    @Mock
-//    @Value("${path.to.avatars.folder}")
-//    private String avatarsDir;
+
 
     @Test
     public void uploadImage() {
@@ -77,10 +66,7 @@ public class AnimalAvatarServiceTest {
         when(animalsService.findAnimalById(any())).thenReturn(new Animals(animalId, name, busy));
         when(animalAvatarRepository.findById(any())).thenReturn(Optional.empty());
         when(animalAvatarRepository.save(any())).thenReturn(null);
-//        when(Path.of(any())).thenReturn(Path.of("\\avatars", "\\1.jpeg"));
-//        when(avatarsDir).thenReturn("/avatars   ");
 
-//        out.setAvatarsDir("/avatar");
 
         try {
             out.uploadImage(animalId, multipartFile);
@@ -99,5 +85,19 @@ public class AnimalAvatarServiceTest {
         });
 
     }
+
+
+    @Test
+    public void findAnimalAvatarById() {
+
+        Long animalAvatarId = 1L;
+
+        when(animalAvatarRepository.findById(2L)).thenReturn(Optional.empty());
+        when(animalAvatarRepository.findById(animalAvatarId)).thenReturn(Optional.of(new AnimalAvatar()));
+
+        Assertions.assertThat(out.findAnimalAvatarById(2L)).isEqualTo(null);
+        Assertions.assertThat(out.findAnimalAvatarById(animalAvatarId)).isEqualTo(new AnimalAvatar());
+    }
+
 
 }
