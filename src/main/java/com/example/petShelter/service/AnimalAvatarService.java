@@ -57,6 +57,7 @@ public class AnimalAvatarService {
         Animals animal = animalsService.findAnimalById(animalId);
 
         Path filePath = Path.of(avatarsDir, animalId + "." + getExtension(file.getOriginalFilename()));
+        log.info("file path = {}",filePath);
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
 
