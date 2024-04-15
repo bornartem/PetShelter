@@ -21,6 +21,7 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
@@ -43,8 +44,6 @@ public class SheltersControllerMVCTest {
 
     @MockBean // будем его мокать
     private VolunteersRepository volunteersRepository;
-
-
 
 
     @SpyBean
@@ -76,13 +75,13 @@ public class SheltersControllerMVCTest {
         String paramFinish = "Latitude: " + param1 + ", Longitude: " + param2;
 
 
-
         mockMvc.perform(MockMvcRequestBuilders
-                .get(request)
-                .param(param1,"11")
-                .param(param2, "22"))
+                        .get(request)
+                        .param(param1, "11")
+                        .param(param2, "22"))
 
                 .andExpect(status().isOk())
+                .andExpect(content().contentType("text/plain;charset=UTF-8 "))
         ;
 
 
@@ -111,11 +110,10 @@ public class SheltersControllerMVCTest {
         when(sheltersRepository.findAll()).thenReturn(shelters);
 
         mockMvc.perform(MockMvcRequestBuilders      // localhost и тп spring сделает сам
-                .get(request)
-                .accept(MediaType.APPLICATION_JSON))
+                        .get(request)
+                        .accept(MediaType.APPLICATION_JSON))
 
                 .andExpect(status().isOk());
-
 
 
     }
