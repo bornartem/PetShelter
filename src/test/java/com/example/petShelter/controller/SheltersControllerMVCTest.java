@@ -3,6 +3,7 @@ package com.example.petShelter.controller;
 import com.example.petShelter.model.Shelters;
 import com.example.petShelter.repository.*;
 import com.example.petShelter.service.*;
+import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
@@ -99,7 +101,7 @@ public class SheltersControllerMVCTest {
     @BeforeEach
     public void initColl() {
         shelters.add(
-                new Shelters(new ArrayList<>(), 10L, "one", "two", "null", "null", "null", "null", "null")
+                new Shelters(null, 10L, "one", "two", "null", "null", "null", "null", "null")
         );
         shelters.add(
                 new Shelters(null, 20L, "one", "two", null, null, null, null, null)
@@ -126,8 +128,44 @@ public class SheltersControllerMVCTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("one"))
 
         ;
+    }
+
+    Shelters testSh;
+
+    @BeforeEach
+    public void initShelter() {
+        testSh = new Shelters(null, 10L, "one", "two", "null", "null", "null", "null", "null");
+    }
+
+    @Test
+    public void addShelter() throws Exception {
+        String request = "/shelters";
+
+        JSONObject shelterObject = new JSONObject();
+        shelterObject.put("animals", null);
+        shelterObject.put("id", 10L);
+        shelterObject.put("name", "one");
+        shelterObject.put("workingHours", "two");
+        shelterObject.put("contact", null);
+        shelterObject.put("address", null);
+        shelterObject.put("location", null);
+        shelterObject.put("securityContact", null);
+        shelterObject.put("shelterRules", null);
+
+        when(sheltersRepository.save(any())).thenReturn(testSh);
 
 
+        mockMvc.perform(MockMvcRequestBuilders
+                .post(request)
+                .content(shelterObject.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(10))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("one"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.workingHours").value("two"));
+        ;
     }
 
 
