@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -70,18 +71,21 @@ public class SheltersControllerMVCTest {
     public void showLocation() throws Exception {
 
         String request = "/shelters/showLocation";
-        String param1 = "latitude";
-        String param2 = "longitude";
-        String paramFinish = "Latitude: " + param1 + ", Longitude: " + param2;
+        String param1name = "latitude";
+        String param1content = "11.0";
+        String param2name = "longitude";
+        String param2content = "22.0";
+        String paramFinish = "Latitude: " + param1content + ", Longitude: " + param2content;
 
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get(request)
-                        .param(param1, "11")
-                        .param(param2, "22"))
+                        .param(param1name, param1content)
+                        .param(param2name, param2content))
 
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("text/plain;charset=UTF-8 "))
+                .andExpect(content().string(paramFinish))
         ;
 
 
@@ -113,7 +117,10 @@ public class SheltersControllerMVCTest {
                         .get(request)
                         .accept(MediaType.APPLICATION_JSON))
 
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+
+        ;
 
 
     }
