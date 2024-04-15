@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component("/getCatInfo")
 public class CatShelterInfoCommand implements Command {
     private final SheltersService sheltersService;
-    private final static long CAT_SHELTER_ID = 1;
+    private final static long CAT_SHELTER_ID = 2;
    private TelegramBotClient telegramBotClient;
 
     public CatShelterInfoCommand(SheltersService sheltersService, TelegramBotClient telegramBotClient) {

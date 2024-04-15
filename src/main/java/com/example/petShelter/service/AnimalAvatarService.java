@@ -34,8 +34,6 @@ public class AnimalAvatarService {
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
 
-    private Logger log = LoggerFactory.getLogger(AnimalAvatarService.class);
-
     private final AnimalsService animalsService;
     private final AnimalAvatarRepository animalAvatarRepository;
 

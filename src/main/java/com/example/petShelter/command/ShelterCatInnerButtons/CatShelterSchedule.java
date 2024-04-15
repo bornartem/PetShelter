@@ -18,7 +18,7 @@ public class CatShelterSchedule implements Command {
 
     private final SheltersService sheltersService;
 
-    private final static long CAT_SHELTER_ID = 1;
+    private final static long CAT_SHELTER_ID = 2;
 
     public CatShelterSchedule(TelegramBotClient telegramBotClient,
                               SheltersService sheltersService) {
