@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.contains;
@@ -167,6 +168,122 @@ public class SheltersControllerMVCTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.workingHours").value("two"));
         ;
     }
+
+
+    @Test
+    public void findShelterById() throws Exception {
+        String request = "/shelters/10";
+
+        Optional<Shelters> shelters1 = Optional.ofNullable(testSh);
+
+        when(sheltersRepository.findById(any())).thenReturn(shelters1);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .get(request))
+
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(10))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("one"))
+
+        ;
+
+
+    }
+
+
+    @Test
+    public void showContacts() throws Exception {
+        String request = "/shelters/show-contacts";
+
+        when(sheltersRepository.getReferenceById(any())).thenReturn(testSh);
+
+        mockMvc.perform(MockMvcRequestBuilders
+
+                .get(request)
+                .param("shelterId", "10"))
+
+
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/plain;charset=UTF-8 "))
+                .andExpect(content().string("null"))
+        ;
+
+    }
+
+    @Test
+    public void showAddress() throws Exception {
+        String request = "/shelters/show-address";
+
+        when(sheltersRepository.findById(any())).thenReturn(Optional.ofNullable(testSh));
+
+        mockMvc.perform(MockMvcRequestBuilders
+
+                        .get(request)
+                        .param("shelterId", "10"))
+
+
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/plain;charset=UTF-8 "))
+                .andExpect(content().string("null"))
+        ;
+
+    }
+
+
+    @Test
+    public void showSecurityNumber() throws Exception {
+        String request = "/shelters/show-security-number";
+
+        when(sheltersRepository.getReferenceById(any())).thenReturn(testSh);
+
+        mockMvc.perform(MockMvcRequestBuilders
+
+                        .get(request)
+                        .param("shelterId", "10"))
+
+
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/plain;charset=UTF-8 "))
+                .andExpect(content().string("null"))
+        ;
+
+    }
+
+
+    @Test
+    public void changeShelterInfo() throws Exception {
+        String request = "/shelters";
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("animals", null);
+        jsonObject.put("id", 10L);
+        jsonObject.put("name", "one");
+        jsonObject.put("workingHours", "two");
+        jsonObject.put("contact", null);
+        jsonObject.put("address", null);
+        jsonObject.put("location", null);
+        jsonObject.put("securityContact", null);
+        jsonObject.put("shelterRules", null);
+
+        when(sheltersRepository.save(any())).thenReturn(testSh);
+
+        mockMvc.perform(MockMvcRequestBuilders
+
+                .put(request)
+                .content(jsonObject.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+
+
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(10))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("one"))
+
+        ;
+    }
+
 
 
 }

@@ -80,7 +80,7 @@ public class SheltersController {
             @ApiResponse(responseCode = "404", description = "Shelter not found")
     })
     @GetMapping("{shelterId}")
-    public ResponseEntity<Shelters> findShelterById(long shelterId) {
+    public ResponseEntity<Shelters> findShelterById(@PathVariable long shelterId) {
         Shelters shelter = sheltersService.findShelterById(shelterId);
         if (shelter == null) {
             return ResponseEntity.notFound().build();
@@ -92,7 +92,7 @@ public class SheltersController {
     @Operation(summary = "Remove a shelter by ID",
             description = "Removes a shelter from the database using the specified ID")
     @DeleteMapping("{shelterId}")
-    public ResponseEntity removeShelter(@PathVariable long shelterId) {
+    public ResponseEntity<?> removeShelter(@PathVariable long shelterId) {
         sheltersService.removeShelter(shelterId);
         return ResponseEntity.ok().build();
     }
@@ -100,20 +100,20 @@ public class SheltersController {
 
     @GetMapping("/show-contacts")
     public String showContacts(@Parameter(description = "the contact details of Shelter", example = "shelter@gmail.com, 8935-888-9999")
-                               @PathVariable long shelterId) {
+                               @RequestParam long shelterId) {
         return sheltersService.showContacts(shelterId);
     }
 
     @GetMapping("/show-address")
     public String showAddress(@Parameter(description = "the address of Shelter", example = "15-37,Maskavas street," +
             " Riga, Latvia , LV-1236")
-                              @PathVariable long shelterId) {
+                              @RequestParam long shelterId) {
         return sheltersService.showAddress(shelterId);
     }
 
     @GetMapping("/show-security-number")
     public String showSecurityNumber(@Parameter(description = "Shelter's security number", example = "8935-888-9999")
-                                     @PathVariable long shelterId) {
+                                     @RequestParam long shelterId) {
         return sheltersService.showSecurityNumber(shelterId);
     }
 
