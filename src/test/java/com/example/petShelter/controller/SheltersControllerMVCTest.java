@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,6 +21,7 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
 public class SheltersControllerMVCTest {
@@ -67,15 +70,20 @@ public class SheltersControllerMVCTest {
     @Test
     public void showLocation() throws Exception {
 
-        String request = "/showLocation";
-        String param1 = "param1";
-        String param2 = "param2";
+        String request = "/shelters/showLocation";
+        String param1 = "latitude";
+        String param2 = "longitude";
         String paramFinish = "Latitude: " + param1 + ", Longitude: " + param2;
 
 
 
-        mockMvc.perform(
-                get(request).param(param1, param2).accept(paramFinish));
+        mockMvc.perform(MockMvcRequestBuilders
+                .get(request)
+                .param(param1,"11")
+                .param(param2, "22"))
+
+                .andExpect(status().isOk())
+        ;
 
 
     }
@@ -96,16 +104,19 @@ public class SheltersControllerMVCTest {
     }
 
     @Test
-    public void listAllShelters() {
+    public void listAllShelters() throws Exception {
 
-        String request = "/all-shelters";
+        String request = "/shelters/all-shelters";
 
         when(sheltersRepository.findAll()).thenReturn(shelters);
 
-//        mockMvc.perform(
-//                get(request).accept(paramFinish));
-//
-//
+        mockMvc.perform(MockMvcRequestBuilders      // localhost и тп spring сделает сам
+                .get(request)
+                .accept(MediaType.APPLICATION_JSON))
+
+                .andExpect(status().isOk());
+
+
 
     }
 
