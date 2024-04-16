@@ -9,26 +9,26 @@ import com.pengrad.telegrambot.response.SendResponse;
 import org.springframework.stereotype.Component;
 
 /**
- * Class for a home improvement menu for a certain type of dog.
+ * Class for a home improvement menu for a certain type of cat.
  * @author  Maria Sinyavskaya
  */
 
 @Component
-public class HomeImprovementForDogMenu {
+public class HomeImprovementForCatMenu {
     private TelegramBot bot;
 
-    public HomeImprovementForDogMenu(TelegramBot bot) {
+    public HomeImprovementForCatMenu(TelegramBot bot) {
         this.bot = bot;
     }
 
     public void sendMenuMessage(long chatId) {
-        InlineKeyboardButton button1 = new InlineKeyboardButton("Щенка").callbackData("1");
-        InlineKeyboardButton button2 = new InlineKeyboardButton("Взрослой собаки")
+        InlineKeyboardButton button1 = new InlineKeyboardButton("Котенка").callbackData("1");
+        InlineKeyboardButton button2 = new InlineKeyboardButton("Взрослой кошки")
                 .callbackData("1");
 
-        InlineKeyboardButton button3 = new InlineKeyboardButton("Собаки с ОВЗ").callbackData("1");
+        InlineKeyboardButton button3 = new InlineKeyboardButton("Кошки с ОВЗ").callbackData("1");
         InlineKeyboardButton button4 = new InlineKeyboardButton("Вернуться назад")
-                .callbackData("/getInfoAboutDogShelter");
+                .callbackData("/getInfoAboutCatShelter");
 
         Keyboard keyboard1 = new InlineKeyboardMarkup(new InlineKeyboardButton[][]{{button1, button2},
                 {button3, button4}});

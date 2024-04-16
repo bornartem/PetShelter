@@ -28,6 +28,8 @@ public enum CommandName {
     GET_DOG_SHELTER_CAR_PERMISSION("/CarPermissionNumber"),
     GET_DOG_SHELTER_LOCATION("/getDogShelterLocation"),
     GET_DOG_SHELTER_RULES("/ShelterSecurityRulesForDogs"),
+    GET_HOME_IMPROVEMENT_FOR_CAT("/getHomeImprovementForCat"),
+    GET_INFO_ABOUT_CAT("/getInfoAboutCat"),
     NO("noCommand");
 
 
