@@ -4,6 +4,7 @@ import com.example.petShelter.model.AnimalAvatar;
 import com.example.petShelter.model.Animals;
 import com.example.petShelter.repository.AnimalAvatarRepository;
 import jakarta.transaction.Transactional;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +29,9 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 
 @Service
+@Setter
 @Transactional
-@Slf4j
+//@Slf4j
 public class AnimalAvatarService {
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
@@ -37,6 +39,7 @@ public class AnimalAvatarService {
     private final AnimalsService animalsService;
     private final AnimalAvatarRepository animalAvatarRepository;
 
+    // а тут точно не нужно автовайред???
     public AnimalAvatarService(AnimalsService animalsService, AnimalAvatarRepository animalAvatarRepository) {
         this.animalsService = animalsService;
         this.animalAvatarRepository = animalAvatarRepository;
@@ -54,6 +57,7 @@ public class AnimalAvatarService {
         Animals animal = animalsService.findAnimalById(animalId);
 
         Path filePath = Path.of(avatarsDir, animalId + "." + getExtension(file.getOriginalFilename()));
+        log.info("file path = {}",filePath);
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
 
@@ -133,4 +137,8 @@ public class AnimalAvatarService {
     private String getExtension(String filename) {
         return filename.substring(filename.lastIndexOf(".") + 1);
     }
+
+
 }
+
+
