@@ -1,9 +1,12 @@
 package com.example.petShelter.command;
 
 import com.example.petShelter.listener.InfoAboutDogShelterMenu;
-import com.pengrad.telegrambot.model.CallbackQuery;
-import com.pengrad.telegrambot.model.Message;
 import org.springframework.stereotype.Component;
+
+/**
+ * Class that opens the menu for the dog shelter.
+ * @author  Maria Sinyavskaya
+ */
 
 @Component("/getInfoAboutDogShelter")
 public class GetInfoAboutDogShelter implements Command {

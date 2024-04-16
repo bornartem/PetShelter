@@ -3,6 +3,11 @@ package com.example.petShelter.command;
 import com.example.petShelter.listener.ChoosingShelterMenu;
 import org.springframework.stereotype.Component;
 
+/**
+ * Class to return to the shelter selection menu.
+ * @author  Maria Sinyavskaya
+ */
+
 @Component("/backToChoosingShelter")
 public class BackToChoosingShelter implements Command{
 

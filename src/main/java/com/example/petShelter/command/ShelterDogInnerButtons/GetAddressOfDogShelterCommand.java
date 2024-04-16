@@ -1,12 +1,14 @@
 package com.example.petShelter.command.ShelterDogInnerButtons;
 
 import com.example.petShelter.command.Command;
-import com.example.petShelter.listener.InfoAboutDogShelterMenu;
 import com.example.petShelter.service.SheltersService;
 import com.example.petShelter.service.TelegramBotClient;
-import com.pengrad.telegrambot.model.CallbackQuery;
-import com.pengrad.telegrambot.model.Message;
 import org.springframework.stereotype.Component;
+
+/**
+ * Class which shows the information about a dog shelter address.
+ * @author  Maria Sinyavskaya
+ */
 
 @Component("/getAddressOfDogShelter")
 public class GetAddressOfDogShelterCommand implements Command {

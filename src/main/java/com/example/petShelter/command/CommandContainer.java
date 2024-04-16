@@ -32,7 +32,9 @@ public class CommandContainer {
                             ShelterSecurityRulesForCats shelterSecurityRulesForCats, DogShelterInfoCommand dogShelterInfoCommand,
                             DogShelterSchedule dogShelterSchedule, GetDogShelterLocation getDogShelterLocation,
                             GetShelterCarPermission getShelterCarPermission, ShelterSecurityRulesForDogs shelterSecurityRulesForDogs,
-                            RegisterUser registerUser) {
+                            RegisterUser registerUser,
+                            GetHomeImprovementForCat getHomeImprovementForCat,
+                            GetInfoAboutCat getInfoAboutCat) {
 
         commandMap.put(CommandName.START.getCommandName(), commandStart);
         commandMap.put(CommandName.GET_ADDRESS_OF_DOG_SHELTER.getCommandName(), getAddressOfDogShelterCommand);
@@ -53,6 +55,8 @@ public class CommandContainer {
         commandMap.put(CommandName.GET_DOG_SHELTER_CAR_PERMISSION.getCommandName(), getShelterCarPermission);
         commandMap.put(CommandName.GET_DOG_SHELTER_RULES.getCommandName(), shelterSecurityRulesForDogs);
         commandMap.put(CommandName.REGISTER_USER.getCommandName(), registerUser);
+        commandMap.put(CommandName.GET_HOME_IMPROVEMENT_FOR_CAT.getCommandName(), getHomeImprovementForCat);
+        commandMap.put(CommandName.GET_INFO_ABOUT_CAT.getCommandName(), getInfoAboutCat);
 
     }
 
