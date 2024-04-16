@@ -14,8 +14,7 @@ import java.util.List;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
+@Data
 @Entity(name = "animals")
 public class Animals {
 

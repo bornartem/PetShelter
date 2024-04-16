@@ -13,11 +13,10 @@ import java.util.List;
 
 /**
  * The class consists of logic of the project, which has
- the methods  to work with "Animals" entity
+ * the methods  to work with "Animals" entity
  *
  * @author Khilola Kushbakova
  */
-
 
 
 @Service
@@ -56,7 +55,6 @@ public class AnimalsService {
         if (animal == null) {
             log.error("There is no animal with id = {}", animalId);
         }
-
         return animal;
     }
 
@@ -84,13 +82,21 @@ public class AnimalsService {
         if (animals == null) {
             log.error("There is no animal with type = {}", animalType);
         }
-
         return animals;
     }
 
+    /**
+     * Method to add a animal
+     *
+     * @return created animal or throw exception if the animal id is present
+     */
     public Animals addNewAnimal(Animals animal) {
-        log.info("Was invoked method for addNewAnimal");
-        return animalsRepository.save(animal);
+        if (animalsRepository.existsById(animal.getId())) {
+            throw new RuntimeException();
+        } else {
+            log.info("Was invoked method for addNewAnimal");
+            return animalsRepository.save(animal);
+        }
     }
 
     /**
@@ -99,11 +105,12 @@ public class AnimalsService {
      * @param animalId the identifier of the animal to remove
      */
     public void removeAnimal(long animalId) {
-        Animals animal = animalsRepository.findById(animalId).orElse(null);
-        animalsRepository.deleteById(animalId);
-        log.info("Was invoked method for remove removeAnimal");
-        if (animal == null) {
+        if (animalsRepository.existsById(animalId)) {
+            animalsRepository.deleteById(animalId);
+            log.info("Was invoked method for remove removeAnimal");
+        } else {
             log.error("There is no animal with id = {}", animalId);
+            throw new RuntimeException();
         }
     }
 

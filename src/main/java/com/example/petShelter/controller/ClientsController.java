@@ -9,14 +9,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * The class consists of methods for REST API in order to make CRUD and
- other commands for the entity "Clients"
+ * other commands for the entity "Clients"
  *
  * @author bornartem
  */
@@ -40,8 +42,12 @@ public class ClientsController {
             )
     )
     @PostMapping("/create")
-    public Clients create(@RequestBody Clients clients) {
-        return clientService.create(clients);
+    public ResponseEntity<Clients> create(@RequestBody Clients clients) {
+        Clients createdClient = clientService.create(clients);
+        if (createdClient == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(createdClient);
     }
 
     @ApiResponses({
@@ -55,10 +61,15 @@ public class ClientsController {
             )
     })
     @GetMapping("/read{id}")
-    public Clients read(@Parameter(description = "all data of client", example = "Artem, 8911-111-1111")
-                        @PathVariable long id) {
-        return clientService.read(id);
+    public ResponseEntity<Clients> read(@Parameter(description = "all data of client", example = "Artem, 8911-111-1111")
+                                        @PathVariable long id) {
+        Clients clients = clientService.read(id);
+        if (clients == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(clients);
     }
+
 
     @Operation(
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -70,8 +81,12 @@ public class ClientsController {
             )
     )
     @PutMapping("/update")
-    public Clients update(@RequestBody Clients clients) {
-        return clientService.update(clients);
+    public ResponseEntity<Clients> update(@RequestBody Clients clients) {
+        Clients createdClient = clientService.update(clients);
+        if (createdClient == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(createdClient);
     }
 
     @ApiResponses({

@@ -1,5 +1,6 @@
 package com.example.petShelter.controller;
 
+import com.example.petShelter.model.Clients;
 import com.example.petShelter.model.Shelters;
 import com.example.petShelter.service.SheltersService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -69,8 +70,12 @@ public class SheltersController {
             )
     })
     @PostMapping
-    public Shelters addShelter(@RequestBody Shelters shelter) {
-        return sheltersService.addShelter(shelter);
+    public ResponseEntity<Shelters> addShelter(@RequestBody Shelters shelter) {
+        Shelters createdShelter = sheltersService.addShelter(shelter);
+        if (createdShelter == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(createdShelter);
     }
 
 
