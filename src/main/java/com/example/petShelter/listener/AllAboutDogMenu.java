@@ -8,6 +8,11 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.springframework.stereotype.Component;
 
+/**
+ * Class for creating a menu on how to adopt a dog.
+ * @author  Maria Sinyavskaya
+ */
+
 @Component
 public class AllAboutDogMenu {
     private TelegramBot bot;
@@ -17,6 +22,8 @@ public class AllAboutDogMenu {
     }
 
     public void sendMenuMessage(long chatId) {
+        InlineKeyboardButton button0 = new InlineKeyboardButton("Выбрать собаку").callbackData("1");
+
         InlineKeyboardButton button1 = new InlineKeyboardButton("Знакомство с собакой").callbackData("1");
         InlineKeyboardButton button2 = new InlineKeyboardButton("Документы для усыновления")
                 .callbackData("1");
@@ -36,7 +43,7 @@ public class AllAboutDogMenu {
         InlineKeyboardButton button10 = new InlineKeyboardButton("Вернуться к выбору приюта")
                 .callbackData("/backToChoosingShelter");
 
-        Keyboard keyboard1 = new InlineKeyboardMarkup(new InlineKeyboardButton[][]{{button1, button2},
+        Keyboard keyboard1 = new InlineKeyboardMarkup(new InlineKeyboardButton[][]{{button0},{button1, button2},
                 {button3, button4}, {button5, button6}, {button7, button8}, {button9, button10}});
 
         SendResponse response = bot.execute(

@@ -8,6 +8,11 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.springframework.stereotype.Component;
 
+/**
+ * Class for creating a menu for selecting information about a cat shelter of interest.
+ * @author  Maria Sinyavskaya
+ */
+
 @Component
 public class InfoAboutCatShelterMenu {
     private TelegramBot bot;
@@ -18,8 +23,8 @@ public class InfoAboutCatShelterMenu {
 
     public void sendMenuMessage(long chatId) {
         InlineKeyboardButton button1 = new InlineKeyboardButton("О нас").callbackData("/getCatInfo");
-        InlineKeyboardButton button2 = new InlineKeyboardButton("/getAddressOfCatShelter")
-                .callbackData("1");
+        InlineKeyboardButton button2 = new InlineKeyboardButton("Адрес")
+                .callbackData("/getAddressOfCatShelter");
 
         InlineKeyboardButton button3 = new InlineKeyboardButton("Схема проезда").callbackData("/getCatShelterLocation");
         InlineKeyboardButton button4 = new InlineKeyboardButton("Расписание работы").callbackData("/getCatShelterSchedule");
@@ -28,7 +33,7 @@ public class InfoAboutCatShelterMenu {
         InlineKeyboardButton button6 = new InlineKeyboardButton("Техника безопасности").callbackData("/ShelterSecurityRulesForCats");
 
         InlineKeyboardButton button7 = new InlineKeyboardButton("Регистрация пользователя").callbackData("/registerUserInCatShelter");
-        InlineKeyboardButton button8 = new InlineKeyboardButton("Как усыновить кошку").callbackData("1");
+        InlineKeyboardButton button8 = new InlineKeyboardButton("Как усыновить кошку").callbackData("/getInfoAboutCat");
 
         InlineKeyboardButton button9 = new InlineKeyboardButton("Позвать волонтера").callbackData("1");
         InlineKeyboardButton button10 = new InlineKeyboardButton("Вернуться к выбору приюта")

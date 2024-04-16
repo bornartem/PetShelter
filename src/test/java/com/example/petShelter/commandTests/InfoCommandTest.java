@@ -1,15 +1,23 @@
-package com.example.petShelter.command;
+package com.example.petShelter.commandTests;
 
+import com.example.petShelter.command.InfoCommand;
 import com.example.petShelter.service.TelegramBotClient;
-import org.springframework.stereotype.Component;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-/**
- * Class for the command that outputs a story about the shelter
- * @author  Khilola Kushbakova
- */
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-@Component("/info")
-public class InfoCommand implements Command{
+@ExtendWith(MockitoExtension.class)
+public class InfoCommandTest {
+
+    @Mock
+    private TelegramBotClient telegramBotClient;
+
+    private InfoCommand infoCommand;
+
     private final static String INFO_MESSAGE = "Мы объединились для спасения и помощи нуждающимся животным с улиц, " +
             "лечили их, проходили долгий путь восстановления и искали для них семью. Стали присоединяться неравнодушные " +
             "люди! Нас становилось больше. Но, самое главное, росло буквально в геометрической прогрессии количество тех," +
@@ -18,14 +26,14 @@ public class InfoCommand implements Command{
             "в некотором смысле «профессиональными». Налажено сотрудничество с клиниками, найдено много " +
             "единомышленников, что позволило принять решение о переходе на другой качественный уровень. ";
 
-    private TelegramBotClient telegramBotClient;
+    @Test
+    void executeMethodShouldSendMessage() {
+        Long chatId = 123456L;
+        infoCommand = new InfoCommand(telegramBotClient);
 
-    public InfoCommand (TelegramBotClient telegramBotClient) {
-        this.telegramBotClient = telegramBotClient;
-    }
-    @Override
-    public void execute(Long chatId) {
-        telegramBotClient.sendMessage(chatId, INFO_MESSAGE);
+        infoCommand.execute(chatId);
+
+        verify(telegramBotClient, times(1)).sendMessage(chatId, INFO_MESSAGE);
 
     }
 }
