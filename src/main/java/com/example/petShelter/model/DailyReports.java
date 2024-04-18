@@ -20,10 +20,10 @@ import java.time.LocalDateTime;
 @Entity(name = "daily_report")
 public class DailyReports {
 
-    @ManyToOne
-    @JsonIgnore
+//    @ManyToOne
+//    @JsonIgnore
 //    @JoinColumn(name = "id_animal")
-    private Animals animal;
+//    private Animals animal;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

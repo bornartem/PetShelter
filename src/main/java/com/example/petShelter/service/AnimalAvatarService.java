@@ -26,9 +26,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
  * @author Khilola Kushbakova
  */
 
-
 @Service
-@Transactional
 @Slf4j
 public class AnimalAvatarService {
     @Value("${path.to.avatars.folder}")
@@ -42,7 +40,6 @@ public class AnimalAvatarService {
         this.animalAvatarRepository = animalAvatarRepository;
     }
 
-
     /**
      * Uploads an image for a specific animal.
      *
@@ -54,6 +51,7 @@ public class AnimalAvatarService {
         Animals animal = animalsService.findAnimalById(animalId);
 
         Path filePath = Path.of(avatarsDir, animalId + "." + getExtension(file.getOriginalFilename()));
+        log.info("file path = {}",filePath);
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
 
@@ -77,10 +75,7 @@ public class AnimalAvatarService {
         animalAvatar.setData(file.getBytes());
 
         animalAvatarRepository.save(animalAvatar);
-
     }
-
-
     /**
      * Finds an animal avatar by ID.
      *
@@ -96,7 +91,6 @@ public class AnimalAvatarService {
 
         return animalAvatar;
     }
-
 
     /**
      * Generates a preview image from the given file path.
@@ -123,7 +117,6 @@ public class AnimalAvatarService {
         }
     }
 
-
     /**
      * Gets the file extension from a filename.
      *
@@ -133,4 +126,8 @@ public class AnimalAvatarService {
     private String getExtension(String filename) {
         return filename.substring(filename.lastIndexOf(".") + 1);
     }
+
+
 }
+
+

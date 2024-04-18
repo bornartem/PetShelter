@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ import java.util.List;
  * @author Khilola Kushbakova
  */
 
-
+@Tag(name="animalControllerTag")
 @RestController
 @RequestMapping("/animals")
 public class AnimalsController {
@@ -35,40 +36,6 @@ public class AnimalsController {
     public AnimalsController(AnimalsService animalsService) {
         this.animalsService = animalsService;
     }
-
-
-    @Operation(summary = "Find all animals of a certain shelter",
-            description = "Returns a list of animals belonging to a specific shelter based on the shelterId provided")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of animals"),
-            @ApiResponse(responseCode = "404", description = "Shelter with the provided shelterId not found",
-                    content = @Content(
-                            mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Shelters.class)
-                    )
-            )
-    })
-    @GetMapping("{shelterId}")
-    public List<Animals> findAllAnimalsOfCertainShelter(@PathVariable Long shelterId) {
-        return animalsService.findAllAnimalsOfCertainShelter(shelterId);
-    }
-
-
-//    @Operation(summary = "Find all animals of a certain shelter",
-//            description = "Returns a list of animals belonging to a specific shelter based on the shelterId provided")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of animals"),
-//            @ApiResponse(responseCode = "404", description = "Shelter with the provided shelterId not found",
-//                    content = @Content(
-//                            mediaType = MediaType.APPLICATION_JSON_VALUE,
-//                            schema = @Schema(implementation = Shelters.class)
-//                    )
-//            )
-//    })
-//    @GetMapping("{shelterId}")
-//    public List<Animals> findAllAnimalsOfCertainShelter(@PathVariable Long shelterId) {
-//        return animalsService.findAllAnimalsOfCertainShelter(shelterId);
-//    }
 
     @Operation(summary = "Remove an animal from the list",
             description = "Deletes the animal with the specified animalId")
@@ -132,7 +99,6 @@ public class AnimalsController {
     public Animals addNewAnimal(@RequestBody Animals animal) {
         return animalsService.addNewAnimal(animal);
     }
-
 
     @Operation(summary = "Update animal information",
             description = "Updates the information of an existing animal based on the provided data")

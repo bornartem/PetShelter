@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
  */
 
 
-
-
 @Component("/getAddressOfCatShelter")
 public class GetAddressOfCatShelterCommand implements Command {
 

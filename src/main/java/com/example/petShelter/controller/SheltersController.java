@@ -1,5 +1,6 @@
 package com.example.petShelter.controller;
 
+import com.example.petShelter.model.Clients;
 import com.example.petShelter.model.Shelters;
 import com.example.petShelter.service.SheltersService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +24,7 @@ import java.util.Collection;
  * @author Khilola Kushbakova
  */
 
-
+@Tag(name = "shelterController")
 @RestController
 @RequestMapping("/shelters")
 public class SheltersController {
@@ -69,8 +71,12 @@ public class SheltersController {
             )
     })
     @PostMapping
-    public Shelters addShelter(@RequestBody Shelters shelter) {
-        return sheltersService.addShelter(shelter);
+    public ResponseEntity<Shelters> addShelter(@RequestBody Shelters shelter) {
+        Shelters createdShelter = sheltersService.addShelter(shelter);
+        if (createdShelter == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(createdShelter);
     }
 
 
@@ -80,7 +86,7 @@ public class SheltersController {
             @ApiResponse(responseCode = "404", description = "Shelter not found")
     })
     @GetMapping("{shelterId}")
-    public ResponseEntity<Shelters> findShelterById(long shelterId) {
+    public ResponseEntity<Shelters> findShelterById(@PathVariable long shelterId) {
         Shelters shelter = sheltersService.findShelterById(shelterId);
         if (shelter == null) {
             return ResponseEntity.notFound().build();
@@ -92,28 +98,43 @@ public class SheltersController {
     @Operation(summary = "Remove a shelter by ID",
             description = "Removes a shelter from the database using the specified ID")
     @DeleteMapping("{shelterId}")
-    public ResponseEntity removeShelter(@PathVariable long shelterId) {
+    public ResponseEntity<?> removeShelter(@PathVariable long shelterId) {
         sheltersService.removeShelter(shelterId);
         return ResponseEntity.ok().build();
     }
 
-
+    @Operation(summary = "Get contact details of a shelter", description = "Retrieve the contact information of a shelter based on its ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved contact details"),
+            @ApiResponse(responseCode = "404", description = "Shelter not found")
+    })
     @GetMapping("/show-contacts")
     public String showContacts(@Parameter(description = "the contact details of Shelter", example = "shelter@gmail.com, 8935-888-9999")
-                               @PathVariable long shelterId) {
+                               @RequestParam long shelterId) {
         return sheltersService.showContacts(shelterId);
     }
 
+    @Operation(summary = "Retrieve Shelter Address",
+            description = "Get the address of a shelter based on the shelterId")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Address successfully retrieved"),
+            @ApiResponse(responseCode = "404", description = "Shelter not found")
+    })
     @GetMapping("/show-address")
     public String showAddress(@Parameter(description = "the address of Shelter", example = "15-37,Maskavas street," +
             " Riga, Latvia , LV-1236")
-                              @PathVariable long shelterId) {
+                              @RequestParam long shelterId) {
         return sheltersService.showAddress(shelterId);
     }
-
+    @Operation(summary = "Show shelter's security number",
+            description = "Retrieve the security number of a shelter")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved shelter's security number"),
+            @ApiResponse(responseCode = "404", description = "Shelter not found")
+    })
     @GetMapping("/show-security-number")
     public String showSecurityNumber(@Parameter(description = "Shelter's security number", example = "8935-888-9999")
-                                     @PathVariable long shelterId) {
+                                     @RequestParam long shelterId) {
         return sheltersService.showSecurityNumber(shelterId);
     }
 

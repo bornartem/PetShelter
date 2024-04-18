@@ -1,8 +1,12 @@
 package com.example.petShelter.command;
 
 import com.example.petShelter.listener.InfoAboutCatShelterMenu;
-import com.example.petShelter.listener.InfoAboutDogShelterMenu;
 import org.springframework.stereotype.Component;
+
+/**
+ * Class that opens the menu for the cat shelter.
+ * @author  Maria Sinyavskaya
+ */
 
 @Component("/getInfoAboutCatShelter")
 public class GetInfoAboutCatShelter implements Command {

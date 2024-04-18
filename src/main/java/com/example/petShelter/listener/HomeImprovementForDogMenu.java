@@ -8,6 +8,11 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.springframework.stereotype.Component;
 
+/**
+ * Class for a home improvement menu for a certain type of dog.
+ * @author  Maria Sinyavskaya
+ */
+
 @Component
 public class HomeImprovementForDogMenu {
     private TelegramBot bot;

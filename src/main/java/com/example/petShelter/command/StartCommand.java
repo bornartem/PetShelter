@@ -2,8 +2,6 @@ package com.example.petShelter.command;
 
 import com.example.petShelter.listener.ChoosingShelterMenu;
 import com.example.petShelter.service.TelegramBotClient;
-import com.pengrad.telegrambot.model.CallbackQuery;
-import com.pengrad.telegrambot.model.Message;
 import org.springframework.stereotype.Component;
 
 /**

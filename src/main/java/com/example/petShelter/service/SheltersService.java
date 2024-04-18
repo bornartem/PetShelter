@@ -17,7 +17,6 @@ import java.util.Optional;
  * @author Khilola Kushbakova
  */
 
-
 @Service
 public class SheltersService {
 
@@ -30,7 +29,6 @@ public class SheltersService {
         this.sheltersRepository = sheltersRepository;
     }
 
-
     /**
      * Method to list all shelters.
      *
@@ -41,17 +39,28 @@ public class SheltersService {
         Collection<Shelters> shelters = sheltersRepository.findAll();
         if (shelters == null) {
             log.error("There is no any shelter ");
+            throw new RuntimeException();
         }
         if (shelters.isEmpty()) {
             log.warn("No shelters found, add a new shelter");
+            throw new RuntimeException();
         }
 
         return shelters;
     }
 
+    /**
+     * Method to add a shelter
+     *
+     * @return created shelter or throw exception if the shelter id is present
+     */
     public Shelters addShelter(Shelters shelter) {
-        log.info("Was invoked method for addShelter");
-        return sheltersRepository.save(shelter);
+        if (sheltersRepository.existsById(shelter.getId())) {
+            throw new RuntimeException();
+        } else {
+            log.info("Was invoked method for addShelter");
+            return sheltersRepository.save(shelter);
+        }
     }
 
     /**
@@ -76,12 +85,12 @@ public class SheltersService {
      * @param shelterId The unique identifier of the shelter to be removed
      */
     public void removeShelter(long shelterId) {
-        Shelters shelter = sheltersRepository.findById(shelterId).orElse(null);
-        sheltersRepository.deleteById(shelterId);
-        log.info("Was invoked method for removeShelter");
-        if (shelter == null) {
+        if (sheltersRepository.existsById(shelterId)) {
+            sheltersRepository.deleteById(shelterId);
+            log.info("Was invoked method for removeShelter");
+        } else {
             log.error("There is no shelter with id = {}", shelterId);
-
+            throw new RuntimeException();
         }
     }
 
