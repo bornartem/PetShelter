@@ -1,6 +1,5 @@
 package com.example.petShelter.controller;
 
-import com.example.petShelter.model.Clients;
 import com.example.petShelter.model.Shelters;
 import com.example.petShelter.service.SheltersService;
 import io.swagger.v3.oas.annotations.Operation;
