@@ -26,8 +26,14 @@ public class RegisterUser implements Command {
 
     public void execute(Long chatId) {
         Clients client = new Clients();
-        clientsService.create(client);
+        telegramBotClient.sendMessage(chatId, "Пришлите пожалуйста, ваше имя");
+        String name = telegramBotClient.waitForUserInput(chatId);
+        client.setName(name);
+        telegramBotClient.sendMessage(chatId, "Пришлите пожалуйста , ваши контакты (номер телефона и почту");
+        String contact = telegramBotClient.waitForUserInput(chatId);
+        client.setContact(contact);
 
+        clientsService.create(client);
         telegramBotClient.sendMessage(chatId, "User registered successfully in shelter");
     }
 }
