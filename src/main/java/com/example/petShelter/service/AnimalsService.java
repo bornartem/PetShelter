@@ -18,7 +18,6 @@ import java.util.List;
  *
  * @author Khilola Kushbakova
  */
-
 @Service
 @Slf4j
 public class AnimalsService {
@@ -84,7 +83,7 @@ public class AnimalsService {
     }
 
     /**
-     * Method to add an animal
+     * Method to add a animal
      *
      * @return created animal or throw exception if the animal id is present
      */
