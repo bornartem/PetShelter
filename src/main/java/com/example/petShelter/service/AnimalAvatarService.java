@@ -38,7 +38,6 @@ public class AnimalAvatarService {
     private final AnimalsService animalsService;
     private final AnimalAvatarRepository animalAvatarRepository;
 
-    // а тут точно не нужно автовайред???
     public AnimalAvatarService(AnimalsService animalsService, AnimalAvatarRepository animalAvatarRepository) {
         this.animalsService = animalsService;
         this.animalAvatarRepository = animalAvatarRepository;
