@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
  * which allows to enter to the shelter territory.
  * @author  Khilola Kushbakova
  */
-
 @Component ("/CarPermissionNumber")
 public class GetShelterCarPermission implements Command {
     private final TelegramBotClient telegramBotClient;

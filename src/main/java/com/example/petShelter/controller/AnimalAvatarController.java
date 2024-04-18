@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
 /**
  * The class consists of codes in order to upload and
  download the photos of animals for REST API
@@ -26,7 +27,8 @@ import java.nio.file.Path;
  *
  * @author Khilola Kushbakova
  */
-@Tag(name = "avatarTag")
+
+@Tag(name="animalAvatarController")
 @RestController
 @RequestMapping("avatar")
 public class AnimalAvatarController {
@@ -57,8 +59,8 @@ public class AnimalAvatarController {
     })
 
     @GetMapping(value = "/{id}/image/preview")
-    public ResponseEntity<byte[]> downloadImage(@PathVariable Long animalId) {
-        AnimalAvatar animalAvatar = animalAvatarService.findAnimalAvatarById(animalId);
+    public ResponseEntity<byte[]> downloadImage(@PathVariable Long id) {
+        AnimalAvatar animalAvatar = animalAvatarService.findAnimalAvatarById(id);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(animalAvatar.getMediaType()));
@@ -74,8 +76,8 @@ public class AnimalAvatarController {
             @ApiResponse(responseCode = "404", description = "Animal avatar not found")
     })
     @GetMapping(value = "/{id}/image-from-file")
-    public void downloadAvatar(@PathVariable Long animalId, HttpServletResponse response) throws IOException {
-        AnimalAvatar animalAvatar = animalAvatarService.findAnimalAvatarById(animalId);
+    public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) throws IOException {
+        AnimalAvatar animalAvatar = animalAvatarService.findAnimalAvatarById(id);
 
         Path path = Path.of(animalAvatar.getFilePath());
 

@@ -4,14 +4,10 @@ import com.example.petShelter.command.Command;
 import com.example.petShelter.service.SheltersService;
 import com.example.petShelter.service.TelegramBotClient;
 import org.springframework.stereotype.Component;
-
-
 /**
  * Class which shows the information about a dog shelter security rules on territory of shelter.
  * @author  Khilola Kushbakova
  */
-
-
 @Component ("/ShelterSecurityRulesForDogs")
 public class ShelterSecurityRulesForDogs implements Command {
     private final TelegramBotClient telegramBotClient;

@@ -4,7 +4,6 @@ import com.example.petShelter.command.Command;
 import com.example.petShelter.service.SheltersService;
 import com.example.petShelter.service.TelegramBotClient;
 import org.springframework.stereotype.Component;
-
 /**
  * Class which shows the information about dog shelter after clicking the button in Telegram to info.
  *

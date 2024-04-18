@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,10 @@ import java.util.List;
  * @author Khilola Kushbakova
  */
 
-@Tag(name= "animalControllerTag")
+@Tag(name="animalControllerTag")
 @RestController
 @RequestMapping("/animals")
+@Slf4j
 public class AnimalsController {
 
     @Autowired
@@ -35,23 +37,6 @@ public class AnimalsController {
 
     public AnimalsController(AnimalsService animalsService) {
         this.animalsService = animalsService;
-    }
-
-
-    @Operation(summary = "Find all animals of a certain shelter",
-            description = "Returns a list of animals belonging to a specific shelter based on the shelterId provided")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of animals"),
-            @ApiResponse(responseCode = "404", description = "Shelter with the provided shelterId not found",
-                    content = @Content(
-                            mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Shelters.class)
-                    )
-            )
-    })
-    @GetMapping("{shelterId}")
-    public List<Animals> findAllAnimalsOfCertainShelter(@PathVariable Long shelterId) {
-        return animalsService.findAllAnimalsOfCertainShelter(shelterId);
     }
 
     @Operation(summary = "Remove an animal from the list",
@@ -71,14 +56,19 @@ public class AnimalsController {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the animal"),
             @ApiResponse(responseCode = "404", description = "Animal with the provided animalId not found")
     })
-    @GetMapping("{animalId}")
+    @GetMapping("/getByAnimalID/{animalId}")
     public ResponseEntity<Animals> findAnimalById(@PathVariable long animalId) {
+        log.info("animal id is {}", animalId);
         Animals animal = animalsService.findAnimalById(animalId);
         if (animal == null) {
             return ResponseEntity.notFound().build();
+//            return null;
         }
+        log.info("found animal is {}", animal);
         return ResponseEntity.ok(animal);
+//        return animal.toString();
     }
+
 
     @Operation(summary = "Find animals by status",
             description = "Returns a collection of animals with a specific busy status")
@@ -88,6 +78,7 @@ public class AnimalsController {
     @GetMapping("/search-animals-by-status/{busyAnimalStatus}")
     public Collection<Animals> findAnimalsByStatus(@PathVariable boolean busyAnimalStatus) {
         return animalsService.findAnimalsByStatus(busyAnimalStatus);
+
     }
 
     @Operation(summary = "Find animals by type",
@@ -100,21 +91,21 @@ public class AnimalsController {
         return animalsService.findAnimalsByType(animalType);
     }
 
-    @Operation(summary = "Add a new animal",
-            description = "Creates and adds a new animal to the list")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "New animal added successfully",
-                    content = @Content(
-                            mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Shelters.class)
-                    )
-            )
-    })
+
+//    @Operation(summary = "Add a new animal",
+//            description = "Creates and adds a new animal to the list")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "New animal added successfully",
+//                    content = @Content(
+//                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+//                            schema = @Schema(implementation = Shelters.class)
+//                    )
+//            )
+//    })
     @PostMapping
     public Animals addNewAnimal(@RequestBody Animals animal) {
         return animalsService.addNewAnimal(animal);
     }
-
 
     @Operation(summary = "Update animal information",
             description = "Updates the information of an existing animal based on the provided data")

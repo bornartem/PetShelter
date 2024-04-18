@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * The class consists of logic of the project, which has
- the methods  to work with "Volunteers" entity
+ * the methods  to work with "Volunteers" entity
  *
  * @author bornartem
  */
@@ -31,7 +31,12 @@ public class VolunteersService {
      * @return create and save volunteer in db
      */
     public Volunteers create(Volunteers volunteers) {
-        return volunteersRepository.save(volunteers);
+        if (volunteersRepository.existsById(volunteers.getId())) {
+            throw new RuntimeException();
+        } else {
+            volunteersRepository.save(volunteers);
+            return volunteers;
+        }
     }
 
     /**
@@ -63,7 +68,11 @@ public class VolunteersService {
      * @param id identifier of volunteer, can't be null
      */
     public void delete(long id) {
-        volunteersRepository.deleteById(id);
+        if (volunteersRepository.existsById(id)) {
+            volunteersRepository.deleteById(id);
+        } else {
+            throw new RuntimeException();
+        }
     }
 
     /**
@@ -73,11 +82,20 @@ public class VolunteersService {
      * @return all volunteers
      */
     public List<Volunteers> getAll() {
+        if (volunteersRepository.findAll().isEmpty()) {
+            throw new RuntimeException();
+        }
         return volunteersRepository.findAll();
     }
 
-    public Integer getCountVolunteers(){
-        return volunteersRepository.getCountVolunteers();
+    /**
+     * get integer count volunteers from db
+     * called method getCountVolunteers()
+     *
+     * @return count of volunteers
+     */
+    public Integer getCountVolunteers() {
+            return volunteersRepository.getCountVolunteers();
     }
 
 }

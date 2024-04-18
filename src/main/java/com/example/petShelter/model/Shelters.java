@@ -16,14 +16,15 @@ import java.util.List;
 @Setter
 @ToString
 @EqualsAndHashCode
-@Entity(name = "shelter")
+@Entity
+@Table(name = "shelter")
 public class Shelters {
-    @OneToMany(mappedBy = "shelter")
-    private List<Animals> animal;
+    @OneToMany(mappedBy = "shelters")
+    private List<Animals> animals;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_shelter")
-    private long id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "working_hours")

@@ -9,7 +9,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,8 +42,12 @@ public class VolunteersController {
             )
     )
     @PostMapping("/create")
-    public Volunteers create(@RequestBody Volunteers volunteers) {
-        return volunteersService.create(volunteers);
+    public ResponseEntity<Volunteers> create(@RequestBody Volunteers volunteers) {
+        Volunteers createdVolunteer = volunteersService.create(volunteers);
+        if (createdVolunteer == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(createdVolunteer);
     }
 
     @ApiResponses({
@@ -69,8 +75,12 @@ public class VolunteersController {
             )
     )
     @PutMapping("/update")
-    public Volunteers update(@RequestBody Volunteers volunteers) {
-        return volunteersService.update(volunteers);
+    public ResponseEntity<Volunteers> update(@RequestBody Volunteers volunteers) {
+        Volunteers foundVolunteer = volunteersService.update(volunteers);
+        if (foundVolunteer == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(foundVolunteer);
     }
 
     @ApiResponses({

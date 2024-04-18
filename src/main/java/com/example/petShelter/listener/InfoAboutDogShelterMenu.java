@@ -8,6 +8,11 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.springframework.stereotype.Component;
 
+/**
+ * Class for creating a menu for selecting information about a dog shelter of interest.
+ * @author  Maria Sinyavskaya
+ */
+
 @Component
 public class InfoAboutDogShelterMenu {
     private TelegramBot bot;
@@ -18,7 +23,7 @@ public class InfoAboutDogShelterMenu {
 
     public void sendMenuMessage(long chatId) {
         InlineKeyboardButton button1 = new InlineKeyboardButton("О нас").callbackData("/getDogShelterInfo");
-        InlineKeyboardButton button2 = new InlineKeyboardButton("/getAddressOfDogShelter")
+        InlineKeyboardButton button2 = new InlineKeyboardButton("Адрес")
                 .callbackData("/getAddressOfDogShelter");
 
         InlineKeyboardButton button3 = new InlineKeyboardButton("Схема проезда").callbackData("/getDogShelterLocation");

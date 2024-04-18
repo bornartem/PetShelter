@@ -62,7 +62,6 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 //                    choosingShelterMenu.sendMenuMessage(update.message().chat().id());
 //                }
                 if (userText.startsWith(COMMAND_PREFIX)) {
-                    //final CallbackQuery callbackQuery = new CallbackQuery();
                     Long chatId = update.callbackQuery() != null ?
                             update.callbackQuery().message().chat().id() : message.chat().id();
                     commandContainer.process(userText, chatId);

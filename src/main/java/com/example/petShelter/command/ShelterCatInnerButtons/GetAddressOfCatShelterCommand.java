@@ -5,10 +5,12 @@ import com.example.petShelter.service.SheltersService;
 import com.example.petShelter.service.TelegramBotClient;
 import org.springframework.stereotype.Component;
 
+
 /**
  * Class which shows the information about a cat shelter address.
  * @author  Khilola Kushbakova
  */
+
 
 @Component("/getAddressOfCatShelter")
 public class GetAddressOfCatShelterCommand implements Command {

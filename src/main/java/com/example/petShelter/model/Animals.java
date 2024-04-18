@@ -14,19 +14,22 @@ import java.util.List;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+//@ToString
+@Getter
+@Setter
 @EqualsAndHashCode
-@Entity(name = "animals")
+@Entity
 public class Animals {
 
-    @JsonIgnore
+
     @ManyToOne
-//    @JoinColumn(name = "id_shelter")
-    private Shelters shelter;
+    @JoinColumn(name = "shelters_id")
+    @JsonIgnore
+    private Shelters shelters;
 
     //    @OneToMany(mappedBy = "daily_report")
-    @OneToMany(mappedBy = "animal")
-    private List<DailyReports> dailyReport;
+//    @OneToMany(mappedBy = "animal")
+//    private List<DailyReports> dailyReport;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,4 +44,19 @@ public class Animals {
     @Column(name = "date_take")
     private LocalDateTime dateTake;
 
+    public Animals(long id, String name, Boolean busyFree) {
+        this.id = id;
+        this.name = name;
+        this.busyFree = busyFree;
+    }
+
+    @Override
+    public String toString() {
+        return "Animals{" +
+
+                "id=" + id +
+                ", name='" + name + '\'' +
+
+                '}';
+    }
 }
