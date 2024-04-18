@@ -31,7 +31,7 @@ public class CommandContainer {
                             GetCatShelterCarPermission getCatShelterCarPermission, GetCatShelterLocation getCatShelterLocation,
                             ShelterSecurityRulesForCats shelterSecurityRulesForCats, DogShelterInfoCommand dogShelterInfoCommand,
                             DogShelterSchedule dogShelterSchedule, GetDogShelterLocation getDogShelterLocation,
-                            GetShelterCarPermission getShelterCarPermission, ShelterSecurityRulesForDogs shelterSecurityRulesForDogs,
+                            GetShelterCarPermission getShelterCarPermission,ShelterSecurityRulesForDogs shelterSecurityRulesForDogs,
                             RegisterUser registerUser) {
 
         commandMap.put(CommandName.START.getCommandName(), commandStart);

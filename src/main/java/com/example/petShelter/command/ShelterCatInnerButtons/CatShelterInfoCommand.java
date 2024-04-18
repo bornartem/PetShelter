@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
  * @author  Khilola Kushbakova
  */
 
-
-
 @Component("/getCatInfo")
 public class CatShelterInfoCommand implements Command {
     private final SheltersService sheltersService;

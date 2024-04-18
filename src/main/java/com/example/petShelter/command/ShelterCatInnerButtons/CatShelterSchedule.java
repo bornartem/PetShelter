@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
  * @author  Khilola Kushbakova
  */
 
-
 @Component ("/getCatShelterSchedule")
 public class CatShelterSchedule implements Command {
     private final TelegramBotClient telegramBotClient;

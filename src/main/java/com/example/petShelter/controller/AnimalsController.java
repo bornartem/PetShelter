@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ import java.util.List;
  * @author Khilola Kushbakova
  */
 
-
+@Tag(name= "animalControllerTag")
 @RestController
 @RequestMapping("/animals")
 public class AnimalsController {
@@ -52,23 +53,6 @@ public class AnimalsController {
     public List<Animals> findAllAnimalsOfCertainShelter(@PathVariable Long shelterId) {
         return animalsService.findAllAnimalsOfCertainShelter(shelterId);
     }
-
-
-//    @Operation(summary = "Find all animals of a certain shelter",
-//            description = "Returns a list of animals belonging to a specific shelter based on the shelterId provided")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of animals"),
-//            @ApiResponse(responseCode = "404", description = "Shelter with the provided shelterId not found",
-//                    content = @Content(
-//                            mediaType = MediaType.APPLICATION_JSON_VALUE,
-//                            schema = @Schema(implementation = Shelters.class)
-//                    )
-//            )
-//    })
-//    @GetMapping("{shelterId}")
-//    public List<Animals> findAllAnimalsOfCertainShelter(@PathVariable Long shelterId) {
-//        return animalsService.findAllAnimalsOfCertainShelter(shelterId);
-//    }
 
     @Operation(summary = "Remove an animal from the list",
             description = "Deletes the animal with the specified animalId")
@@ -104,7 +88,6 @@ public class AnimalsController {
     @GetMapping("/search-animals-by-status/{busyAnimalStatus}")
     public Collection<Animals> findAnimalsByStatus(@PathVariable boolean busyAnimalStatus) {
         return animalsService.findAnimalsByStatus(busyAnimalStatus);
-
     }
 
     @Operation(summary = "Find animals by type",
@@ -116,7 +99,6 @@ public class AnimalsController {
     public Collection<Animals> findAnimalsByType(String animalType) {
         return animalsService.findAnimalsByType(animalType);
     }
-
 
     @Operation(summary = "Add a new animal",
             description = "Creates and adds a new animal to the list")

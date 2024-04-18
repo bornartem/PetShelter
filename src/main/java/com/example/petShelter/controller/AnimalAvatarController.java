@@ -5,6 +5,7 @@ import com.example.petShelter.service.AnimalAvatarService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 /**
  * The class consists of codes in order to upload and
  download the photos of animals for REST API
@@ -26,9 +26,7 @@ import java.nio.file.Path;
  *
  * @author Khilola Kushbakova
  */
-
-
-
+@Tag(name = "avatarTag")
 @RestController
 @RequestMapping("avatar")
 public class AnimalAvatarController {

@@ -30,8 +30,6 @@ public class AnimalsService {
     public AnimalsService(AnimalsRepository animalsRepository) {
         this.animalsRepository = animalsRepository;
     }
-
-
     /**
      * Method to find all animals belonging to a certain shelter.
      *
@@ -42,8 +40,6 @@ public class AnimalsService {
         log.info("Was invoked method for findAllAnimalsOfCertainShelter");
         return animalsRepository.findAllByShelterId(shelterId);
     }
-
-
     /**
      * Method to find an animal by its identifier.
      *
@@ -59,19 +55,16 @@ public class AnimalsService {
 
         return animal;
     }
-
     /**
      * Method to find animals based on their status.
      *
      * @param busyAnimalStatus the status of animals to search for
      * @return a collection of animals with the specified status
      */
-
     public Collection<Animals> findAnimalsByStatus(boolean busyAnimalStatus) {
         log.info("Was invoked method for findAnimalsByStatus");
         return animalsRepository.findAnimalsByBusyFree(busyAnimalStatus);
     }
-
     /**
      * Method to find animals based on their type.
      *
@@ -92,7 +85,6 @@ public class AnimalsService {
         log.info("Was invoked method for addNewAnimal");
         return animalsRepository.save(animal);
     }
-
     /**
      * Method to remove an animal by its identifier.
      *

@@ -10,14 +10,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Optional;
-
 /**
  * The class consists of logic of the project, which has the methods  to work with "Shelters" entity
  *
  * @author Khilola Kushbakova
  */
-
-
 @Service
 public class SheltersService {
 
@@ -29,8 +26,6 @@ public class SheltersService {
     public SheltersService(SheltersRepository sheltersRepository) {
         this.sheltersRepository = sheltersRepository;
     }
-
-
     /**
      * Method to list all shelters.
      *
@@ -53,7 +48,6 @@ public class SheltersService {
         log.info("Was invoked method for addShelter");
         return sheltersRepository.save(shelter);
     }
-
     /**
      * Method to find a shelter by its identifier.
      *
@@ -69,7 +63,6 @@ public class SheltersService {
 
         return shelter;
     }
-
     /**
      * Removes a shelter with the given shelterId from the database.
      *
@@ -84,7 +77,6 @@ public class SheltersService {
 
         }
     }
-
     /**
      * Retrieves the contact information of a shelter by its unique identifier.
      *
@@ -96,14 +88,12 @@ public class SheltersService {
         return sheltersRepository.getReferenceById(shelterId).getContact();
 
     }
-
     public String showAddress(long shelterId) {
         log.info("Was invoked method for showAddress");
 
         final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(shelterId);
         return byIdOptionalShelters.isPresent() ? byIdOptionalShelters.get().getAddress() : null;
     }
-
     /**
      * This method generates a string representation of a location based on the provided latitude and longitude.
      *
@@ -115,13 +105,10 @@ public class SheltersService {
         String location = "Latitude: " + latitude + ", Longitude: " + longitude;
         return location;
     }
-
     public String showSecurityNumber(long shelterId) {
         log.info("Was invoked method for giveSecurityNumber");
         return sheltersRepository.getReferenceById(shelterId).getSecurityContact();
     }
-
-
     /**
      * This method is used to change the information of a shelter in the database.
      *
@@ -132,9 +119,7 @@ public class SheltersService {
     public Shelters changeShelterInfo(Shelters shelter) {
         log.info("Was invoked method for  changeShelterInfo");
         return sheltersRepository.save(shelter);
-
     }
-
     public String showAnimalInfoById(long id) {
         log.info("Was invoked method for  showAnimalInfoById");
         final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);
@@ -143,19 +128,16 @@ public class SheltersService {
                 + shelters.getAddress() + " "
                 + shelters.getContact()).orElse(null);
     }
-
     public String showSchedule(long id) {
         log.info("Was invoked method for showSchedule");
         final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);
         return byIdOptionalShelters.map(Shelters::getWorkingHours).orElse(null);
     }
-
     public String showSecurityContact(long id) {
         log.info("Was invoked method for  showSecurityContact");
         final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);
         return byIdOptionalShelters.map(Shelters::getSecurityContact).orElse(null);
     }
-
     public String showShelterRules(long id) {
         log.info("Was invoked method for showShelterRules");
         final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);

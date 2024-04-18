@@ -26,9 +26,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
  * @author Khilola Kushbakova
  */
 
-
 @Service
-@Transactional
 @Slf4j
 public class AnimalAvatarService {
     @Value("${path.to.avatars.folder}")
@@ -41,7 +39,6 @@ public class AnimalAvatarService {
         this.animalsService = animalsService;
         this.animalAvatarRepository = animalAvatarRepository;
     }
-
 
     /**
      * Uploads an image for a specific animal.
@@ -77,10 +74,7 @@ public class AnimalAvatarService {
         animalAvatar.setData(file.getBytes());
 
         animalAvatarRepository.save(animalAvatar);
-
     }
-
-
     /**
      * Finds an animal avatar by ID.
      *
@@ -96,7 +90,6 @@ public class AnimalAvatarService {
 
         return animalAvatar;
     }
-
 
     /**
      * Generates a preview image from the given file path.
@@ -122,8 +115,6 @@ public class AnimalAvatarService {
             return baos.toByteArray();
         }
     }
-
-
     /**
      * Gets the file extension from a filename.
      *
