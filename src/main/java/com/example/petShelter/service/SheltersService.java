@@ -17,7 +17,6 @@ import java.util.Optional;
  * @author Khilola Kushbakova
  */
 
-
 @Service
 public class SheltersService {
 
@@ -29,7 +28,6 @@ public class SheltersService {
     public SheltersService(SheltersRepository sheltersRepository) {
         this.sheltersRepository = sheltersRepository;
     }
-
 
     /**
      * Method to list all shelters.

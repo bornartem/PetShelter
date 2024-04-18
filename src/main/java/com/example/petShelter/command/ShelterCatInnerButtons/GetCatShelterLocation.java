@@ -4,16 +4,10 @@ import com.example.petShelter.command.Command;
 import com.example.petShelter.service.SheltersService;
 import com.example.petShelter.service.TelegramBotClient;
 import org.springframework.stereotype.Component;
-
-
-
 /**
  * Class which shows the information about a cat shelter location.
  * @author  Khilola Kushbakova
  */
-
-
-
 @Component ("/getCatShelterLocation")
 public class GetCatShelterLocation implements Command {
     private final TelegramBotClient telegramBotClient;

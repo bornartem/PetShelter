@@ -4,15 +4,11 @@ import com.example.petShelter.command.Command;
 import com.example.petShelter.service.SheltersService;
 import com.example.petShelter.service.TelegramBotClient;
 import org.springframework.stereotype.Component;
-
-
 /**
  * Class which shows the information about  permission number for the dog shelter,
  * which allows to enter to the shelter territory.
  * @author  Khilola Kushbakova
  */
-
-
 @Component ("/CarPermissionNumber")
 public class GetShelterCarPermission implements Command {
     private final TelegramBotClient telegramBotClient;
