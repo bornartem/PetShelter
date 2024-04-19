@@ -97,13 +97,8 @@ public class AnimalsService {
      * @param animalId the identifier of the animal to remove
      */
     public void removeAnimal(long animalId) {
-        if (animalsRepository.existsById(animalId)) {
             animalsRepository.deleteById(animalId);
             log.info("Was invoked method for remove removeAnimal");
-        } else {
-            log.error("There is no animal with id = {}", animalId);
-            throw new RuntimeException();
-        }
     }
     public Animals changeAnimalInfo(Animals animal) {
         log.info("Was invoked method for changeAnimalInfo");

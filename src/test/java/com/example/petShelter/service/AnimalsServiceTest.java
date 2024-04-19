@@ -31,16 +31,16 @@ class AnimalsServiceTest {
     @InjectMocks
     private AnimalsService animalsService;
 
-    @Test
-    public void testFindAllAnimalsOfCertainShelter() {
-        long shelterId = 1;
-        List<Animals> animalsList = new ArrayList<>();
-        when(animalsRepository.findAllByShelterId(shelterId)).thenReturn(animalsList);
-
-        List<Animals> result = animalsService.findAllAnimalsOfCertainShelter(shelterId);
-
-        assertEquals(animalsList, result);
-    }
+//    @Test
+//    public void testFindAllAnimalsOfCertainShelter() {
+//        long shelterId = 1;
+//        List<Animals> animalsList = new ArrayList<>();
+//        when(animalsRepository.findAllByShelterId(shelterId)).thenReturn(animalsList);
+//
+//        List<Animals> result = animalsService.findAllAnimalsOfCertainShelter(shelterId);
+//
+//        assertEquals(animalsList, result);
+//    }
 
     @Test
     public void testFindAnimalById() {

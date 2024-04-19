@@ -68,11 +68,7 @@ public class VolunteersService {
      * @param id identifier of volunteer, can't be null
      */
     public void delete(long id) {
-        if (volunteersRepository.existsById(id)) {
             volunteersRepository.deleteById(id);
-        } else {
-            throw new RuntimeException();
-        }
     }
 
     /**
