@@ -36,6 +36,7 @@ public class RegistrationNewVolunteer implements Command{
         volunteers.setActivity(false);
         volunteersService.create(volunteers);
 
+
 //        choosingShelterMenu.sendMenuMessage(chatId);
     }
 
