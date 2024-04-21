@@ -8,16 +8,16 @@ import org.springframework.stereotype.Component;
 @Component("/transportingACat")
 public class TransportingACat implements Command {
     private final TelegramBotClient telegramBotClient;
+    private final String transportingFile;
 
     @Autowired
-    public TransportingACat(TelegramBotClient telegramBotClient) {
+    public TransportingACat(TelegramBotClient telegramBotClient, String transportingFile) {
         this.telegramBotClient = telegramBotClient;
+        this.transportingFile = transportingFile;
     }
-
-    private final static String TRANSPORTING_DOG = "Пожалуйста, учитывайте, что без переноски мы животных не отдаем!";
 
     @Override
     public void execute(Long chatId) {
-        telegramBotClient.sendMessage(chatId, TRANSPORTING_DOG);
+        telegramBotClient.sendMessage(chatId, transportingFile);
     }
 }

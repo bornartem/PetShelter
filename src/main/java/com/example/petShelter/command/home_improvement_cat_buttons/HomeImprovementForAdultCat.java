@@ -8,18 +8,16 @@ import org.springframework.stereotype.Component;
 @Component("/homeImprovementForAdultCat")
 public class HomeImprovementForAdultCat implements Command {
     private final TelegramBotClient telegramBotClient;
+    private final String adultPetFile;
 
     @Autowired
-    public HomeImprovementForAdultCat(TelegramBotClient telegramBotClient) {
+    public HomeImprovementForAdultCat(TelegramBotClient telegramBotClient, String adultPetFile) {
         this.telegramBotClient = telegramBotClient;
+        this.adultPetFile = adultPetFile;
     }
-
-    private final static String ADULT = "Наши требования и что необходимо сделать в этот период вам. \n" +
-            "Установить сетки на окнах. Безопасность наших ребятишек – это основное требование к будущим хозяевам, и обязательное условие передачи животного.\n" +
-            "Подготовить место для сна, еды, игр животного.\n";
 
     @Override
     public void execute(Long chatId) {
-        telegramBotClient.sendMessage(chatId, ADULT);
+        telegramBotClient.sendMessage(chatId, adultPetFile);
     }
 }

@@ -3,23 +3,23 @@ package com.example.petShelter.command.home_improvement_dog_buttons;
 import com.example.petShelter.command.Command;
 import com.example.petShelter.service.TelegramBotClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component("/homeImprovementForAdult")
 public class HomeImprovementForAdult implements Command {
     private final TelegramBotClient telegramBotClient;
+    private final String adultPetFile;
 
     @Autowired
-    public HomeImprovementForAdult(TelegramBotClient telegramBotClient) {
+    public HomeImprovementForAdult(TelegramBotClient telegramBotClient,
+                                   @Qualifier("adultPetFile") String adultPetFile) {
         this.telegramBotClient = telegramBotClient;
+        this.adultPetFile = adultPetFile;
     }
-
-    private final static String ADULT = "Наши требования и что необходимо сделать в этот период вам. \n" +
-            "Установить сетки на окнах. Безопасность наших ребятишек – это основное требование к будущим хозяевам, и обязательное условие передачи животного.\n" +
-            "Подготовить место для сна, еды, игр животного.\n";
 
     @Override
     public void execute(Long chatId) {
-        telegramBotClient.sendMessage(chatId, ADULT);
+        telegramBotClient.sendMessage(chatId, adultPetFile);
     }
 }
