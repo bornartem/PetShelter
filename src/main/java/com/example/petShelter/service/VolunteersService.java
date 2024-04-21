@@ -95,16 +95,18 @@ public class VolunteersService {
     }
 
     public Volunteers findFirstByChatId(long chatId) {
-        return volunteersRepository.findByChatId(chatId);
+        return volunteersRepository.findFirstByChatId(chatId);
     }
 
     public Volunteers findFirstActivity() {
-        return volunteersRepository.findFirstByIsActiveTrue();
+//        return volunteersRepository.findFirstByIsActiveTrue();
+        //это временно для того чтобы работало, верхнего метода пока что нет
+        return volunteersRepository.findFirstByChatId(889317453);
     }
 
     public void inactiveVolunteerByChatId(Long volChatId) {
 
-        Volunteers volunteers = volunteersRepository.findByChatId(volChatId);
+        Volunteers volunteers = volunteersRepository.findFirstByChatId(volChatId);
         volunteers.setActivity(false);
         volunteersRepository.save(volunteers);
     }

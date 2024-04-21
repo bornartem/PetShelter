@@ -19,7 +19,7 @@ public class ConversationPeopleService {
     }
 
     public void deletePeople(Long chatId) {
-        conversationRepository.deleteByChatId(chatId);
+        conversationRepository.delete(conversationRepository.findByChatId(chatId));
     }
 
     public ConversationPeople findByChatId(Long chatId) {

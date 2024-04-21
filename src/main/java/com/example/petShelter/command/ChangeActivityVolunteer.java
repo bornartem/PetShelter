@@ -4,20 +4,23 @@ import com.example.petShelter.listener.ChoosingShelterMenu;
 import com.example.petShelter.model.Volunteers;
 import com.example.petShelter.service.TelegramBotClient;
 import com.example.petShelter.service.VolunteersService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
  * change volunteer activity(find-able clients|not find-able)
+ *
  * @author Danil
  */
 @Component("/changeActivity")
-public class ChangeActivityVolunteer implements Command{
-    private final static String FIRST = "Тепер вы НЕ активны(вышли из поска клиетов).";
-    private final static String SECOND = "Тепер вы в АКТИВНОМ поиске клиентов.";
+public class ChangeActivityVolunteer implements Command {
+    private final static String FIRST = "Теперь вы НЕ активны(вышли из поиска клиентов).";
+    private final static String SECOND = "Теперь вы в АКТИВНОМ поиске клиентов.";
 
     private final TelegramBotClient telegramBotClient;
     private final VolunteersService volunteersService;
 
+    @Autowired
     public ChangeActivityVolunteer(TelegramBotClient telegramBotClient, VolunteersService volunteersService) {
         this.telegramBotClient = telegramBotClient;
         this.volunteersService = volunteersService;

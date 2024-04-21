@@ -1,5 +1,6 @@
 package com.example.petShelter.service.workingWithVolunteerConversationService;
 
+import com.example.petShelter.model.ConversationPeople;
 import com.example.petShelter.model.Volunteers;
 import com.example.petShelter.service.ClientsService;
 import com.example.petShelter.service.ConversationPeopleService;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 
-
 @Service
 public class ConversationServiceMain {
 
@@ -23,6 +23,7 @@ public class ConversationServiceMain {
     @Autowired
     ClientsService clientService;
 
+    @Autowired
     private TelegramBot telegramBot;
     @Autowired
     private ConversationPeopleService conversationPeopleService;
@@ -33,6 +34,7 @@ public class ConversationServiceMain {
      * о том что пользователь вызывает волонтера<br>
      * либо отправляем его в таблицу ожидающих, либо создаем
      * общение между клиентом и волонтером
+     *
      * @param clientChatId пользователь который просит о помощи
      */
     public void firstGivingUsers(Long clientChatId) {
@@ -54,8 +56,6 @@ public class ConversationServiceMain {
             volunteerReady(clientChatId, volId);
         }
     }
-
-
 
 
     /**
@@ -87,12 +87,12 @@ public class ConversationServiceMain {
 
     }
 
-    
 
     /**
      * method for create conversation between client and volunteer
+     *
      * @param clientChatId client chat id in telegram
-     * @param volChatId volunteer chat id in telegram
+     * @param volChatId    volunteer chat id in telegram
      */
     public void volunteerReady(Long clientChatId, Long volChatId) {
         telegramBot.execute(new SendMessage(
@@ -120,7 +120,6 @@ public class ConversationServiceMain {
     }
 
 
-
 //    /**
 //     * добавляем в таблицу общающихся пользователей
 //     * клиента и волонтера
@@ -144,6 +143,7 @@ public class ConversationServiceMain {
     /**
      * метод который ищет свободного волонтера
      * если такого не находится возвращается null
+     *
      * @return id свободного волнтера или null
      */
     private Long findRelaxVolunteers() {
@@ -160,38 +160,44 @@ public class ConversationServiceMain {
     }
 
 
-
     /**
      * если в листенере пришло сообщение от пользователя
      * который есть в таблице общающихся пользователей
      *
-     * @param update      пользователь написавший сообщение
+     * @param userChatId  пользователь написавший сообщение
+     * @param message его сообщение
      * @param isVolunteer является пользователь волонтером
      */
-    public void continueConversation(Update update, Boolean isVolunteer) {
-        Long updateId = update.message().chat().id();
-        String message = update.message().text();
-        if (isVolunteer && Objects.equals(message, "/stop")) {
-            telegramBot.execute(new SendMessage(updateId, SendMessageInConv.STOP_MESSAGE_FOR_VOL));
+    public void continueConversation(Long userChatId, String message, Boolean isVolunteer) {
+//        Long userChatId = update.message().chat().id();
+//        String message = update.message().text();
+        ConversationPeople people = conversationPeopleService.findByChatId(userChatId);
+        Long opponentChatId = people.getOpponentChatId();
+        if (isVolunteer && Objects.equals(message, "!stop")) {
+            telegramBot.execute(new SendMessage(userChatId, SendMessageInConv.STOP_MESSAGE_FOR_VOL));
 
             /*
-                найти в таблице по updateId с кем общается и ему тоже отправить
-                telegramBot.execute(new SendMessage(updateId, SendMessageInConv.STOP_MESSAGE));
-
+                найти в таблице по userChatId с кем общается и ему тоже отправить
+                telegramBot.execute(new SendMessage(userChatId, SendMessageInConv.STOP_MESSAGE));
              */
+            telegramBot.execute(new SendMessage(opponentChatId, SendMessageInConv.STOP_MESSAGE));
 
             /*
                 удалить из общающихся таблицы обоих
             */
+
+            conversationPeopleService.deletePeople(opponentChatId);
+            conversationPeopleService.deletePeople(userChatId);
+
         } else {
-            Long opponentChatId;
+//            Long opponentChatId;
             /*
                 метод поиска по таблице с кем общается
                 opponentChatId =
             */
             // инициализация для того чтобы не было ошибок, потом убрать,
             // когда код сверху будет готов
-            opponentChatId = 0L;
+//            opponentChatId = 0L;
 
             telegramBot.execute(new SendMessage(opponentChatId, message));
         }

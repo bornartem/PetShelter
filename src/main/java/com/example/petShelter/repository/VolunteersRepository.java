@@ -8,7 +8,7 @@ public interface VolunteersRepository extends JpaRepository<Volunteers, Long> {
     @Query(value = "select count (*) from volunteers", nativeQuery = true)
     int getCountVolunteers();
 
-    Volunteers findByChatId(long chatId);
+    Volunteers findFirstByChatId(long chatId);
 
-    Volunteers findFirstByIsActiveTrue();
+//    Volunteers findFirstByIsActiveTrue();
 }

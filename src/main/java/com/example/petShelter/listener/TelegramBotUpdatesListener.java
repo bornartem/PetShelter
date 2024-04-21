@@ -2,9 +2,12 @@ package com.example.petShelter.listener;
 
 
 import com.example.petShelter.command.CommandContainer;
+import com.example.petShelter.model.ConversationPeople;
 import com.example.petShelter.model.Volunteers;
+import com.example.petShelter.service.ConversationPeopleService;
 import com.example.petShelter.service.TelegramBotClient;
 import com.example.petShelter.service.VolunteersService;
+import com.example.petShelter.service.workingWithVolunteerConversationService.ConversationServiceMain;
 import com.example.petShelter.service.workingWithVolunteerConversationService.FinishedVolunteerSingUp;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
@@ -38,19 +41,25 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     private final ChoosingShelterMenu choosingShelterMenu;
     private final FinishedVolunteerSingUp finishedSingUp;
     private final VolunteersService volunteerService;
+    private final ConversationPeopleService conversationPeopleService;
+    private final ConversationServiceMain conversationServiceMain;
 
     public TelegramBotUpdatesListener(TelegramBot telegramBot,
                                       CommandContainer commandContainer,
                                       TelegramBotClient telegramBotClient,
                                       ChoosingShelterMenu choosingShelterMenu,
                                       FinishedVolunteerSingUp finishedSingUp,
-                                      VolunteersService volunteerService) {
+                                      VolunteersService volunteerService,
+                                      ConversationPeopleService conversationPeopleService,
+                                      ConversationServiceMain conversationServiceMain) {
         this.telegramBot = telegramBot;
         this.commandContainer = commandContainer;
         this.telegramBotClient = telegramBotClient;
         this.choosingShelterMenu = choosingShelterMenu;
         this.finishedSingUp = finishedSingUp;
         this.volunteerService = volunteerService;
+        this.conversationPeopleService = conversationPeopleService;
+        this.conversationServiceMain = conversationServiceMain;
     }
 
     @PostConstruct
@@ -70,12 +79,13 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                 Long chatId = update.callbackQuery() != null ?
                         update.callbackQuery().message().chat().id() : message.chat().id();
 
-                /*
-                нужна проверка на то что находится ли пользователь в общении
-                 */
-
+                //проверка общается ли человек, и если это так то нужно перенаправлять сообщения
                 Volunteers volunteers = volunteerService.findFirstByChatId(chatId);
-                if (volunteers != null && !userText.startsWith(COMMAND_PREFIX)) {
+                ConversationPeople people = conversationPeopleService.findByChatId(chatId);
+                if (people != null) {
+                    conversationServiceMain.continueConversation(chatId, userText, people.getIsVolunteer());
+                } //иначе если волонтер и он продолжает регистрироваться
+                else if (volunteers != null && !userText.startsWith(COMMAND_PREFIX)) {
                     finishedSingUp.singUp(chatId, userText, volunteers);
                 } else
 
