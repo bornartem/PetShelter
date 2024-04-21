@@ -123,6 +123,14 @@ public class CommandContainerTest {
     HomeImprovementForAdultCat homeImprovementForAdultCat;
     @Mock
     HomeImprovementForCatWithDisabilities homeImprovementForCatWithDisabilities;
+    @Mock
+    RegistrationNewVolunteer registrationNewVolunteer;
+    @Mock
+    ChangeActivityVolunteer changeActivityVolunteer;
+    @Mock
+    VolunteersHelp volunteersHelp;
+
+
     private CommandContainer commandContainer;
 
     @BeforeEach
@@ -138,7 +146,8 @@ public class CommandContainerTest {
                 transportingADog, dogHandlerAdvices, dogHandlersList, rejectToGetADog, homeImprovementForPuppy,
                 homeImprovementForAdult, homeImprovementWithDisabilities, getInfoAboutCatMeeting, documentsForGetACat,
                 transportingACat, rejectToGetACat, homeImprovementForKitty, homeImprovementForAdultCat,
-                homeImprovementForCatWithDisabilities
+                homeImprovementForCatWithDisabilities, registrationNewVolunteer, changeActivityVolunteer,
+                volunteersHelp
         );
     }
 

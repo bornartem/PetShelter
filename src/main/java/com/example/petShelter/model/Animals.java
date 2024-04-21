@@ -22,10 +22,6 @@ import java.util.List;
 public class Animals {
 
 
-    @ManyToOne
-    @JoinColumn(name = "shelters_id")
-    @JsonIgnore
-    private Shelters shelters;
 
     //    @OneToMany(mappedBy = "daily_report")
 //    @OneToMany(mappedBy = "animal")
@@ -35,6 +31,10 @@ public class Animals {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_animal")
     private long id;
+    @ManyToOne
+    @JoinColumn(name = "shelters_id")
+    @JsonIgnore
+    private Shelters shelters;
     @Column(name = "name")
     private String name;
     @Column(name = "type")
@@ -59,4 +59,5 @@ public class Animals {
 
                 '}';
     }
+
 }

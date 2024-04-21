@@ -50,7 +50,9 @@ public class CommandContainer {
                             HomeImprovementForAdult homeImprovementForAdult, HomeImprovementWithDisabilities homeImprovementWithDisabilities,
                             GetInfoAboutCatMeeting getInfoAboutCatMeeting, DocumentsForGetACat documentsForGetACat,
                             TransportingACat transportingACat, RejectToGetACat rejectToGetACat, HomeImprovementForKitty homeImprovementForKitty,
-                            HomeImprovementForAdultCat homeImprovementForAdultCat, HomeImprovementForCatWithDisabilities homeImprovementForCatWithDisabilities) {
+                            HomeImprovementForAdultCat homeImprovementForAdultCat, HomeImprovementForCatWithDisabilities homeImprovementForCatWithDisabilities,
+                            RegistrationNewVolunteer registrationNewVolunteer, ChangeActivityVolunteer changeActivityVolunteer,
+                            VolunteersHelp volunteersHelp) {
 
         commandMap.put(CommandName.START.getCommandName(), commandStart);
         commandMap.put(CommandName.GET_ADDRESS_OF_DOG_SHELTER.getCommandName(), getAddressOfDogShelterCommand);
@@ -89,6 +91,9 @@ public class CommandContainer {
         commandMap.put(CommandName.HOME_IMPROVEMENT_FOR_KITTY.getCommandName(), homeImprovementForKitty);
         commandMap.put(CommandName.HOME_IMPROVEMENT_FOR_ADULT_CAT.getCommandName(), homeImprovementForAdultCat);
         commandMap.put(CommandName.HOME_IMPROVEMENT_FOR_CAT_WITH_DISABILITIES.getCommandName(), homeImprovementForCatWithDisabilities);
+        commandMap.put(CommandName.REGISTRATION_NEW_VOLUNTEER.getCommandName(), registrationNewVolunteer);
+        commandMap.put(CommandName.CHANGE_ACTIVITY_VOLUNTEER.getCommandName(), changeActivityVolunteer);
+        commandMap.put(CommandName.VOLUNTEER_HELP.getCommandName(), volunteersHelp);
     }
 
     public void process(String commandName, Long chatId) {
