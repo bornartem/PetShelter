@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 @EqualsAndHashCode
 @Entity(name = "volunteers")
 public class Volunteers {
@@ -37,4 +37,15 @@ public class Volunteers {
 
     @Column(name = "activity")
     private boolean activity;
+
+    @Override
+    public String toString() {
+        return "Volunteers{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", contact='" + contact + '\'' +
+                ", activity=" + activity +
+                ", chatId=" + chatId +
+                '}';
+    }
 }

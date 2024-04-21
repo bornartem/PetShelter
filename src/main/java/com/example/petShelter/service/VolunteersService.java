@@ -94,4 +94,7 @@ public class VolunteersService {
             return volunteersRepository.getCountVolunteers();
     }
 
+    public Volunteers findFirstByChatId(long chatId) {
+        return volunteersRepository.findByChatId(chatId);
+    }
 }

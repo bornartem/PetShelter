@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class RegistrationNewVolunteer implements Command{
     private final static String START_MESSAGE = "Привет! Это регистрация волонтера в приюте \"Пушистый друг\". " +
             "\nВведите через запятую и пробел(, ) свои данные, а конкретнее:\n" +
-            "контактную информацию, и ФИО";
+            "ФИО и контактную информацию";
 
     private final TelegramBotClient telegramBotClient;
     private final VolunteersService volunteersService;
