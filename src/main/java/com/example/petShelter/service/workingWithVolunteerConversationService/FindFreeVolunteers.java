@@ -1,4 +1,4 @@
-package com.example.petShelter.conversations;
+package com.example.petShelter.service.workingWithVolunteerConversationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;

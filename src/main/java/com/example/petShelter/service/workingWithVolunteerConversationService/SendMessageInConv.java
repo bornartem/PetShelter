@@ -1,4 +1,4 @@
-package com.example.petShelter.conversations;
+package com.example.petShelter.service.workingWithVolunteerConversationService;
 
 
 public class SendMessageInConv {

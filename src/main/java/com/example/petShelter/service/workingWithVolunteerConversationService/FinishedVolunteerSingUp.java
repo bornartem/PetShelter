@@ -1,4 +1,4 @@
-package com.example.petShelter.service.workingWithVolunteerConversation;
+package com.example.petShelter.service.workingWithVolunteerConversationService;
 
 import com.example.petShelter.model.Volunteers;
 import com.example.petShelter.service.TelegramBotClient;
