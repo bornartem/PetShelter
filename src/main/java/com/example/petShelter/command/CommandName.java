@@ -48,6 +48,7 @@ public enum CommandName {
     HOME_IMPROVEMENT_WITH_DISABILITIES("/homeImprovementWithDisabilities"),
     HOME_IMPROVEMENT_FOR_CAT_WITH_DISABILITIES("/homeImprovementForCatWithDisabilities"),
     REGISTRATION_NEW_VOLUNTEER("/volunteersLoginIn"),
+    CHANGE_ACTIVITY_VOLUNTEER("/changeActivity"),
     NO("noCommand");
 
 

@@ -25,4 +25,9 @@ public class ConversationPeopleService {
     public ConversationPeople findByChatId(Long chatId) {
         return conversationRepository.findByChatId(chatId);
     }
+
+    public void addPeople(Long clientId, Long volId) {
+        conversationRepository.save(new ConversationPeople(Integer.MAX_VALUE, clientId, volId, false));
+        conversationRepository.save(new ConversationPeople(Integer.MAX_VALUE,  volId, clientId, true));
+    }
 }

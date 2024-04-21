@@ -97,4 +97,15 @@ public class VolunteersService {
     public Volunteers findFirstByChatId(long chatId) {
         return volunteersRepository.findByChatId(chatId);
     }
+
+    public Volunteers findFirstActivity() {
+        return volunteersRepository.findFirstByIsActiveTrue();
+    }
+
+    public void inactiveVolunteerByChatId(Long volChatId) {
+
+        Volunteers volunteers = volunteersRepository.findByChatId(volChatId);
+        volunteers.setActivity(false);
+        volunteersRepository.save(volunteers);
+    }
 }

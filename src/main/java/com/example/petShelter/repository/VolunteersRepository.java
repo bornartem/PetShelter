@@ -9,4 +9,6 @@ public interface VolunteersRepository extends JpaRepository<Volunteers, Long> {
     int getCountVolunteers();
 
     Volunteers findByChatId(long chatId);
+
+    Volunteers findFirstByIsActiveTrue();
 }

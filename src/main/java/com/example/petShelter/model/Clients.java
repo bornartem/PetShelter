@@ -35,4 +35,5 @@ public class Clients {
     @Column(name = "contact")
     private String contact;
 
+
 }

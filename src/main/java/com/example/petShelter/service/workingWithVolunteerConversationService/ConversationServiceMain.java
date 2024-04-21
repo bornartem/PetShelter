@@ -1,6 +1,8 @@
 package com.example.petShelter.service.workingWithVolunteerConversationService;
 
+import com.example.petShelter.model.Volunteers;
 import com.example.petShelter.service.ClientsService;
+import com.example.petShelter.service.ConversationPeopleService;
 import com.example.petShelter.service.VolunteersService;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
@@ -22,6 +24,8 @@ public class ConversationServiceMain {
     ClientsService clientService;
 
     private TelegramBot telegramBot;
+    @Autowired
+    private ConversationPeopleService conversationPeopleService;
 
 
     /**
@@ -29,10 +33,10 @@ public class ConversationServiceMain {
      * о том что пользователь вызывает волонтера<br>
      * либо отправляем его в таблицу ожидающих, либо создаем
      * общение между клиентом и волонтером
-     * @param update пользователь который просит о помощи
+     * @param clientChatId пользователь который просит о помощи
      */
-    public void firstGivingUsers(Update update) {
-        Long clientChatId = update.message().chat().id();
+    public void firstGivingUsers(Long clientChatId) {
+//        Long clientChatId = update.message().chat().id();
 //        String clientText = update.message().text();
 
         telegramBot.execute(new SendMessage(
@@ -43,7 +47,7 @@ public class ConversationServiceMain {
         Long volId = null;
         volId = findRelaxVolunteers();
 
-        if (volId == null) {
+        if (volId.equals(null)) {
             //добавляем в ожидающих
             volunteerNotFound(clientChatId);
         } else {
@@ -97,13 +101,15 @@ public class ConversationServiceMain {
         ));
 
             /*
-            //делает волонтера неактивным
+            делает волонтера неактивным
             volunteerService.inactiveVolunteer(volId);
             */
+        volunteerService.inactiveVolunteerByChatId(volChatId);
 
 
         //добавил их в таблицу общающихся
-        usersToConversationTable(clientChatId, volChatId);
+//        usersToConversationTable(clientChatId, volChatId);
+        conversationPeopleService.addPeople(clientChatId, volChatId);
 
 
         //отправить волонтеру что он должен первое написать
@@ -115,23 +121,24 @@ public class ConversationServiceMain {
 
 
 
-    /**
-     * добавляем в таблицу общающихся пользователей
-     * клиента и волонтера
-     *
-     * @param clientId id клиента not null
-     * @param volId id волонтера not null
-     */
-    private void usersToConversationTable(Long clientId, Long volId) {
-//        id генерируется само
-
-        /*
-            методы
-            conversationPeopleService.addPeople(clientId, volId);
-            conversationPeopleService.addPeople(volId, clientId);
-        */
-
-    }
+//    /**
+//     * добавляем в таблицу общающихся пользователей
+//     * клиента и волонтера
+//     *
+//     * @param clientId id клиента not null
+//     * @param volId id волонтера not null
+//     */
+//    private void usersToConversationTable(Long clientId, Long volId) {
+//        /*
+//            методы
+//            conversationPeopleService.addPeople(clientId, volId);
+//            conversationPeopleService.addPeople(volId, clientId);
+//        */
+//        //добавляется два раза
+//        conversationPeopleService.addPeople(clientId, volId);
+////        conversationPeopleService.addPeople(volId, clientId);
+//
+//    }
 
 
     /**
@@ -145,12 +152,11 @@ public class ConversationServiceMain {
         и если да то возвращаю null
          */
 
-        Long volChatId;
 
         /*
         поиск свободного волонтера
          */
-        return null;
+        return volunteerService.findFirstActivity().getChatId();
     }
 
 
