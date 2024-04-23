@@ -99,18 +99,18 @@ public class VolunteersService {
         return volunteersRepository.findFirstByChatId(chatId);
     }
 
-    public Volunteers findFirstActivity() {
-//        return volunteersRepository.findFirstByIsActiveTrue();
-        //это временно для того чтобы работало, верхнего метода пока что нет
-        return volunteersRepository.findFirstByChatId(889317453);
-    }
-
+    /**
+     * method made volunteer inactive
+     *
+     * @param volChatId volunteer chat id
+     */
     public void inactiveVolunteerByChatId(Long volChatId) {
 
         Volunteers volunteers = volunteersRepository.findFirstByChatId(volChatId);
         volunteers.setActivity(false);
         volunteersRepository.save(volunteers);
     }
+
 
     public Volunteers findFreeVolunteer() {
         return volunteersRepository.findVolunteersByActivityTrue()

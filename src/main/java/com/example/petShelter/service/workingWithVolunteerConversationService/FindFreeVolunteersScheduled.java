@@ -5,7 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FindFreeVolunteers {
+public class FindFreeVolunteersScheduled {
 
     @Autowired
     private ConversationServiceMain conversationService;

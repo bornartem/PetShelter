@@ -75,11 +75,11 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
             if (message != null) {
                 String userText = message.text();
-//                Long chatId = message.chat().id();
+
                 Long chatId = update.callbackQuery() != null ?
                         update.callbackQuery().message().chat().id() : message.chat().id();
 
-                //проверка общается ли человек, и если это так то нужно перенаправлять сообщения
+                //проверка общается ли человек, и если это так, то нужно перенаправлять сообщения
                 Volunteers volunteers = volunteerService.findFirstByChatId(chatId);
                 ConversationPeople people = conversationPeopleService.findByChatId(chatId);
                 if (people != null) {
@@ -87,18 +87,13 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                 } //иначе если волонтер и он продолжает регистрироваться
                 else if (volunteers != null && !userText.startsWith(COMMAND_PREFIX)) {
                     finishedSingUp.singUp(chatId, userText, volunteers);
-                } else
 
-//                if (update.message().text().equals("/menu")) {
-//                    choosingShelterMenu.sendMenuMessage(update.message().chat().id());
-//                }
-                    if (userText.startsWith(COMMAND_PREFIX)) {
-//                        Long chatId = update.callbackQuery() != null ?
-//                                update.callbackQuery().message().chat().id() : message.chat().id();
-                        commandContainer.process(userText, chatId);
-                    } else {
-                        telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
-                    }
+                } else if (userText.startsWith(COMMAND_PREFIX)) {
+                    commandContainer.process(userText, chatId);
+
+                } else {
+                    telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
+                }
             } else {
                 if (update.callbackQuery() != null) {
                     String userText = update.callbackQuery().data();

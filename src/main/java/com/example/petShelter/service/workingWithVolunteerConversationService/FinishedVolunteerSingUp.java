@@ -22,8 +22,7 @@ public class FinishedVolunteerSingUp {
         volunteers.setContact(strings[1]);
         volunteersService.update(volunteers);
         String message = "Вы зарегестрированны в качестве волонтера, с данными:\n"+
-                volunteers.toString();
+                volunteers;
         telegramBotClient.sendMessage(chatId, message);
-        //если волонтер и он дорегистрируется
     }
 }

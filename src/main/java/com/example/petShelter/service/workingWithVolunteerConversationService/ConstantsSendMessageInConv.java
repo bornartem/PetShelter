@@ -1,7 +1,7 @@
 package com.example.petShelter.service.workingWithVolunteerConversationService;
 
 
-public class SendMessageInConv {
+public class ConstantsSendMessageInConv {
 
     public static final String HI_MESSAGE = "поприветствуйте клиента, представьтесь и " +
             "спросите про его вопрос.";
