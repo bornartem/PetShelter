@@ -63,7 +63,10 @@ public class ConversationServiceMain {
      * @param clientChatId is client chat id in telegram
      */
     private void volunteerNotFound(Long clientChatId) {
-        telegramBot.execute(new SendMessage(clientChatId, "Все волонтеры сейчас заняты, Вам ответит первый освободившийся"));
+        telegramBot.execute(new SendMessage(
+                clientChatId,
+                "Все волонтеры сейчас заняты, напишите чуть позже")
+        );
         return;
         // ниже комментировано из-за урезки функционала
 //        Integer countWaitingClients = 0;

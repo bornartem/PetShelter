@@ -17,12 +17,16 @@ public class FinishedVolunteerSingUp {
     }
 
     public void singUp(Long chatId, String text, Volunteers volunteers) {
-        String[] strings = text.split(", ");
-        volunteers.setName(strings[0]);
-        volunteers.setContact(strings[1]);
-        volunteersService.update(volunteers);
-        String message = "Вы зарегестрированны в качестве волонтера, с данными:\n"+
-                volunteers;
-        telegramBotClient.sendMessage(chatId, message);
+        if (volunteers.getName().isEmpty() || volunteers.getContact().isBlank()) {
+            String[] strings = text.split(", ");
+            volunteers.setName(strings[0]);
+            volunteers.setContact(strings[1]);
+            volunteersService.update(volunteers);
+            String message = "Вы зарегестрированны в качестве волонтера, с данными:\n"+
+                    volunteers;
+            telegramBotClient.sendMessage(chatId, message);
+        }
+
+
     }
 }

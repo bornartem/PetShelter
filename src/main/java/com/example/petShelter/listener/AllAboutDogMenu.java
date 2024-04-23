@@ -36,7 +36,7 @@ public class AllAboutDogMenu {
         InlineKeyboardButton button6 = new InlineKeyboardButton("Проверенные кинологи").callbackData("/dogHandlersList");
 
         InlineKeyboardButton button7 = new InlineKeyboardButton("Отказ в усыновлении").callbackData("/rejectToGetADog");
-        InlineKeyboardButton button8 = new InlineKeyboardButton("Позвать волонтера").callbackData("1");
+        InlineKeyboardButton button8 = new InlineKeyboardButton("Позвать волонтера").callbackData("/volunteerHelp");
 
         InlineKeyboardButton button9 = new InlineKeyboardButton("Информация о приюте")
                 .callbackData("/getInfoAboutDogShelter");
