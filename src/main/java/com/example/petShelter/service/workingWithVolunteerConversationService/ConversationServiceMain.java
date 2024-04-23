@@ -67,27 +67,6 @@ public class ConversationServiceMain {
                 clientChatId,
                 "Все волонтеры сейчас заняты, напишите чуть позже")
         );
-        return;
-        // ниже комментировано из-за урезки функционала
-//        Integer countWaitingClients = 0;
-//        Integer countAllVolunteers = 0;
-//
-//        /*
-//            find count waiting client at table
-//            countWaitingClients =
-//            find count all volunteers
-//            countAllVolunteers =
-//         */
-//
-//        if (countWaitingClients > 2 * countAllVolunteers) {
-//            telegramBot.execute(new SendMessage(clientChatId, SendMessageInConv.CROWDED_TABLE));
-//        } else {
-//            telegramBot.execute(new SendMessage(clientChatId, SendMessageInConv.PLEASE_WAIT));
-//
-//            /*
-//                метод добавит клиента в таблицу с ожидающими пользователями
-//             */
-//        }
     }
 
 
@@ -121,12 +100,6 @@ public class ConversationServiceMain {
      * @return any free volunteer id
      */
     private Long findRelaxVolunteers() {
-        /*
-        Сначала делаю проверку есть ли ожидающие пользователи
-        и если да то возвращаю null
-        этого кода нет так как нет таблицы с ожидающими клиентами.
-        Этот функционал на будущее.
-         */
         return volunteerService.findFreeVolunteer().getChatId();
     }
 
