@@ -35,7 +35,7 @@ class AnimalsServiceTest {
     public void testFindAllAnimalsOfCertainShelter() {
         long shelterId = 1;
         List<Animals> animalsList = new ArrayList<>();
-        when(animalsRepository.findAllByShelterId(shelterId)).thenReturn(animalsList);
+        when(animalsRepository.findBySheltersId(shelterId)).thenReturn(animalsList);
 
         List<Animals> result = animalsService.findAllAnimalsOfCertainShelter(shelterId);
 

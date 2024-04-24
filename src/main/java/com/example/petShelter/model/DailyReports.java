@@ -13,10 +13,7 @@ import java.time.LocalDateTime;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Data
 @Entity(name = "daily_report")
 public class DailyReports {
 
@@ -33,9 +30,15 @@ public class DailyReports {
     @Column(name = "date_time", nullable = false)
     private LocalDateTime dateTime;
 
+    /**
+     *the field shows the health and the general animal's  welfare
+     */
     @Column(name = "well")
     private String well;
 
+    /**
+     *the field shows the change in animal's  behavior
+     */
     @Column(name = "reaction")
     private String reaction;
 
@@ -43,6 +46,9 @@ public class DailyReports {
     @Column(name = "foto_animal")
     private byte[] data;
 
+    /**
+     *the field shows the status once daily report is checked by volunteers
+     */
     @Column(name = "is_check", nullable = false)
     private Boolean is_check;
 

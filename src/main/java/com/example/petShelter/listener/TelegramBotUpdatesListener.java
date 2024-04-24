@@ -5,7 +5,6 @@ import com.example.petShelter.command.CommandContainer;
 import com.example.petShelter.service.TelegramBotClient;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
-import com.pengrad.telegrambot.model.CallbackQuery;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import jakarta.annotation.PostConstruct;
@@ -77,5 +76,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }
+
+
 
 }
