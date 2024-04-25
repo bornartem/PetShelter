@@ -106,5 +106,4 @@ public class CommandContainer {
             commandMap.get(commandName).execute(chatId, updatesList);
         }
     }
-
 }

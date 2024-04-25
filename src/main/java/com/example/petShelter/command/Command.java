@@ -15,5 +15,4 @@ public interface Command {
         execute(chatId, new ArrayList<>());
     };
     default void execute(Long chatId, List<Update> updatesList){};
-
 }

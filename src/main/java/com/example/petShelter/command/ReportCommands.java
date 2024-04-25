@@ -33,7 +33,6 @@ public class ReportCommands implements Command {
      * The method generates a report (fills in the DailyReport object) from the messages
      * sent by the user step by step
      */
-
     @Override
     public void execute(Long chatId, List<Update> updatesList) {
 

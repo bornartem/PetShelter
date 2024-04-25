@@ -18,7 +18,6 @@ import java.util.List;
 
 @Component("/registerUser")
 public class RegisterUserCommand implements Command {
-
     private Long clientId;
     private Long chatId;
     private Integer messageId;

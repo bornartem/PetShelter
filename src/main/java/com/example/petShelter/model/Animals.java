@@ -22,7 +22,6 @@ import java.util.List;
 public class Animals {
 
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_animal")

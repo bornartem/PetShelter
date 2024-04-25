@@ -18,7 +18,6 @@ import java.util.List;
 @Entity(name = "daily_report")
 public class DailyReports {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_daily_report")

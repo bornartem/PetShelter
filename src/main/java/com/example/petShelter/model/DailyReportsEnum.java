@@ -7,7 +7,6 @@ public enum DailyReportsEnum {
     REACTION("reaction"),
     ANIMAL_MENU("animalMenu"),
     PHOTO("photo");
-
     private String fieldName;
 
     DailyReportsEnum(String fieldName) {
