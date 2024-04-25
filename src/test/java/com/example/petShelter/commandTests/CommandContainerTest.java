@@ -84,7 +84,7 @@ public class CommandContainerTest {
     ShelterSecurityRulesForDogs shelterSecurityRulesForDogs;
 
     @Mock
-    RegisterUser registerUser;
+    RegisterUserCommand registerUser;
 
     @Mock
     GetHomeImprovementForCat getHomeImprovementForCat;

@@ -22,11 +22,6 @@ import java.util.List;
 public class Animals {
 
 
-
-    //    @OneToMany(mappedBy = "daily_report")
-//    @OneToMany(mappedBy = "animal")
-//    private List<DailyReports> dailyReport;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_animal")
