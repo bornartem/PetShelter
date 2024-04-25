@@ -4,8 +4,10 @@ import com.example.petShelter.command.ShelterCatInnerButtons.*;
 import com.example.petShelter.command.ShelterDogInnerButtons.*;
 import com.example.petShelter.service.TelegramBotClient;
 
+import com.pengrad.telegrambot.model.Update;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -32,7 +34,7 @@ public class CommandContainer {
                             ShelterSecurityRulesForCats shelterSecurityRulesForCats, DogShelterInfoCommand dogShelterInfoCommand,
                             DogShelterSchedule dogShelterSchedule, GetDogShelterLocation getDogShelterLocation,
                             GetShelterCarPermission getShelterCarPermission, ShelterSecurityRulesForDogs shelterSecurityRulesForDogs,
-                            RegisterUser registerUser,
+                            RegisterUserCommand registerUser,
                             GetHomeImprovementForCat getHomeImprovementForCat,
                             GetInfoAboutCat getInfoAboutCat) {
 
@@ -58,13 +60,14 @@ public class CommandContainer {
         commandMap.put(CommandName.GET_HOME_IMPROVEMENT_FOR_CAT.getCommandName(), getHomeImprovementForCat);
         commandMap.put(CommandName.GET_INFO_ABOUT_CAT.getCommandName(), getInfoAboutCat);
 
+
     }
 
-    public void process(String commandName, Long chatId) {
+    public void process(String commandName, Long chatId, List<Update> updatesList) {
         if (commandMap.isEmpty()) {
             throw new RuntimeException();
         } else if (commandMap.containsKey(commandName)) {
-            commandMap.get(commandName).execute(chatId);
+            commandMap.get(commandName).execute(chatId, updatesList);
         }
     }
 

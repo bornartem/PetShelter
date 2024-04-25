@@ -3,6 +3,8 @@ package com.example.petShelter.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 /**
  * The class consists of logic of the project, which create "Clients" entity
  *
@@ -34,5 +36,8 @@ public class Clients {
 
     @Column(name = "contact")
     private String contact;
+
+    @OneToMany(mappedBy = "client")
+    private List<DailyReports> dailyReports;
 
 }

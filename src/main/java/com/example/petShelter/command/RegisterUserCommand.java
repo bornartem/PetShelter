@@ -1,39 +1,43 @@
-package com.example.petShelter.listener;
+package com.example.petShelter.command;
+
 
 import com.example.petShelter.model.Clients;
 import com.example.petShelter.service.ClientsService;
-import com.pengrad.telegrambot.UpdatesListener;
 import com.example.petShelter.service.TelegramBotClient;
 import com.pengrad.telegrambot.model.Update;
-import lombok.Getter;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+
 /**
- * This class implements an UpdatesListener interface and provides a method to process updates from Telegram API.
+ * Class which allows to register users  in Telegram .
+ *
  * @author Khilola Kushbakova
  */
 
-@Getter
-@Service
-public class RegisterListener implements UpdatesListener {
-    private final TelegramBotClient telegramBotClient;
-    private final ClientsService clientsService;
-
-    public RegisterListener(TelegramBotClient telegramBotClient, ClientsService clientsService) {
-        this.telegramBotClient = telegramBotClient;
-        this.clientsService = clientsService;
-    }
-
+@Component("/registerUser")
+public class RegisterUserCommand implements Command {
 
     private Long clientId;
     private Long chatId;
     private Integer messageId;
 
+    private final ClientsService clientsService;
+    private final TelegramBotClient telegramBotClient;
+
+
+    public RegisterUserCommand(ClientsService clientsService, TelegramBotClient telegramBotClient) {
+        this.clientsService = clientsService;
+        this.telegramBotClient = telegramBotClient;
+
+    }
+
+
     @Override
-    public int process(List<Update> updates) {
+    public void execute(Long chatId, List<Update> updatesList) {
         try {
-            Update update = updates.get(0);
+            Update update = updatesList.get(0);
             this.clientId = Long.valueOf(update.callbackQuery().data().substring(3));
             this.chatId = update.callbackQuery().message().chat().id();
             this.messageId = update.callbackQuery().message().messageId();
@@ -48,7 +52,7 @@ public class RegisterListener implements UpdatesListener {
 
             if (userDetails.length < 4) {
                 telegramBotClient.sendMessage(chatId, "Please enter all required data.");
-                return 0;
+                return;
             }
 
             String name = userDetails[0];
@@ -58,7 +62,7 @@ public class RegisterListener implements UpdatesListener {
 
             if (name.isEmpty() || surname.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || !isValidContact(phoneNumber) || !isValidContact(email)) {
                 telegramBotClient.sendMessage(chatId, "Please enter valid data.");
-                return 0;
+                return;
             }
 
             client.setName(name + " " + surname);
@@ -66,13 +70,12 @@ public class RegisterListener implements UpdatesListener {
 
             clientsService.create(client);
 
-            telegramBotClient.sendMessage(chatId, "User " + client.getName() + " successfully registered !");
-            return 1;
+            telegramBotClient.sendMessage(chatId, "User " + client.getName() + " Регистрация успешна !");
+            return;
         } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
         }
     }
+
 
     private boolean isValidContact(String contact) {
         String phoneRegex = "^\\+7-9\\d{2}-\\d{3}-\\d{2}-\\d{2}$";
@@ -92,4 +95,5 @@ public class RegisterListener implements UpdatesListener {
         // Implement logic to fetch and return the latest update
         return null;
     }
+
 }
