@@ -2,6 +2,17 @@ package com.example.petShelter.command;
 
 import com.example.petShelter.command.ShelterCatInnerButtons.*;
 import com.example.petShelter.command.ShelterDogInnerButtons.*;
+import com.example.petShelter.command.cat_menu_buttons.DocumentsForGetACat;
+import com.example.petShelter.command.cat_menu_buttons.GetInfoAboutCatMeeting;
+import com.example.petShelter.command.cat_menu_buttons.RejectToGetACat;
+import com.example.petShelter.command.cat_menu_buttons.TransportingACat;
+import com.example.petShelter.command.dog_menu_buttons.*;
+import com.example.petShelter.command.home_improvement_cat_buttons.HomeImprovementForAdultCat;
+import com.example.petShelter.command.home_improvement_cat_buttons.HomeImprovementForCatWithDisabilities;
+import com.example.petShelter.command.home_improvement_cat_buttons.HomeImprovementForKitty;
+import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementForAdult;
+import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementForPuppy;
+import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementWithDisabilities;
 import com.example.petShelter.service.TelegramBotClient;
 
 import com.pengrad.telegrambot.model.Update;
@@ -34,9 +45,17 @@ public class CommandContainer {
                             ShelterSecurityRulesForCats shelterSecurityRulesForCats, DogShelterInfoCommand dogShelterInfoCommand,
                             DogShelterSchedule dogShelterSchedule, GetDogShelterLocation getDogShelterLocation,
                             GetShelterCarPermission getShelterCarPermission, ShelterSecurityRulesForDogs shelterSecurityRulesForDogs,
-                            RegisterUserCommand registerUser,
-                            GetHomeImprovementForCat getHomeImprovementForCat,
-                            GetInfoAboutCat getInfoAboutCat) {
+
+                            RegisterUser registerUser, GetHomeImprovementForCat getHomeImprovementForCat, GetInfoAboutCat getInfoAboutCat,
+                            GetInfoAboutDogMeeting getInfoAboutDogMeeting, DocumentsForGetADog documentsForGetADog,
+                            TransportingADog transportingADog, DogHandlerAdvices dogHandlerAdvices, DogHandlersList dogHandlersList,
+                            RejectToGetADog rejectToGetADog, HomeImprovementForPuppy homeImprovementForPuppy,
+                            HomeImprovementForAdult homeImprovementForAdult, HomeImprovementWithDisabilities homeImprovementWithDisabilities,
+                            GetInfoAboutCatMeeting getInfoAboutCatMeeting, DocumentsForGetACat documentsForGetACat,
+                            TransportingACat transportingACat, RejectToGetACat rejectToGetACat, HomeImprovementForKitty homeImprovementForKitty,
+                            HomeImprovementForAdultCat homeImprovementForAdultCat, HomeImprovementForCatWithDisabilities homeImprovementForCatWithDisabilities,
+                            RegistrationNewVolunteer registrationNewVolunteer, ChangeActivityVolunteer changeActivityVolunteer,
+                            VolunteersHelp volunteersHelp) {
 
         commandMap.put(CommandName.START.getCommandName(), commandStart);
         commandMap.put(CommandName.GET_ADDRESS_OF_DOG_SHELTER.getCommandName(), getAddressOfDogShelterCommand);
@@ -59,8 +78,25 @@ public class CommandContainer {
         commandMap.put(CommandName.REGISTER_USER.getCommandName(), registerUser);
         commandMap.put(CommandName.GET_HOME_IMPROVEMENT_FOR_CAT.getCommandName(), getHomeImprovementForCat);
         commandMap.put(CommandName.GET_INFO_ABOUT_CAT.getCommandName(), getInfoAboutCat);
-
-
+        commandMap.put(CommandName.GET_INFO_ABOUT_DOG_MEETING.getCommandName(), getInfoAboutDogMeeting);
+        commandMap.put(CommandName.DOCUMENTS_FOR_GET_A_DOG.getCommandName(), documentsForGetADog);
+        commandMap.put(CommandName.TRANSPORTING_A_DOG.getCommandName(), transportingADog);
+        commandMap.put(CommandName.DOG_HANDLER_ADVICES.getCommandName(), dogHandlerAdvices);
+        commandMap.put(CommandName.DOG_HANDLER_LIST.getCommandName(), dogHandlersList);
+        commandMap.put(CommandName.REJECT_TO_GET_A_DOG.getCommandName(), rejectToGetADog);
+        commandMap.put(CommandName.HOME_IMPROVEMENT_FOR_PUPPY.getCommandName(), homeImprovementForPuppy);
+        commandMap.put(CommandName.HOME_IMPROVEMENT_FOR_ADULT.getCommandName(), homeImprovementForAdult);
+        commandMap.put(CommandName.HOME_IMPROVEMENT_WITH_DISABILITIES.getCommandName(), homeImprovementWithDisabilities);
+        commandMap.put(CommandName.GET_INFO_ABOUT_CAT_MEETING.getCommandName(), getInfoAboutCatMeeting);
+        commandMap.put(CommandName.DOCUMENTS_FOR_GET_A_CAT.getCommandName(), documentsForGetACat);
+        commandMap.put(CommandName.TRANSPORTING_A_CAT.getCommandName(), transportingACat);
+        commandMap.put(CommandName.REJECT_TO_GET_A_CAT.getCommandName(), rejectToGetACat);
+        commandMap.put(CommandName.HOME_IMPROVEMENT_FOR_KITTY.getCommandName(), homeImprovementForKitty);
+        commandMap.put(CommandName.HOME_IMPROVEMENT_FOR_ADULT_CAT.getCommandName(), homeImprovementForAdultCat);
+        commandMap.put(CommandName.HOME_IMPROVEMENT_FOR_CAT_WITH_DISABILITIES.getCommandName(), homeImprovementForCatWithDisabilities);
+        commandMap.put(CommandName.REGISTRATION_NEW_VOLUNTEER.getCommandName(), registrationNewVolunteer);
+        commandMap.put(CommandName.CHANGE_ACTIVITY_VOLUNTEER.getCommandName(), changeActivityVolunteer);
+        commandMap.put(CommandName.VOLUNTEER_HELP.getCommandName(), volunteersHelp);
     }
 
     public void process(String commandName, Long chatId, List<Update> updatesList) {

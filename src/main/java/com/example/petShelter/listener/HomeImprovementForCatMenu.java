@@ -22,11 +22,11 @@ public class HomeImprovementForCatMenu {
     }
 
     public void sendMenuMessage(long chatId) {
-        InlineKeyboardButton button1 = new InlineKeyboardButton("Котенка").callbackData("1");
+        InlineKeyboardButton button1 = new InlineKeyboardButton("Котенка").callbackData("/homeImprovementForKitty");
         InlineKeyboardButton button2 = new InlineKeyboardButton("Взрослой кошки")
-                .callbackData("1");
+                .callbackData("/homeImprovementForAdultCat");
 
-        InlineKeyboardButton button3 = new InlineKeyboardButton("Кошки с ОВЗ").callbackData("1");
+        InlineKeyboardButton button3 = new InlineKeyboardButton("Кошки с ОВЗ").callbackData("/homeImprovementForCatWithDisabilities");
         InlineKeyboardButton button4 = new InlineKeyboardButton("Вернуться назад")
                 .callbackData("/getInfoAboutCatShelter");
 

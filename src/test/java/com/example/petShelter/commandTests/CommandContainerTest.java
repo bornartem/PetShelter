@@ -3,6 +3,17 @@ package com.example.petShelter.commandTests;
 import com.example.petShelter.command.*;
 import com.example.petShelter.command.ShelterCatInnerButtons.*;
 import com.example.petShelter.command.ShelterDogInnerButtons.*;
+import com.example.petShelter.command.cat_menu_buttons.DocumentsForGetACat;
+import com.example.petShelter.command.cat_menu_buttons.GetInfoAboutCatMeeting;
+import com.example.petShelter.command.cat_menu_buttons.RejectToGetACat;
+import com.example.petShelter.command.cat_menu_buttons.TransportingACat;
+import com.example.petShelter.command.dog_menu_buttons.*;
+import com.example.petShelter.command.home_improvement_cat_buttons.HomeImprovementForAdultCat;
+import com.example.petShelter.command.home_improvement_cat_buttons.HomeImprovementForCatWithDisabilities;
+import com.example.petShelter.command.home_improvement_cat_buttons.HomeImprovementForKitty;
+import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementForAdult;
+import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementForPuppy;
+import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementWithDisabilities;
 import com.example.petShelter.service.TelegramBotClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +21,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -79,6 +91,45 @@ public class CommandContainerTest {
 
     @Mock
     GetInfoAboutCat getInfoAboutCat;
+    @Mock
+    GetInfoAboutDogMeeting getInfoAboutDogMeeting;
+    @Mock
+    DocumentsForGetADog documentsForGetADog;
+    @Mock
+    TransportingADog transportingADog;
+    @Mock
+    DogHandlerAdvices dogHandlerAdvices;
+    @Mock
+    DogHandlersList dogHandlersList;
+    @Mock
+    RejectToGetADog rejectToGetADog;
+    @Mock
+    HomeImprovementForPuppy homeImprovementForPuppy;
+    @Mock
+    HomeImprovementForAdult homeImprovementForAdult;
+    @Mock
+    HomeImprovementWithDisabilities homeImprovementWithDisabilities;
+    @Mock
+    GetInfoAboutCatMeeting getInfoAboutCatMeeting;
+    @Mock
+    DocumentsForGetACat documentsForGetACat;
+    @Mock
+    TransportingACat transportingACat;
+    @Mock
+    RejectToGetACat rejectToGetACat;
+    @Mock
+    HomeImprovementForKitty homeImprovementForKitty;
+    @Mock
+    HomeImprovementForAdultCat homeImprovementForAdultCat;
+    @Mock
+    HomeImprovementForCatWithDisabilities homeImprovementForCatWithDisabilities;
+    @Mock
+    RegistrationNewVolunteer registrationNewVolunteer;
+    @Mock
+    ChangeActivityVolunteer changeActivityVolunteer;
+    @Mock
+    VolunteersHelp volunteersHelp;
+
 
     private CommandContainer commandContainer;
 
@@ -86,14 +137,17 @@ public class CommandContainerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         commandContainer = new CommandContainer(
-                startCommand, getAddressOfDogShelterCommand,getInfoAboutDogShelter,
-                getInfoAboutCatShelter, backToChoosingShelter, getInfoAboutDog,
-                getHomeImprovementForDog, catShelterInfoCommand, catShelterSchedule,
-                getAddressOfCatShelterCommand, getCatShelterCarPermission,
-                getCatShelterLocation, shelterSecurityRulesForCats,
-                dogShelterInfoCommand, dogShelterSchedule, getDogShelterLocation,
-                getShelterCarPermission, shelterSecurityRulesForDogs, registerUser,
-                getHomeImprovementForCat, getInfoAboutCat
+                startCommand, getAddressOfDogShelterCommand, getInfoAboutDogShelter, getInfoAboutCatShelter,
+                backToChoosingShelter, getInfoAboutDog, getHomeImprovementForDog, catShelterInfoCommand,
+                catShelterSchedule, getAddressOfCatShelterCommand, getCatShelterCarPermission,
+                getCatShelterLocation, shelterSecurityRulesForCats, dogShelterInfoCommand, dogShelterSchedule,
+                getDogShelterLocation, getShelterCarPermission, shelterSecurityRulesForDogs, registerUser,
+                getHomeImprovementForCat, getInfoAboutCat, getInfoAboutDogMeeting, documentsForGetADog,
+                transportingADog, dogHandlerAdvices, dogHandlersList, rejectToGetADog, homeImprovementForPuppy,
+                homeImprovementForAdult, homeImprovementWithDisabilities, getInfoAboutCatMeeting, documentsForGetACat,
+                transportingACat, rejectToGetACat, homeImprovementForKitty, homeImprovementForAdultCat,
+                homeImprovementForCatWithDisabilities, registrationNewVolunteer, changeActivityVolunteer,
+                volunteersHelp
         );
     }
 

@@ -40,4 +40,5 @@ public class Clients {
     @OneToMany(mappedBy = "client")
     private List<DailyReports> dailyReports;
 
+
 }

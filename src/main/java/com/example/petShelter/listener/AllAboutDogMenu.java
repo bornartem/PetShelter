@@ -24,19 +24,19 @@ public class AllAboutDogMenu {
     public void sendMenuMessage(long chatId) {
         InlineKeyboardButton button0 = new InlineKeyboardButton("Выбрать собаку").callbackData("1");
 
-        InlineKeyboardButton button1 = new InlineKeyboardButton("Знакомство с собакой").callbackData("1");
+        InlineKeyboardButton button1 = new InlineKeyboardButton("Знакомство с собакой").callbackData("/getInfoAboutDogMeeting");
         InlineKeyboardButton button2 = new InlineKeyboardButton("Документы для усыновления")
-                .callbackData("1");
+                .callbackData("/documentsForGetADog");
 
-        InlineKeyboardButton button3 = new InlineKeyboardButton("Транспортировка собаки").callbackData("1");
+        InlineKeyboardButton button3 = new InlineKeyboardButton("Транспортировка собаки").callbackData("/transportingADog");
         InlineKeyboardButton button4 = new InlineKeyboardButton("Обустройство дома")
                 .callbackData("/getHomeImprovementForDog");
 
-        InlineKeyboardButton button5 = new InlineKeyboardButton("Советы кинолога по общению").callbackData("1");
-        InlineKeyboardButton button6 = new InlineKeyboardButton("Проверенные кинологи").callbackData("1");
+        InlineKeyboardButton button5 = new InlineKeyboardButton("Советы кинолога по общению").callbackData("/dogHandlerAdvices");
+        InlineKeyboardButton button6 = new InlineKeyboardButton("Проверенные кинологи").callbackData("/dogHandlersList");
 
-        InlineKeyboardButton button7 = new InlineKeyboardButton("Отказ в усыновлении").callbackData("1");
-        InlineKeyboardButton button8 = new InlineKeyboardButton("Позвать волонтера").callbackData("1");
+        InlineKeyboardButton button7 = new InlineKeyboardButton("Отказ в усыновлении").callbackData("/rejectToGetADog");
+        InlineKeyboardButton button8 = new InlineKeyboardButton("Позвать волонтера").callbackData("/volunteerHelp");
 
         InlineKeyboardButton button9 = new InlineKeyboardButton("Информация о приюте")
                 .callbackData("/getInfoAboutDogShelter");

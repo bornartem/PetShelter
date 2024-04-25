@@ -36,7 +36,7 @@ public class InfoAboutDogShelterMenu {
         InlineKeyboardButton button8 = new InlineKeyboardButton("Как усыновить собаку")
                 .callbackData("/getInfoAboutDog");
 
-        InlineKeyboardButton button9 = new InlineKeyboardButton("Позвать волонтера").callbackData("1");
+        InlineKeyboardButton button9 = new InlineKeyboardButton("Позвать волонтера").callbackData("/volunteerHelp");
         InlineKeyboardButton button10 = new InlineKeyboardButton("Вернуться к выбору приюта")
                 .callbackData("/backToChoosingShelter");
 

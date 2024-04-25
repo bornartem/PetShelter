@@ -1,5 +1,7 @@
 package com.example.petShelter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,12 +16,14 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 @EqualsAndHashCode
 @Entity(name = "volunteers")
+@JsonIgnoreProperties(value = {"clients"})
 public class Volunteers {
 
     @OneToMany(mappedBy = "volunteer")
+    @JsonManagedReference
     private List<Clients> clients;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,4 +41,15 @@ public class Volunteers {
 
     @Column(name = "activity")
     private boolean activity;
+
+    @Override
+    public String toString() {
+        return "Volunteers{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", contact='" + contact + '\'' +
+                ", activity=" + activity +
+                ", chatId=" + chatId +
+                '}';
+    }
 }

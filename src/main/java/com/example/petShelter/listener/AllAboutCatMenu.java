@@ -24,16 +24,16 @@ public class AllAboutCatMenu {
     public void sendMenuMessage(long chatId) {
         InlineKeyboardButton button0 = new InlineKeyboardButton("Выбрать кошку").callbackData("1");
 
-        InlineKeyboardButton button1 = new InlineKeyboardButton("Знакомство с кошкой").callbackData("1");
+        InlineKeyboardButton button1 = new InlineKeyboardButton("Знакомство с кошкой").callbackData("/getInfoAboutCatMeeting");
         InlineKeyboardButton button2 = new InlineKeyboardButton("Документы для усыновления")
-                .callbackData("1");
+                .callbackData("/documentsForGetACat");
 
-        InlineKeyboardButton button3 = new InlineKeyboardButton("Транспортировка").callbackData("1");
+        InlineKeyboardButton button3 = new InlineKeyboardButton("Транспортировка").callbackData("/transportingACat");
         InlineKeyboardButton button4 = new InlineKeyboardButton("Обустройство дома")
                 .callbackData("/getHomeImprovementForCat");
 
-        InlineKeyboardButton button5 = new InlineKeyboardButton("Отказ в усыновлении").callbackData("1");
-        InlineKeyboardButton button6 = new InlineKeyboardButton("Позвать волонтера").callbackData("1");
+        InlineKeyboardButton button5 = new InlineKeyboardButton("Отказ в усыновлении").callbackData("/rejectToGetACat");
+        InlineKeyboardButton button6 = new InlineKeyboardButton("Позвать волонтера").callbackData("/volunteerHelp");
 
         InlineKeyboardButton button7 = new InlineKeyboardButton("Информация о приюте")
                 .callbackData("/getInfoAboutCatShelter");

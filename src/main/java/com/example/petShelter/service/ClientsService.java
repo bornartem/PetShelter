@@ -68,11 +68,7 @@ public class ClientsService {
      * @return delete client from db by id
      */
     public void delete(long id) {
-        if (clientsRepository.existsById(id)) {
-            clientsRepository.deleteById(id);
-        } else {
-            throw new RuntimeException();
-        }
+        clientsRepository.deleteById(id);
     }
 
     /**

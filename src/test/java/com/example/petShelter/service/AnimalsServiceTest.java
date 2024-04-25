@@ -31,6 +31,7 @@ class AnimalsServiceTest {
     @InjectMocks
     private AnimalsService animalsService;
 
+
     @Test
     public void testFindAllAnimalsOfCertainShelter() {
         long shelterId = 1;
