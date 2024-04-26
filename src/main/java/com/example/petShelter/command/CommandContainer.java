@@ -46,7 +46,7 @@ public class CommandContainer {
                             DogShelterSchedule dogShelterSchedule, GetDogShelterLocation getDogShelterLocation,
                             GetShelterCarPermission getShelterCarPermission, ShelterSecurityRulesForDogs shelterSecurityRulesForDogs,
 
-                            RegisterUser registerUser, GetHomeImprovementForCat getHomeImprovementForCat, GetInfoAboutCat getInfoAboutCat,
+                            RegisterUserCommand registerUser, GetHomeImprovementForCat getHomeImprovementForCat, GetInfoAboutCat getInfoAboutCat,
                             GetInfoAboutDogMeeting getInfoAboutDogMeeting, DocumentsForGetADog documentsForGetADog,
                             TransportingADog transportingADog, DogHandlerAdvices dogHandlerAdvices, DogHandlersList dogHandlersList,
                             RejectToGetADog rejectToGetADog, HomeImprovementForPuppy homeImprovementForPuppy,
@@ -55,7 +55,7 @@ public class CommandContainer {
                             TransportingACat transportingACat, RejectToGetACat rejectToGetACat, HomeImprovementForKitty homeImprovementForKitty,
                             HomeImprovementForAdultCat homeImprovementForAdultCat, HomeImprovementForCatWithDisabilities homeImprovementForCatWithDisabilities,
                             RegistrationNewVolunteer registrationNewVolunteer, ChangeActivityVolunteer changeActivityVolunteer,
-                            VolunteersHelp volunteersHelp) {
+                            VolunteersHelp volunteersHelp, ReportCommands reportCommands) {
 
         commandMap.put(CommandName.START.getCommandName(), commandStart);
         commandMap.put(CommandName.GET_ADDRESS_OF_DOG_SHELTER.getCommandName(), getAddressOfDogShelterCommand);
@@ -97,6 +97,7 @@ public class CommandContainer {
         commandMap.put(CommandName.REGISTRATION_NEW_VOLUNTEER.getCommandName(), registrationNewVolunteer);
         commandMap.put(CommandName.CHANGE_ACTIVITY_VOLUNTEER.getCommandName(), changeActivityVolunteer);
         commandMap.put(CommandName.VOLUNTEER_HELP.getCommandName(), volunteersHelp);
+        commandMap.put(CommandName.REPORT_FROM_USERS.getCommandName(),reportCommands);
     }
 
     public void process(String commandName, Long chatId, List<Update> updatesList) {

@@ -87,33 +87,34 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                     commandContainer.process(userText, chatId, Arrays.asList(update));
 
 
-                Long chatId = update.callbackQuery() != null ?
-                        update.callbackQuery().message().chat().id() : message.chat().id();
+                    Long chatId = update.callbackQuery() != null ?
+                            update.callbackQuery().message().chat().id() : message.chat().id();
 
-                //проверка общается ли человек, и если это так, то нужно перенаправлять сообщения
-                Volunteers volunteers = volunteerService.findFirstByChatId(chatId);
-                ConversationPeople people = conversationPeopleService.findByChatId(chatId);
-                if (people != null) {
-                    conversationServiceMain.continueConversation(chatId, userText, people.getIsVolunteer());
-                } //иначе если волонтер и он продолжает регистрироваться
-                else if (volunteers != null && !userText.startsWith(COMMAND_PREFIX)) {
-                    finishedSingUp.singUp(chatId, userText, volunteers);
+                    //проверка общается ли человек, и если это так, то нужно перенаправлять сообщения
+                    Volunteers volunteers = volunteerService.findFirstByChatId(chatId);
+                    ConversationPeople people = conversationPeopleService.findByChatId(chatId);
+                    if (people != null) {
+                        conversationServiceMain.continueConversation(chatId, userText, people.getIsVolunteer());
+                    } //иначе если волонтер и он продолжает регистрироваться
+                    else if (volunteers != null && !userText.startsWith(COMMAND_PREFIX)) {
+                        finishedSingUp.singUp(chatId, userText, volunteers);
 
-                } else if (userText.startsWith(COMMAND_PREFIX)) {
-                    commandContainer.process(userText, chatId);
+                    } else if (userText.startsWith(COMMAND_PREFIX)) {
+                        commandContainer.process(userText, chatId);
 
 
+                    } else {
+                        telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
+                    }
                 } else {
-                    telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
-                }
-            } else {
-                if (update.callbackQuery() != null) {
-                    String userText = update.callbackQuery().data();
-                    commandContainer.process(userText, update.callbackQuery().message().chat().id(), Arrays.asList(update));
+                    if (update.callbackQuery() != null) {
+                        String userText = update.callbackQuery().data();
+                        commandContainer.process(userText, update.callbackQuery().message().chat().id(), Arrays.asList(update));
+                    }
                 }
             }
-        });
+            });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }
-}
+
 }

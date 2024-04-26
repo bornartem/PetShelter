@@ -4,9 +4,15 @@ import com.example.petShelter.model.DailyReports;
 import com.example.petShelter.repository.DailyReportRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
 
 /**
  *Service class which consist of business logic of Reports from users
@@ -16,6 +22,8 @@ import java.time.LocalDateTime;
 @Slf4j
 @Service
 public class DailyRepostService {
+    @Value("${path.to.photo.dir}")
+    private String photosDir;
 
     @Autowired
     private DailyReportRepository dailyReportRepository;
@@ -26,7 +34,19 @@ public class DailyRepostService {
      * @param reports The DailyReports object to be created.
      * @return The created DailyReports object.
      */
-    public DailyReports createDailyReport(DailyReports reports) {
+    public DailyReports createDailyReport(DailyReports reports, File photoFile) {
+        if (photoFile != null) {
+            String fileName = photoFile.getName();
+            String filePath = photosDir + fileName;
+            try {
+                Files.copy(Paths.get(photoFile.getAbsolutePath()), Paths.get(filePath),
+                        StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                log.error("Error while saving photo file: {}", e.getMessage());
+                throw new RuntimeException("Error while saving photo file");
+            }
+            reports.setPhotoPath(filePath);
+        }
         return dailyReportRepository.save(reports);
     }
 
@@ -48,10 +68,10 @@ public class DailyRepostService {
     public void deleteDailyReportById(long id) {
         if (dailyReportRepository.existsById(id)) {
             dailyReportRepository.deleteById(id);
-            log.info("Was invoked method for deleteDailyReportById");
+            log.info("Deleted daily report with id = {}", id);
         } else {
             log.error("There is no report with id = {}", id);
-            throw new RuntimeException();
+            throw new RuntimeException("Daily report not found");
         }
     }
 

@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+
 /**
  * Class controller  which is using for API/ Swagger DailyRepost commands
  *
@@ -27,8 +29,8 @@ public class DailyReportController {
                     description = "Daily report created successfully"
             )
     })
-    public DailyReports createDailyReport(@RequestBody DailyReports reports) {
-        return dailyRepostService.createDailyReport(reports);
+    public DailyReports createDailyReport(@RequestBody DailyReports reports, File photoFile) {
+        return dailyRepostService.createDailyReport(reports, photoFile);
     }
 
 
