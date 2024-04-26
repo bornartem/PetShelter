@@ -34,7 +34,7 @@ public class RegistrationNewVolunteer implements Command{
     public void execute(Long chatId) {
         telegramBotClient.sendMessage(chatId, START_MESSAGE);
         Volunteers volunteers = new Volunteers();
-        volunteers.setId(volunteersService.getCountVolunteers()+1);
+        volunteers.setId(volunteersService.getMaxIdByVolunteers()+1);
         volunteers.setChatId(chatId);
         volunteers.setActivity(false);
         volunteersService.create(volunteers);
