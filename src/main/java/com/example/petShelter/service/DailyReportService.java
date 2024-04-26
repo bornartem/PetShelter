@@ -21,12 +21,15 @@ import java.nio.file.StandardCopyOption;
  */
 @Slf4j
 @Service
-public class DailyRepostService {
+public class DailyReportService {
     @Value("${path.to.photo.dir}")
     private String photosDir;
 
-    @Autowired
-    private DailyReportRepository dailyReportRepository;
+    private final DailyReportRepository dailyReportRepository;
+
+    public DailyReportService(DailyReportRepository dailyReportRepository) {
+        this.dailyReportRepository = dailyReportRepository;
+    }
 
     /**
      * Creates a new daily report.

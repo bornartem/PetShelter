@@ -36,7 +36,7 @@ public class Clients {
     @Column(name = "contact")
     private String contact;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "clientId")
     private List<DailyReports> dailyReports;
 
 

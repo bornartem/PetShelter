@@ -1,11 +1,12 @@
 package com.example.petShelter.controller;
 
 import com.example.petShelter.model.DailyReports;
-import com.example.petShelter.service.DailyRepostService;
+import com.example.petShelter.service.DailyReportService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -18,9 +19,12 @@ import java.io.File;
 @RestController
 @RequestMapping("/daily_reports")
 public class DailyReportController {
-    @Autowired
-    private DailyRepostService dailyRepostService;
 
+    private final DailyReportService dailyReportService;
+
+    public DailyReportController(DailyReportService dailyReportService) {
+        this.dailyReportService = dailyReportService;
+    }
 
     @PostMapping
     @ApiResponses({
@@ -29,10 +33,10 @@ public class DailyReportController {
                     description = "Daily report created successfully"
             )
     })
-    public DailyReports createDailyReport(@RequestBody DailyReports reports, File photoFile) {
-        return dailyRepostService.createDailyReport(reports, photoFile);
+    public ResponseEntity<DailyReports> createDailyReport(@Valid @RequestBody DailyReports report, File photoFile) {
+        DailyReports createdReport = dailyReportService.createDailyReport(report, photoFile);
+        return ResponseEntity.ok(createdReport);
     }
-
 
     @GetMapping("/{id}")
     @ApiResponses({
@@ -41,8 +45,9 @@ public class DailyReportController {
                     description = "Daily report found"
             )
     })
-    public DailyReports findDailyReportById(@PathVariable long id) {
-        return dailyRepostService.findDailyReportById(id);
+    public ResponseEntity<DailyReports> findDailyReportById(@PathVariable long id) {
+        DailyReports foundReport = dailyReportService.findDailyReportById(id);
+        return ResponseEntity.ok(foundReport);
     }
 
     @DeleteMapping("/{id}")
@@ -52,10 +57,10 @@ public class DailyReportController {
                     description = "Daily report deleted"
             )
     })
-    public void deleteDailyReportById(@PathVariable long id) {
-        dailyRepostService.deleteDailyReportById(id);
+    public ResponseEntity<Void> deleteDailyReportById(@PathVariable long id) {
+        dailyReportService.deleteDailyReportById(id);
+        return ResponseEntity.noContent().build();
     }
-
 
     @PutMapping
     @ApiResponses({
@@ -64,7 +69,8 @@ public class DailyReportController {
                     description = "Changes in daily report saved"
             )
     })
-    public DailyReports changeDailyReport(@RequestBody DailyReports reports) {
-        return dailyRepostService.changeDailyReport(reports);
+    public ResponseEntity<DailyReports> changeDailyReport(@Valid @RequestBody DailyReports report) {
+        DailyReports updatedReport = dailyReportService.changeDailyReport(report);
+        return ResponseEntity.ok(updatedReport);
     }
 }

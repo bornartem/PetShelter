@@ -30,9 +30,6 @@ import java.util.List;
 @Service
 public class TelegramBotUpdatesListener implements UpdatesListener {
 
-    private Long clientId;
-    private Long chatId;
-    private Integer messageId;
 
     public static String COMMAND_PREFIX = "/";
 
@@ -87,8 +84,10 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                     commandContainer.process(userText, chatId, Arrays.asList(update));
 
 
-                    Long chatId = update.callbackQuery() != null ?
+                    chatId = update.callbackQuery() != null ?
                             update.callbackQuery().message().chat().id() : message.chat().id();
+
+                    List<Update> updatesList = Arrays.asList(update);
 
                     //проверка общается ли человек, и если это так, то нужно перенаправлять сообщения
                     Volunteers volunteers = volunteerService.findFirstByChatId(chatId);
@@ -100,20 +99,22 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                         finishedSingUp.singUp(chatId, userText, volunteers);
 
                     } else if (userText.startsWith(COMMAND_PREFIX)) {
-                        commandContainer.process(userText, chatId);
+                        commandContainer.process(userText, chatId, updatesList);
 
 
                     } else {
-                        telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
+                        telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас," +
+                                " напишите /help чтобы узнать что я понимаю.");
                     }
                 } else {
                     if (update.callbackQuery() != null) {
-                        String userText = update.callbackQuery().data();
-                        commandContainer.process(userText, update.callbackQuery().message().chat().id(), Arrays.asList(update));
+                        userText = update.callbackQuery().data();
+                        commandContainer.process(userText, update.callbackQuery().message().chat().id(),
+                                Arrays.asList(update));
                     }
                 }
             }
-            });
+        });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }
 
