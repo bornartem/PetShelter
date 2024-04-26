@@ -19,7 +19,7 @@ public class RegistrationNewVolunteer implements Command{
             "или\n" +
             "Степанов Петр: postadres123@mail.ru\n" +
             "или\n" +
-            "Валера: 91234567890, email345@gmail.com";
+            "Валера: 81234567890, email345@gmail.com";
 
     private final TelegramBotClient telegramBotClient;
     private final VolunteersService volunteersService;
@@ -33,11 +33,16 @@ public class RegistrationNewVolunteer implements Command{
     @Override
     public void execute(Long chatId) {
         telegramBotClient.sendMessage(chatId, START_MESSAGE);
-        Volunteers volunteers = new Volunteers();
-        volunteers.setId(volunteersService.getMaxIdByVolunteers()+1);
-        volunteers.setChatId(chatId);
+        Volunteers volunteers = volunteersService.findFirstByChatId(chatId);
+        if (volunteers == null) {
+            volunteers = new Volunteers();
+            volunteers.setId(volunteersService.getMaxIdByVolunteers()+1L);
+            volunteers.setChatId(chatId);
+            volunteers.setActivity(false);
+            volunteersService.create(volunteers);
+        }
         volunteers.setActivity(false);
-        volunteersService.create(volunteers);
+        volunteersService.update(volunteers);
     }
 
 }
