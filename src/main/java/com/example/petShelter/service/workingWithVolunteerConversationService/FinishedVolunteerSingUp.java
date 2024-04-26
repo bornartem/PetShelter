@@ -18,7 +18,7 @@ public class FinishedVolunteerSingUp {
 
     public void singUp(Long chatId, String text, Volunteers volunteers) {
         if (volunteers.getName() == null || volunteers.getContact() == null) {
-            String[] strings = text.split(", ");
+            String[] strings = text.split(": ");
             volunteers.setName(strings[0]);
             volunteers.setContact(strings[1]);
             volunteersService.update(volunteers);

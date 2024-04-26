@@ -17,7 +17,9 @@ public class RegistrationNewVolunteer implements Command{
             "Пример:\n" +
             "Иванов Иван Иванович: +7 123 456 78 90\n" +
             "или\n" +
-            "Степанов Петр: postadres123@mail.ru";
+            "Степанов Петр: postadres123@mail.ru\n" +
+            "или\n" +
+            "Валера: 91234567890, email345@gmail.com";
 
     private final TelegramBotClient telegramBotClient;
     private final VolunteersService volunteersService;
@@ -32,6 +34,7 @@ public class RegistrationNewVolunteer implements Command{
     public void execute(Long chatId) {
         telegramBotClient.sendMessage(chatId, START_MESSAGE);
         Volunteers volunteers = new Volunteers();
+        volunteers.setId(volunteersService.getCountVolunteers()+1);
         volunteers.setChatId(chatId);
         volunteers.setActivity(false);
         volunteersService.create(volunteers);
