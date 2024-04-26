@@ -1,6 +1,5 @@
 package com.example.petShelter.command;
 
-import com.example.petShelter.listener.ChoosingShelterMenu;
 import com.example.petShelter.model.Volunteers;
 import com.example.petShelter.service.TelegramBotClient;
 import com.example.petShelter.service.VolunteersService;
