@@ -8,24 +8,33 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.response.SendResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author Khilola Kushbakova
  */
+
+@Slf4j
 @Component("/reportFromUsers")
 public class ReportCommands implements Command {
+    private Map<Long, Clients> usersIdUserMap;
+    private final Map<Long, DailyReports> reports = new HashMap<>();
+
 
     private final ClientsService clientsService;
     private final TelegramBotClient telegramBotClient;
+    private final TelegramBot telegramBot;
 
-    public ReportCommands(ClientsService clientsService, TelegramBotClient telegramBotClient) {
+    public ReportCommands(ClientsService clientsService, TelegramBotClient telegramBotClient, TelegramBot telegramBot) {
         this.clientsService = clientsService;
         this.telegramBotClient = telegramBotClient;
+        this.telegramBot = telegramBot;
     }
 
 
@@ -35,10 +44,13 @@ public class ReportCommands implements Command {
      */
     @Override
     public void execute(Long chatId, List<Update> updatesList) {
+    }
 
-        long chatId = updatesList.get(0).message().chat().id();
+    private void recordReport(Update update) {
+
+        long chatId = update.message().chat().id();
         String messageString = "";
-        DailyReports currentReport = dailyReports.get(chatId);
+        DailyReports currentReport = reports.get(chatId);
 
         if (currentReport == null) {
             telegramBotClient.sendMessage(chatId, "Отправка отчета не активна. Выберите опцию 'Отправить отчет");
@@ -100,11 +112,22 @@ public class ReportCommands implements Command {
             }
         }
     }
+    /**
+     * Method to save Reposts.
+     */
+
+    private void storeReport(DailyReports newReport) {
+        long chatId = newReport.getClientId().getId();
+        Clients client = clientsService.read(chatId);
+        client.getDailyReports().add(newReport);
+        clientsService.create(client);
+
+    }
 
     /**
      * Sends a message to the user indicating that they have filled out the report incorrectly.
      */
-    private void badFilledReport(Update update,  Map<Long, Clients> id) {
+    private void badFilledReport(Update update) {
 
         String[] data = update.callbackQuery().data().split(":");
 
@@ -113,18 +136,21 @@ public class ReportCommands implements Command {
 
         Integer messageId = update.callbackQuery().message().messageId();
 
-        Clients user = id.get(idUser);
+        Clients user = usersIdUserMap.get(idUser);
 
-                execute(new SendMessage(chatId, "Пользователь " + user.getName() + " был предупрежден о том, что отчет " +
+        telegramBot.execute(new SendMessage(chatId, "Пользователь " + user.getName() + " был предупрежден о том, что отчет " +
                 "плохо заполнен"));
 
-                execute(new SendMessage(user.getChatId(), "Уважаемый приемный родитель, мы заметили, что " +
+        telegramBot.execute(new SendMessage(user.getChatId(), "Уважаемый приемный родитель, мы заметили, что " +
                 "вы не заполняете отчет достаточно детально." + "\n" + "Пожалуйста, отнеситесь к этой деятельности более ответственно." + "\n" +
                 "В противном случае, волонтеры приюта будут вынуждены лично проверить условия благополучия животного."));
     }
 
 
-
+    /**
+     * This method processes daily reports and notifies the client about extending
+     * the trial period if necessary.
+     */
     public void processDailyReport(List<DailyReports> dailyReports, Clients client, TelegramBot bot) {
         for (DailyReports report : dailyReports) {
             LocalDateTime currentDate = LocalDateTime.now();
@@ -140,26 +166,29 @@ public class ReportCommands implements Command {
 
     public void congratulateAdopter(TelegramBot bot, long chatId) {
         SendMessage message = new SendMessage(chatId,
-                "Congratulations on passing the trial period! We are happy to announce that you are now " +
-                        "the official owner of your adopted animal.");
+                "Поздравляем с прохождением испытательного срока! Мы рады объявить, " +
+                        "что вы теперь официальным владельцем вашего усыновленного животного.");
         SendResponse response = bot.execute(message);
     }
 
     public void notifyExtendedTrialPeriod(TelegramBot bot, long chatId, int days) {
-        SendMessage message = new SendMessage(chatId, "Your trial period has been extended for " + days +
-                " days. Please continue providing care and love to your adopted animal.");
+        SendMessage message = new SendMessage(chatId, "Ваш испытательный срок был продлен на " + days +
+                " дней. Пожалуйста, продолжайте заботиться и любить вашего усыновленного животного.");
         SendResponse response = bot.execute(message);
     }
 
     public void notifyFailedTrialPeriod(TelegramBot bot, long chatId) {
-        SendMessage message = new SendMessage(chatId, "We regret to inform you that you have not passed the trial period. Please follow the instructions provided to proceed.");
+        SendMessage message = new SendMessage(chatId, "Мы сожалеем сообщить вам, что вы не прошли " +
+                "испытательный срок. Пожалуйста, следуйте предоставленным инструкциям для продолжения.");
         bot.execute(message);
     }
 
     public void requestVolunteerAssistance(TelegramBot bot, long chatId) {
-        SendMessage message = new SendMessage(chatId, "It seems I am unable to assist you at the moment." +
-                " Would you like to request assistance from a volunteer?");
+        SendMessage message = new SendMessage(chatId, "Похоже, что я не могу помочь вам в данный момент. " +
+                "Хотели бы вы запросить помощь у волонтера?");
         bot.execute(message);
     }
+
+
 
 }

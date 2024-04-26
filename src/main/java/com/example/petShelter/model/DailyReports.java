@@ -45,6 +45,9 @@ public class DailyReports {
     @Column(name = "foto_animal")
     private List<Byte> photos;
 
+
+    private String photoPath;
+
     /**
      *the field shows the status once daily report is checked by volunteers
      */
@@ -52,8 +55,8 @@ public class DailyReports {
     private Boolean isCheck;
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Clients client;
+    @JoinColumn(name = "id_client")
+    private Clients clientId;
 
 
     private DailyReportsEnum currentStep;
@@ -74,4 +77,6 @@ public class DailyReports {
     public boolean isCheck() {
         return this.isCheck;
     }
+
+
 }
