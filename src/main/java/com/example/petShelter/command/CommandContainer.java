@@ -52,7 +52,7 @@ public class CommandContainer {
                             TransportingACat transportingACat, RejectToGetACat rejectToGetACat, HomeImprovementForKitty homeImprovementForKitty,
                             HomeImprovementForAdultCat homeImprovementForAdultCat, HomeImprovementForCatWithDisabilities homeImprovementForCatWithDisabilities,
                             RegistrationNewVolunteer registrationNewVolunteer, ChangeActivityVolunteer changeActivityVolunteer,
-                            VolunteersHelp volunteersHelp) {
+                            VolunteersHelp volunteersHelp, StopConversation stopConversation) {
 
         commandMap.put(CommandName.START.getCommandName(), commandStart);
         commandMap.put(CommandName.GET_ADDRESS_OF_DOG_SHELTER.getCommandName(), getAddressOfDogShelterCommand);
@@ -94,6 +94,7 @@ public class CommandContainer {
         commandMap.put(CommandName.REGISTRATION_NEW_VOLUNTEER.getCommandName(), registrationNewVolunteer);
         commandMap.put(CommandName.CHANGE_ACTIVITY_VOLUNTEER.getCommandName(), changeActivityVolunteer);
         commandMap.put(CommandName.VOLUNTEER_HELP.getCommandName(), volunteersHelp);
+        commandMap.put(CommandName.STOP_CONVERSATION.getCommandName(), stopConversation);
     }
 
     public void process(String commandName, Long chatId) {

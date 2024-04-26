@@ -13,6 +13,7 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
+import com.pengrad.telegrambot.request.SendMessage;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,33 +74,35 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             logger.info("Processing update: {}", update);
             Message message = update.message();
 
-            if (message.text() != null) {
-                String userText = message.text();
+            String userText = message.text();
+            if (userText != null) {
 
                 Long chatId = update.callbackQuery() != null ?
                         update.callbackQuery().message().chat().id() : message.chat().id();
 
-                //проверка общается ли человек, и если это так, то нужно перенаправлять сообщения
+
                 Volunteers volunteers = volunteerService.findFirstByChatId(chatId);
                 ConversationPeople people = conversationPeopleService.findByChatId(chatId);
-                if (people != null) {
-                    conversationServiceMain.continueConversation(chatId, userText, people.getIsVolunteer());
-                } //иначе если волонтер и он продолжает регистрироваться
-                else if (volunteers != null && !userText.startsWith(COMMAND_PREFIX)) {
-                    finishedSingUp.singUp(chatId, userText, volunteers);
 
-                } else if (userText.startsWith(COMMAND_PREFIX)) {
+                if (userText.startsWith(COMMAND_PREFIX)) {
                     commandContainer.process(userText, chatId);
+                }
+                //проверка общается ли человек, и если это так, то нужно перенаправлять сообщения
+                else if (people != null) {
+                    Long opponentChatId = people.getOpponentChatId();
+                    telegramBotClient.sendMessage(opponentChatId, userText);
+                } //иначе если волонтер и он продолжает регистрироваться
+                else if (volunteers != null) {
+                    finishedSingUp.singUp(chatId, userText, volunteers);
 
                 } else {
                     telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
                 }
-            } else {
-                if (update.callbackQuery() != null) {
-                    String userText = update.callbackQuery().data();
-                    commandContainer.process(userText, update.callbackQuery().message().chat().id());
-                }
+            } else if (update.callbackQuery() != null) {
+                userText = update.callbackQuery().data();
+                commandContainer.process(userText, update.callbackQuery().message().chat().id());
             }
+
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }
