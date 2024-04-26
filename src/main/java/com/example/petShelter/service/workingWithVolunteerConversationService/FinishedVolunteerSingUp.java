@@ -17,13 +17,14 @@ public class FinishedVolunteerSingUp {
     }
 
     public void singUp(Long chatId, String text, Volunteers volunteers) {
-        if (volunteers.getName().isEmpty() || volunteers.getContact().isBlank()) {
+        if (volunteers.getName() == null || volunteers.getContact() == null) {
             String[] strings = text.split(", ");
             volunteers.setName(strings[0]);
             volunteers.setContact(strings[1]);
             volunteersService.update(volunteers);
             String message = "Вы зарегистрированы в качестве волонтера, с данными:\n"+
-                    volunteers;
+                    volunteers + " Сейчас вы не в активном поиске клиентов нажмите /changeActivity" +
+                    " чтобы изменить активность.";
             telegramBotClient.sendMessage(chatId, message);
         }
 

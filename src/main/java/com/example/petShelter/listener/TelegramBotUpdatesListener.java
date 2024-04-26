@@ -73,7 +73,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             logger.info("Processing update: {}", update);
             Message message = update.message();
 
-            if (message != null) {
+            if (message.text() != null) {
                 String userText = message.text();
 
                 Long chatId = update.callbackQuery() != null ?
