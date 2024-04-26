@@ -7,25 +7,26 @@ import com.example.petShelter.service.VolunteersService;
 import org.springframework.stereotype.Component;
 
 /**
- * The class consists of logic of the project, which has
- the methods to send messages with "TelegramBot"
- * @author Maria Sinyavskaya
+ * The class contains method for sing in new volunteer
+ * @author Danil
  */
 @Component("/volunteersLoginIn")
 public class RegistrationNewVolunteer implements Command{
     private final static String START_MESSAGE = "Привет! Это регистрация волонтера в приюте \"Пушистый друг\". " +
-            "\nВведите через запятую и пробел(, ) свои данные, а конкретнее:\n" +
-            "ФИО и контактную информацию";
+            "\nВведите через двоеточие и пробел(: ) свои данные, а конкретнее:\n" +
+            "ФИО и контактную информацию\n" +
+            "Пример:\n" +
+            "Иванов Иван Иванович: +7 123 456 78 90\n" +
+            "или\n" +
+            "Степанов Петр: postadres123@mail.ru";
 
     private final TelegramBotClient telegramBotClient;
     private final VolunteersService volunteersService;
 
-//    private final ChoosingShelterMenu choosingShelterMenu;
 
     public RegistrationNewVolunteer(TelegramBotClient telegramBotClient, VolunteersService volunteersService) {
         this.telegramBotClient = telegramBotClient;
         this.volunteersService = volunteersService;
-//        this.choosingShelterMenu = choosingShelterMenu;
     }
 
     @Override
@@ -35,9 +36,6 @@ public class RegistrationNewVolunteer implements Command{
         volunteers.setChatId(chatId);
         volunteers.setActivity(false);
         volunteersService.create(volunteers);
-
-
-//        choosingShelterMenu.sendMenuMessage(chatId);
     }
 
 }
