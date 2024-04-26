@@ -37,7 +37,6 @@ public class AnimalAvatarController {
     public AnimalAvatarController(AnimalAvatarService animalAvatarService) {
         this.animalAvatarService = animalAvatarService;
     }
-
     @Operation(summary = "Upload an image for a specific animal")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Image uploaded successfully"),

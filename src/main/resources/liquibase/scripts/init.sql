@@ -73,4 +73,5 @@ id BIGSERIAL PRIMARY KEY,
   notification VARCHAR(255) NOT NULL
 );
 
+
 select * from animals

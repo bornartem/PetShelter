@@ -18,7 +18,6 @@ import java.util.List;
  */
 @Service
 public class TelegramBotClientImpl implements TelegramBotClient {
-
     private final TelegramBot telegramBot;
 
     public TelegramBotClientImpl(TelegramBot telegramBot) {

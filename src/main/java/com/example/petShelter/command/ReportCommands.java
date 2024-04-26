@@ -123,7 +123,6 @@ public class ReportCommands implements Command {
         clientsService.create(client);
 
     }
-
     /**
      * Sends a message to the user indicating that they have filled out the report incorrectly.
      */

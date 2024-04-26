@@ -63,7 +63,6 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
         this.conversationPeopleService = conversationPeopleService;
         this.conversationServiceMain = conversationServiceMain;
     }
-
     @PostConstruct
     public void init() {
         telegramBot.setUpdatesListener(this);

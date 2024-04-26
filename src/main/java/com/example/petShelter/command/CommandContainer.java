@@ -99,7 +99,6 @@ public class CommandContainer {
         commandMap.put(CommandName.VOLUNTEER_HELP.getCommandName(), volunteersHelp);
         commandMap.put(CommandName.REPORT_FROM_USERS.getCommandName(),reportCommands);
     }
-
     public void process(String commandName, Long chatId, List<Update> updatesList) {
         if (commandMap.isEmpty()) {
             throw new RuntimeException();

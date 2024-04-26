@@ -58,7 +58,6 @@ public class DailyReports {
     @JoinColumn(name = "id_client")
     private Clients clientId;
 
-
     private DailyReportsEnum currentStep;
 
     public void nextStep() {

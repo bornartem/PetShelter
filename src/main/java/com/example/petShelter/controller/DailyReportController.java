@@ -61,7 +61,6 @@ public class DailyReportController {
         dailyReportService.deleteDailyReportById(id);
         return ResponseEntity.noContent().build();
     }
-
     @PutMapping
     @ApiResponses({
             @ApiResponse(
