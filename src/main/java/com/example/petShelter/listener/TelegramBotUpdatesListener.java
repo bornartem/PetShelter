@@ -81,11 +81,11 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                 if (userText.startsWith(COMMAND_PREFIX)) {
                     Long chatId = update.callbackQuery() != null ?
                             update.callbackQuery().message().chat().id() : message.chat().id();
-                    commandContainer.process(userText, chatId, Arrays.asList(update));
+//                    commandContainer.process(userText, chatId, Arrays.asList(update));
 
 
-                    chatId = update.callbackQuery() != null ?
-                            update.callbackQuery().message().chat().id() : message.chat().id();
+//                    chatId = update.callbackQuery() != null ?
+//                            update.callbackQuery().message().chat().id() : message.chat().id();
 
                     List<Update> updatesList = Arrays.asList(update);
 

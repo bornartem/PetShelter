@@ -11,8 +11,9 @@ import java.util.List;
  */
 
 public interface Command {
-    default  void execute(Long chatId){
-        execute(chatId, new ArrayList<>());
-    };
+    default void execute(Long chatId){};
+//    {
+//        execute(chatId, new ArrayList<>());
+//    };
     default void execute(Long chatId, List<Update> updatesList){};
 }

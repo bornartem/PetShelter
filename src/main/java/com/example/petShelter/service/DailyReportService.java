@@ -15,7 +15,7 @@ import java.nio.file.StandardCopyOption;
 
 
 /**
- *Service class which consist of business logic of Reports from users
+ * Service class which consist of business logic of Reports from users
  *
  * @author Khilola Kushbakova
  */
@@ -27,6 +27,7 @@ public class DailyReportService {
 
     private final DailyReportRepository dailyReportRepository;
 
+    @Autowired
     public DailyReportService(DailyReportRepository dailyReportRepository) {
         this.dailyReportRepository = dailyReportRepository;
     }
@@ -84,10 +85,10 @@ public class DailyReportService {
      * @param reports The updated DailyReports object.
      * @return The updated DailyReports object.
      */
-    public DailyReports changeDailyReport(DailyReports reports){
+    public DailyReports changeDailyReport(DailyReports reports) {
         return dailyReportRepository.save(reports);
     }
-    }
+}
 
 
 
