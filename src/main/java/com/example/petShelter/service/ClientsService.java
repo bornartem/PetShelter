@@ -85,4 +85,7 @@ public class ClientsService {
         }
     }
 
+    public Clients findFirstByChatId(Long chatId) {
+        return clientsRepository.findFirstByChatId(chatId);
+    }
 }
