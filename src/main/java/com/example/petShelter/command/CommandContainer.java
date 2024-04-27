@@ -114,7 +114,7 @@ public class CommandContainer {
         } else if (commandMap.containsKey(commandName)) {
             commandMap.get(commandName).execute(chatId);
         } else if (commandWithListMap.containsKey(commandName)) {
-            commandWithListMap.get(commandName).execute(chatId, updatesList);
+            commandWithListMap.get(commandName).execute(chatId, updateList);
         }
     }
 
