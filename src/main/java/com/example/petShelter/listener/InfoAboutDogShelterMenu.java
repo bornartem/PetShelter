@@ -32,7 +32,7 @@ public class InfoAboutDogShelterMenu {
         InlineKeyboardButton button5 = new InlineKeyboardButton("Пропуск на машину").callbackData("/CarPermissionNumber");
         InlineKeyboardButton button6 = new InlineKeyboardButton("Техника безопасности").callbackData("/ShelterSecurityRulesForDogs");
 
-        InlineKeyboardButton button7 = new InlineKeyboardButton("Регистрация пользователя").callbackData("/registerUserInCatShelter");
+        InlineKeyboardButton button7 = new InlineKeyboardButton("Регистрация пользователя").callbackData("/registerUser");
         InlineKeyboardButton button8 = new InlineKeyboardButton("Как усыновить собаку")
                 .callbackData("/getInfoAboutDog");
 
