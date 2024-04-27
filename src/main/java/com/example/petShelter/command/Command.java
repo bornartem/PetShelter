@@ -2,7 +2,6 @@ package com.example.petShelter.command;
 
 import com.pengrad.telegrambot.model.Update;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,8 +11,6 @@ import java.util.List;
 
 public interface Command {
     default void execute(Long chatId){};
-//    {
-//        execute(chatId, new ArrayList<>());
-//    };
-    default void execute(Long chatId, List<Update> updatesList){};
+    default void execute(Long chatId, List<Update> updateList){};
+
 }

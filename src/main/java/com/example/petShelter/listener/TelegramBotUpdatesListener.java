@@ -13,6 +13,7 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
+import com.pengrad.telegrambot.request.SendMessage;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,6 @@ import java.util.List;
  */
 @Service
 public class TelegramBotUpdatesListener implements UpdatesListener {
-
 
     public static String COMMAND_PREFIX = "/";
 
@@ -77,42 +77,30 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
             if (message != null) {
                 String userText = message.text();
-
-//                if (userText.startsWith(COMMAND_PREFIX)) {
-                    Long chatId = update.callbackQuery() != null ?
-                            update.callbackQuery().message().chat().id() : message.chat().id();
-//                    commandContainer.process(userText, chatId, Arrays.asList(update));
+                Long chatId = update.callbackQuery() != null ?
+                        update.callbackQuery().message().chat().id() : message.chat().id();
 
 
-//                    chatId = update.callbackQuery() != null ?
-//                            update.callbackQuery().message().chat().id() : message.chat().id();
+                Volunteers volunteers = volunteerService.findFirstByChatId(chatId);
+                ConversationPeople people = conversationPeopleService.findByChatId(chatId);
 
-                    List<Update> updatesList = Arrays.asList(update);
-
-                    //проверка общается ли человек, и если это так, то нужно перенаправлять сообщения
-                    Volunteers volunteers = volunteerService.findFirstByChatId(chatId);
-                    ConversationPeople people = conversationPeopleService.findByChatId(chatId);
-                    if (people != null) {
-                        conversationServiceMain.continueConversation(chatId, userText, people.getIsVolunteer());
-                    } //иначе если волонтер и он продолжает регистрироваться
-                    else if (volunteers != null && !userText.startsWith(COMMAND_PREFIX)) {
-                        finishedSingUp.singUp(chatId, userText, volunteers);
-
-                    } else if (userText.startsWith(COMMAND_PREFIX)) {
-                        commandContainer.process(userText, chatId, updatesList);
-
-
-                    } else {
-                        telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас," +
-                                " напишите /help чтобы узнать что я понимаю.");
-                    }
-//                }
-            } else {
-                if (update.callbackQuery() != null) {
-                    String userText = update.callbackQuery().data();
-                    commandContainer.process(userText, update.callbackQuery().message().chat().id(),
-                            Arrays.asList(update));
+                if (userText.startsWith(COMMAND_PREFIX)) {
+                    commandContainer.process(userText, chatId, null);
                 }
+                //проверка общается ли человек, и если это так, то нужно перенаправлять сообщения
+                else if (people != null) {
+                    Long opponentChatId = people.getOpponentChatId();
+                    telegramBotClient.sendMessage(opponentChatId, userText);
+                } //иначе если волонтер и он продолжает регистрироваться
+                else if (volunteers != null) {
+                    finishedSingUp.singUp(chatId, userText, volunteers);
+
+                } else {
+                    telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
+                }
+            } else if (update.callbackQuery() != null) {
+                String userText = update.callbackQuery().data();
+                commandContainer.process(userText, update.callbackQuery().message().chat().id(),Arrays.asList(update));
             }
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;

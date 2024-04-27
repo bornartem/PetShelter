@@ -26,7 +26,7 @@ public class Volunteers {
     @JsonManagedReference
     private List<Clients> clients;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_volunteer")
     private long id;
 

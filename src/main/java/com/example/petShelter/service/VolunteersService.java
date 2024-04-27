@@ -117,4 +117,8 @@ public class VolunteersService {
                 .stream().findAny()
                 .orElseThrow(() -> new NotFoundInDB("Все волонтеры сейчас заняты, Вам ответит первый освободившийся"));
     }
+
+    public long getMaxIdByVolunteers() {
+        return volunteersRepository.getMaxIdByVolunteers();
+    }
 }

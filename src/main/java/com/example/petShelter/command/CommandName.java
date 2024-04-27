@@ -50,6 +50,7 @@ public enum CommandName {
     REGISTRATION_NEW_VOLUNTEER("/volunteersLoginIn"),
     CHANGE_ACTIVITY_VOLUNTEER("/changeActivity"),
     REPORT_FROM_USERS("/reportFromUsers"),
+    STOP_CONVERSATION("/stopConversation"),
     NO("noCommand");
 
 

@@ -56,7 +56,8 @@ public class CommandContainer {
                             TransportingACat transportingACat, RejectToGetACat rejectToGetACat, HomeImprovementForKitty homeImprovementForKitty,
                             HomeImprovementForAdultCat homeImprovementForAdultCat, HomeImprovementForCatWithDisabilities homeImprovementForCatWithDisabilities,
                             RegistrationNewVolunteer registrationNewVolunteer, ChangeActivityVolunteer changeActivityVolunteer,
-                            VolunteersHelp volunteersHelp, ReportCommands reportCommands) {
+                            VolunteersHelp volunteersHelp, StopConversation stopConversation,
+                            ReportCommands reportCommands) {
 
         commandMap.put(CommandName.START.getCommandName(), commandStart);
         commandMap.put(CommandName.GET_ADDRESS_OF_DOG_SHELTER.getCommandName(), getAddressOfDogShelterCommand);
@@ -98,17 +99,16 @@ public class CommandContainer {
         commandMap.put(CommandName.REGISTRATION_NEW_VOLUNTEER.getCommandName(), registrationNewVolunteer);
         commandMap.put(CommandName.CHANGE_ACTIVITY_VOLUNTEER.getCommandName(), changeActivityVolunteer);
         commandMap.put(CommandName.VOLUNTEER_HELP.getCommandName(), volunteersHelp);
+        commandMap.put(CommandName.STOP_CONVERSATION.getCommandName(), stopConversation);
 //        commandMap.put(CommandName.REPORT_FROM_USERS.getCommandName(),reportCommands);
 
 
         commandWithListMap.put(CommandName.REGISTER_USER.getCommandName(), registerUser);
         commandWithListMap.put(CommandName.REPORT_FROM_USERS.getCommandName(), reportCommands);
+
     }
 
-
-
-
-    public void process(String commandName, Long chatId, List<Update> updatesList) {
+    public void process(String commandName, Long chatId, List<Update> updateList) {
         if (commandMap.isEmpty()) {
             throw new RuntimeException();
         } else if (commandMap.containsKey(commandName)) {
@@ -117,4 +117,5 @@ public class CommandContainer {
             commandWithListMap.get(commandName).execute(chatId, updatesList);
         }
     }
+
 }

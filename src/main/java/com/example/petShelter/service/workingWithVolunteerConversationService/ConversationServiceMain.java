@@ -103,29 +103,29 @@ public class ConversationServiceMain {
         return volunteerService.findFreeVolunteer().getChatId();
     }
 
-
-    /**
-     * method if in listener got letter from user, who is in mable "conversation people"
-     * @param userChatId users chat id, who write message
-     * @param message his message
-     * @param isVolunteer is he volunteer
-     */
-    public void continueConversation(Long userChatId, String message, Boolean isVolunteer) {
-
-        ConversationPeople people = conversationPeopleService.findByChatId(userChatId);
-        Long opponentChatId = people.getOpponentChatId();
-
-        if (isVolunteer && Objects.equals(message, "!stop")) {
-
-            telegramBot.execute(new SendMessage(userChatId, ConstantsSendMessageInConv.STOP_MESSAGE_FOR_VOL));
-            telegramBot.execute(new SendMessage(opponentChatId, ConstantsSendMessageInConv.STOP_MESSAGE));
-
-            conversationPeopleService.deletePeople(opponentChatId);
-            conversationPeopleService.deletePeople(userChatId);
-
-        } else {
-            telegramBot.execute(new SendMessage(opponentChatId, message));
-        }
-
-    }
+//
+//    /**
+//     * method if in listener got letter from user, who is in mable "conversation people"
+//     * @param userChatId users chat id, who write message
+//     * @param message his message
+//     * @param isVolunteer is he volunteer
+//     */
+//    public void continueConversation(Long userChatId, String message, Boolean isVolunteer) {
+//
+//        ConversationPeople people = conversationPeopleService.findByChatId(userChatId);
+//        Long opponentChatId = people.getOpponentChatId();
+//
+//        if (isVolunteer && Objects.equals(message, "!stop")) {
+//
+//            telegramBot.execute(new SendMessage(userChatId, ConstantsSendMessageInConv.STOP_MESSAGE_FOR_VOL));
+//            telegramBot.execute(new SendMessage(opponentChatId, ConstantsSendMessageInConv.STOP_MESSAGE));
+//
+//            conversationPeopleService.deletePeople(opponentChatId);
+//            conversationPeopleService.deletePeople(userChatId);
+//
+//        } else {
+//            telegramBot.execute(new SendMessage(opponentChatId, message));
+//        }
+//
+//    }
 }

@@ -129,6 +129,8 @@ public class CommandContainerTest {
     ChangeActivityVolunteer changeActivityVolunteer;
     @Mock
     VolunteersHelp volunteersHelp;
+    @Mock
+    StopConversation stopConversation;
 
 
     private CommandContainer commandContainer;
@@ -147,7 +149,7 @@ public class CommandContainerTest {
                 homeImprovementForAdult, homeImprovementWithDisabilities, getInfoAboutCatMeeting, documentsForGetACat,
                 transportingACat, rejectToGetACat, homeImprovementForKitty, homeImprovementForAdultCat,
                 homeImprovementForCatWithDisabilities, registrationNewVolunteer, changeActivityVolunteer,
-                volunteersHelp
+                volunteersHelp, stopConversation
         );
     }
 
