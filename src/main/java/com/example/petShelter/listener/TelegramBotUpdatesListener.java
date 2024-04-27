@@ -78,7 +78,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             if (message != null) {
                 String userText = message.text();
 
-                if (userText.startsWith(COMMAND_PREFIX)) {
+//                if (userText.startsWith(COMMAND_PREFIX)) {
                     Long chatId = update.callbackQuery() != null ?
                             update.callbackQuery().message().chat().id() : message.chat().id();
 //                    commandContainer.process(userText, chatId, Arrays.asList(update));
@@ -106,12 +106,12 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                         telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас," +
                                 " напишите /help чтобы узнать что я понимаю.");
                     }
-                } else {
-                    if (update.callbackQuery() != null) {
-                        userText = update.callbackQuery().data();
-                        commandContainer.process(userText, update.callbackQuery().message().chat().id(),
-                                Arrays.asList(update));
-                    }
+//                }
+            } else {
+                if (update.callbackQuery() != null) {
+                    String userText = update.callbackQuery().data();
+                    commandContainer.process(userText, update.callbackQuery().message().chat().id(),
+                            Arrays.asList(update));
                 }
             }
         });
