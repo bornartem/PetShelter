@@ -103,7 +103,7 @@ public class CommandContainer {
         if (commandMap.isEmpty()) {
             throw new RuntimeException();
         } else if (commandMap.containsKey(commandName)) {
-            commandMap.get(commandName).execute(chatId, updateList);
+            commandMap.get(commandName).execute(chatId);
         }
     }
 

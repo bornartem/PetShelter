@@ -71,12 +71,12 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     @Override
     public int process(List<Update> updates) {
         updates.forEach(update -> {
-            logger.info("Processing update: {}", update);
+//            logger.info("Processing update: {}", update);
             Message message = update.message();
 
-            String userText = message.text();
-            if (userText != null) {
 
+            if (message != null) {
+                String userText = message.text();
                 Long chatId = update.callbackQuery() != null ?
                         update.callbackQuery().message().chat().id() : message.chat().id();
 
@@ -85,7 +85,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                 ConversationPeople people = conversationPeopleService.findByChatId(chatId);
 
                 if (userText.startsWith(COMMAND_PREFIX)) {
-                    commandContainer.process(userText, chatId);
+                    commandContainer.process(userText, chatId, null);
                 }
                 //проверка общается ли человек, и если это так, то нужно перенаправлять сообщения
                 else if (people != null) {
@@ -99,8 +99,8 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                     telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
                 }
             } else if (update.callbackQuery() != null) {
-                userText = update.callbackQuery().data();
-                commandContainer.process(userText, update.callbackQuery().message().chat().id());
+                String userText = update.callbackQuery().data();
+                commandContainer.process(userText, update.callbackQuery().message().chat().id(),null);
             }
 
         });
