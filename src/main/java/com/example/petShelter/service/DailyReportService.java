@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 
 /**
@@ -87,6 +88,14 @@ public class DailyReportService {
      */
     public DailyReports changeDailyReport(DailyReports reports) {
         return dailyReportRepository.save(reports);
+    }
+
+    public List<DailyReports> findByNotCheck() {
+        return dailyReportRepository.findByIsCheckFalse();
+    }
+
+    public DailyReports update(DailyReports report) {
+        return dailyReportRepository.save(report);
     }
 }
 

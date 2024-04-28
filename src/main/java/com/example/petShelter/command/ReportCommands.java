@@ -64,7 +64,7 @@ public class ReportCommands implements Command {
                     if (update.message().photo() == null) {
                         messageString = " Вам нужно  прикрепить фото";
                     } else {
-                        currentReport.setPhotos(List.of());
+                        currentReport.setPhotos("null");
                         currentReport.nextStep();
                         messageString = "Напишите описание текущего состояния здоровья животного";
                     }

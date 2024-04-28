@@ -1,13 +1,10 @@
 package com.example.petShelter.command;
 
-import com.example.petShelter.listener.ChoosingShelterMenu;
-import com.example.petShelter.model.ConversationPeople;
 import com.example.petShelter.model.Volunteers;
 import com.example.petShelter.service.ConversationPeopleService;
 import com.example.petShelter.service.TelegramBotClient;
 import com.example.petShelter.service.VolunteersService;
-import com.example.petShelter.service.workingWithVolunteerConversationService.ConstantsSendMessageInConv;
-import com.pengrad.telegrambot.request.SendMessage;
+import com.example.petShelter.workingWithVolunteerService.workingWithVolunteerConversationService.ConstantsSendMessageInConv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
