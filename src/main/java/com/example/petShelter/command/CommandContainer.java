@@ -43,7 +43,7 @@ public class CommandContainer {
                             ShelterSecurityRulesForCats shelterSecurityRulesForCats, DogShelterInfoCommand dogShelterInfoCommand,
                             DogShelterSchedule dogShelterSchedule, GetDogShelterLocation getDogShelterLocation,
                             GetShelterCarPermission getShelterCarPermission, ShelterSecurityRulesForDogs shelterSecurityRulesForDogs,
-                            RegisterUser registerUser, GetHomeImprovementForCat getHomeImprovementForCat, GetInfoAboutCat getInfoAboutCat,
+                            RegisterUserCommand registerUser, GetHomeImprovementForCat getHomeImprovementForCat, GetInfoAboutCat getInfoAboutCat,
                             GetInfoAboutDogMeeting getInfoAboutDogMeeting, DocumentsForGetADog documentsForGetADog,
                             TransportingADog transportingADog, DogHandlerAdvices dogHandlerAdvices, DogHandlersList dogHandlersList,
                             RejectToGetADog rejectToGetADog, HomeImprovementForPuppy homeImprovementForPuppy,

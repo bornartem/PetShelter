@@ -59,7 +59,6 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                                       ConversationPeopleService conversationPeopleService,
                                       ConversationServiceMain conversationServiceMain,
                                       RegisterUserCommand registerUser) {
-                                      TelegramBotClient telegramBotClient) {
         this.telegramBot = telegramBot;
         this.commandContainer = commandContainer;
         this.telegramBotClient = telegramBotClient;

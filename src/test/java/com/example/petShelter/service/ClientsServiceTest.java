@@ -2,6 +2,7 @@ package com.example.petShelter.service;
 
 import com.example.petShelter.model.Animals;
 import com.example.petShelter.model.Clients;
+import com.example.petShelter.model.DailyReports;
 import com.example.petShelter.repository.ClientsRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,8 +28,10 @@ public class ClientsServiceTest {
 
     @InjectMocks
     private ClientsService clientsService;
-    private Clients clients = new Clients(null, 1L, 1L, "Artem", "+7-911-081_18_10", null);
-    private Clients clients1 = new Clients(null, 2L, 2L, "Art", "+7-911-081_10_10", null);
+
+    private List<DailyReports> dailyReports = new ArrayList<>();
+    private Clients clients = new Clients(null, 1L, 1L, "Artem", "+7-911-081_18_10", dailyReports, null);
+    private Clients clients1 = new Clients(null, 2L, 2L, "Art", "+7-911-081_10_10",dailyReports, null);
 
     @Test
     public void shouldReturnCreateClient(){

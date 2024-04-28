@@ -40,7 +40,6 @@ public class Clients {
     @OneToMany(mappedBy = "clientId")
     private List<DailyReports> dailyReports;
 
-
     @JsonIgnore
     @OneToOne
     private Animals adoptedAnimal;

@@ -18,6 +18,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
+
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -129,6 +131,9 @@ public class CommandContainerTest {
     StopConversation stopConversation;
 
     @Mock
+    ReportCommands reportCommands;
+
+    @Mock
     ChooseACat chooseACat;
 
     @Mock
@@ -148,8 +153,8 @@ public class CommandContainerTest {
                 transportingADog, dogHandlerAdvices, dogHandlersList, rejectToGetADog, homeImprovementForPuppy,
                 homeImprovementForAdult, homeImprovementWithDisabilities, getInfoAboutCatMeeting, documentsForGetACat,
                 transportingACat, rejectToGetACat, homeImprovementForKitty, homeImprovementForAdultCat,
-                homeImprovementForCatWithDisabilities, chooseACat, chooseADog, registrationNewVolunteer, changeActivityVolunteer,
-                volunteersHelp, stopConversation
+                homeImprovementForCatWithDisabilities, registrationNewVolunteer, changeActivityVolunteer,
+                volunteersHelp, stopConversation, reportCommands, chooseACat, chooseADog
         );
     }
 
@@ -158,7 +163,7 @@ public class CommandContainerTest {
         String commandName = CommandName.START.getCommandName();
         Long chatId = 123456L;
 
-        commandContainer.process(commandName, chatId);
+        commandContainer.process(commandName, chatId, Collections.emptyList());
 
         verify(startCommand, times(1)).execute(chatId);
     }
@@ -168,7 +173,7 @@ public class CommandContainerTest {
         String commandName = "NonExistingCommand";
         Long chatId = 123456L;
 
-        commandContainer.process(commandName, chatId);
+        commandContainer.process(commandName, chatId, Collections.emptyList());
 
         verifyNoInteractions(startCommand);
 

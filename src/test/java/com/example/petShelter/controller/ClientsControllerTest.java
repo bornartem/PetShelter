@@ -2,6 +2,7 @@ package com.example.petShelter.controller;
 
 import com.example.petShelter.model.Animals;
 import com.example.petShelter.model.Clients;
+import com.example.petShelter.model.DailyReports;
 import com.example.petShelter.repository.*;
 import com.example.petShelter.service.*;
 import org.json.JSONObject;
@@ -39,9 +40,13 @@ public class ClientsControllerTest {
     @MockBean
     private ClientsRepository clientsRepository;
     @MockBean
+    private DailyReportRepository dailyReportRepository;
+    @MockBean
     private SheltersRepository sheltersRepository;
     @SpyBean
     private VolunteersService volunteersService;
+    @SpyBean
+    private DailyReportService dailyReportService;
     @SpyBean
     private AnimalAvatarService animalAvatarService;
     @SpyBean
@@ -175,9 +180,10 @@ public class ClientsControllerTest {
 
     @Test
     void shouldReturnAllClients() throws Exception {
+        List<DailyReports> dailyReports = new ArrayList<>();
         List<Clients> clientsList = new ArrayList<>(List.of(
-                new Clients(null, 1L, 1L, "Artem", "+7-911-081_18_10", null),
-                new Clients(null, 2L, 2L, "Art", "+7-911-081_10_10", null)
+                new Clients(null, 1L, 1L, "Artem", "+7-911-081_18_10", dailyReports, null),
+                new Clients(null, 2L, 2L, "Art", "+7-911-081_10_10", dailyReports, null)
         ));
 
         when(clientsRepository.findAll()).thenReturn(clientsList);
