@@ -121,4 +121,8 @@ public class VolunteersService {
     public long getMaxIdByVolunteers() {
         return volunteersRepository.getMaxIdByVolunteers();
     }
+
+    public List<Volunteers> findAllActivity() {
+        return volunteersRepository.findVolunteersByActivityTrue()  ;
+    }
 }

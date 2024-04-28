@@ -6,17 +6,14 @@ import com.example.petShelter.command.RegisterUserCommand;
 import com.example.petShelter.model.Clients;
 import com.example.petShelter.model.ConversationPeople;
 import com.example.petShelter.model.Volunteers;
-import com.example.petShelter.service.ClientsService;
-import com.example.petShelter.service.ConversationPeopleService;
-import com.example.petShelter.service.TelegramBotClient;
-import com.example.petShelter.service.VolunteersService;
-import com.example.petShelter.service.workingWithVolunteerConversationService.ConversationServiceMain;
-import com.example.petShelter.service.workingWithVolunteerConversationService.FinishedVolunteerSingUp;
+import com.example.petShelter.service.*;
+import com.example.petShelter.workingWithVolunteerService.workingWithVolunteerConversationService.ConversationServiceMain;
+import com.example.petShelter.workingWithVolunteerService.workingWithVolunteerConversationService.FinishedVolunteerSingUp;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.request.SendMessage;
+import com.pengrad.telegrambot.request.SendPhoto;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +46,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     private final ConversationPeopleService conversationPeopleService;
     private final ConversationServiceMain conversationServiceMain;
     private final RegisterUserCommand registerUser;
+    private final AnimalAvatarService animalAvatarService;
 
     public TelegramBotUpdatesListener(TelegramBot telegramBot,
                                       CommandContainer commandContainer,
@@ -58,7 +56,8 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                                       ClientsService clientsService,
                                       ConversationPeopleService conversationPeopleService,
                                       ConversationServiceMain conversationServiceMain,
-                                      RegisterUserCommand registerUser) {
+                                      RegisterUserCommand registerUser,
+                                      AnimalAvatarService animalAvatarService) {
         this.telegramBot = telegramBot;
         this.commandContainer = commandContainer;
         this.telegramBotClient = telegramBotClient;
@@ -68,6 +67,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
         this.conversationPeopleService = conversationPeopleService;
         this.conversationServiceMain = conversationServiceMain;
         this.registerUser = registerUser;
+        this.animalAvatarService = animalAvatarService;
     }
 
     @PostConstruct
@@ -81,7 +81,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             logger.info("Processing update: {}", update);
             Message message = update.message();
 
-            if (message != null) {
+            if (message.text() != null) {
                 String userText = message.text();
                 Long chatId = update.callbackQuery() != null ?
                         update.callbackQuery().message().chat().id() : message.chat().id();
@@ -91,6 +91,9 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                 Clients clients = clientsService.findFirstByChatId(chatId);
                 ConversationPeople people = conversationPeopleService.findByChatId(chatId);
 
+                if(userText.startsWith("/ответ на отчет")){
+                    conversationServiceMain.reportConversation(chatId, userText);
+                }else
                 if (userText.startsWith(COMMAND_PREFIX)) {
                     commandContainer.process(userText, chatId, null);
                 }
@@ -111,6 +114,10 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             } else if (update.callbackQuery() != null) {
                 String userText = update.callbackQuery().data();
                 commandContainer.process(userText, update.callbackQuery().message().chat().id(), Arrays.asList(update));
+            } else if (update.message().photo() != null) {
+                String photo = update.message().photo()[0].fileId();
+                //здесь код по сохранению фотографии пользователя
+                telegramBot.execute(new SendPhoto(update.message().chat().id(), photo));
             }
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;

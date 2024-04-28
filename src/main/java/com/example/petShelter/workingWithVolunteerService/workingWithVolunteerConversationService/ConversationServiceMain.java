@@ -1,12 +1,14 @@
-package com.example.petShelter.service.workingWithVolunteerConversationService;
+package com.example.petShelter.workingWithVolunteerService.workingWithVolunteerConversationService;
 
 import com.example.petShelter.exception.NotFoundInDB;
-import com.example.petShelter.model.ConversationPeople;
+import com.example.petShelter.model.Clients;
 import com.example.petShelter.service.ClientsService;
 import com.example.petShelter.service.ConversationPeopleService;
 import com.example.petShelter.service.VolunteersService;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.util.Objects;
 @Service
 public class ConversationServiceMain {
 
+    private static final Logger log = LoggerFactory.getLogger(ConversationServiceMain.class);
     @Autowired
     VolunteersService volunteerService;
 
@@ -103,29 +106,22 @@ public class ConversationServiceMain {
         return volunteerService.findFreeVolunteer().getChatId();
     }
 
-//
-//    /**
-//     * method if in listener got letter from user, who is in mable "conversation people"
-//     * @param userChatId users chat id, who write message
-//     * @param message his message
-//     * @param isVolunteer is he volunteer
-//     */
-//    public void continueConversation(Long userChatId, String message, Boolean isVolunteer) {
-//
-//        ConversationPeople people = conversationPeopleService.findByChatId(userChatId);
-//        Long opponentChatId = people.getOpponentChatId();
-//
-//        if (isVolunteer && Objects.equals(message, "!stop")) {
-//
-//            telegramBot.execute(new SendMessage(userChatId, ConstantsSendMessageInConv.STOP_MESSAGE_FOR_VOL));
-//            telegramBot.execute(new SendMessage(opponentChatId, ConstantsSendMessageInConv.STOP_MESSAGE));
-//
-//            conversationPeopleService.deletePeople(opponentChatId);
-//            conversationPeopleService.deletePeople(userChatId);
-//
-//        } else {
-//            telegramBot.execute(new SendMessage(opponentChatId, message));
-//        }
-//
-//    }
+    String VOLUNTEER_MESSAGE_LATE = "Вы успешно проверили отчет от пользователя. Ваша активность - " +
+            "false. Если вы готовы принимать клиента/проверять следующий отчет нажмите /changeActivity";
+    public void reportConversation(Long volChatId, String text) {
+        try {
+            Long clientChatId = Long.parseLong(text.split(" ")[3]);
+            if (clientService.findFirstByChatId(clientChatId) == null) {
+                telegramBot.execute(new SendMessage(volChatId, "проверьте правильность введенного id"));
+                return;
+            }
+            String notNeed = "/ответ на отчет " + clientChatId + " ";
+            int len = notNeed.length();
+            telegramBot.execute(new SendMessage(clientChatId, text.substring(len)));
+            telegramBot.execute(new SendMessage(volChatId, VOLUNTEER_MESSAGE_LATE));
+        } catch (Exception e) {
+            log.info("error in send message about checking report to client (report = {})", text);
+        }
+
+    }
 }

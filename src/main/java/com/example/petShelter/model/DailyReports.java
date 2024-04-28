@@ -41,9 +41,9 @@ public class DailyReports {
     @Column(name = "animal_menu")
     private String animalMenu;
 
-    @Lob
+//    @Lob
     @Column(name = "foto_animal")
-    private List<Byte> photos;
+    private String photos;
 
 
     private String photoPath;
