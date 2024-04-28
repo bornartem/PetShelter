@@ -1,9 +1,11 @@
 package com.example.petShelter.service;
 
+import com.example.petShelter.model.Animals;
 import com.example.petShelter.model.Clients;
 import com.example.petShelter.repository.ClientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +20,12 @@ import java.util.List;
 public class ClientsService {
     private final ClientsRepository clientsRepository;
 
+    private final AnimalsService animalsService;
+
     @Autowired
-    public ClientsService(ClientsRepository clientsRepository) {
+    public ClientsService(ClientsRepository clientsRepository, AnimalsService animalsService) {
         this.clientsRepository = clientsRepository;
+        this.animalsService = animalsService;
     }
 
     /**
@@ -83,6 +88,23 @@ public class ClientsService {
         } else {
             return clientsRepository.findAll();
         }
+    }
+
+    /**
+     * Method to register a foster animal with an adoptive parent
+     * called method of repository {@link JpaRepository#findById(Object)}
+     * called method of repository {@link JpaRepository#save(Object)}
+     *
+     * @param clientId identifier of client, can't be null
+     * @param animalId identifier of animal, can't be null
+     * @return client who adopted the animal
+     */
+    public Clients registerAFosterAnimalWithAnAdoptiveParent(Long clientId, Long animalId) {
+        Clients client = clientsRepository.findById(clientId).orElseThrow();
+        Animals animal = animalsService.findAnimalById(animalId);
+        client.setAdoptedAnimal(animal);
+        clientsRepository.save(client);
+        return client;
     }
 
 }

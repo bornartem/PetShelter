@@ -89,6 +89,26 @@ public class ClientsController {
         return ResponseEntity.ok(createdClient);
     }
 
+    @Operation(summary = "Register a foster animal with an adoptive parent",
+            description = "Returns the client who adopted the animal"
+            )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "register a foster animal with an adoptive parent",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = Clients.class)
+                    )
+            )
+    })
+    @PutMapping("/registerAnimal")
+    public ResponseEntity<Clients> registerAnimalWithAnAdoptiveParent(@RequestParam Long clientId,
+                                                                      @RequestParam Long animalId) {
+        Clients adoptiveParent = clientService.registerAFosterAnimalWithAnAdoptiveParent(clientId, animalId);
+        return ResponseEntity.ok(adoptiveParent);
+    }
+
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",

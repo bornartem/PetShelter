@@ -37,6 +37,8 @@ public class Animals {
     private long id;
     @Column(name = "name")
     private String name;
+    @Column(name = "age")
+    private String age;
     @Column(name = "type")
     private String type;
     @Column(name = "busy_free", nullable = false)
@@ -52,11 +54,6 @@ public class Animals {
 
     @Override
     public String toString() {
-        return "Animals{" +
-
-                "id=" + id +
-                ", name='" + name + '\'' +
-
-                '}';
+        return type + " " + name + ", " + age + "\n";
     }
 }

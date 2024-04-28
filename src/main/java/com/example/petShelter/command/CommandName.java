@@ -47,6 +47,8 @@ public enum CommandName {
     HOME_IMPROVEMENT_FOR_ADULT_CAT("/homeImprovementForAdultCat"),
     HOME_IMPROVEMENT_WITH_DISABILITIES("/homeImprovementWithDisabilities"),
     HOME_IMPROVEMENT_FOR_CAT_WITH_DISABILITIES("/homeImprovementForCatWithDisabilities"),
+    CHOOSE_A_CAT("/chooseACat"),
+    CHOOSE_A_DOG("/chooseADog"),
     NO("noCommand");
 
 

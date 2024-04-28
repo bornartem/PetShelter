@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -64,6 +65,17 @@ public class AnimalsService {
         return animalsRepository.findAnimalsByBusyFree(busyAnimalStatus);
     }
     /**
+     * Method to find animals of a certain shelter and with a certain status.
+     *
+     * @param shelterId the identifier of the shelter whose animals are to be found
+     * @param busyAnimalStatus the status of animals to search for
+     * @return a collection of animals according to the given parameters.
+     */
+    public Collection<Animals> findAnimalsBySheltersIdAndBusyFree(Long shelterId, Boolean busyAnimalStatus) {
+        log.info("Was invoked method for findAnimalsByShelterIdAndBusyFree");
+        return animalsRepository.findAnimalsBySheltersIdAndBusyFree(shelterId, busyAnimalStatus);
+    }
+    /**
      * Method to find animals based on their type.
      *
      * @param animalType the type of animals to search for
@@ -103,6 +115,22 @@ public class AnimalsService {
     public Animals changeAnimalInfo(Animals animal) {
         log.info("Was invoked method for changeAnimalInfo");
         return animalsRepository.save(animal);
+    }
+
+    /**
+     * Method to change busyFree status of animal
+     * called method of repository {@link JpaRepository#findById(Object)}
+     * called method of repository {@link JpaRepository#save(Object)}
+     *
+     * @param animalId identifier of animal, can't be null
+     * @param busyFreeStatus means the status of the animal, true - the animal is free, false - the animal is adopted
+     * @return client who adopted the animal
+     */
+    public Animals changeBusyFreeStatus(Long animalId, Boolean busyFreeStatus) {
+        Animals animal = animalsRepository.findById(animalId).orElseThrow();
+        animal.setBusyFree(busyFreeStatus);
+        animalsRepository.save(animal);
+        return animal;
     }
 
 }

@@ -1,9 +1,11 @@
 package com.example.petShelter.controller;
 
 import com.example.petShelter.model.Animals;
+import com.example.petShelter.model.Clients;
 import com.example.petShelter.model.Shelters;
 import com.example.petShelter.service.AnimalsService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -126,4 +128,25 @@ public class AnimalsController {
         return ResponseEntity.ok(changeAnimalInfo);
     }
 
+    @Operation(summary = "change busyFree status of animal in db",
+            description = "Returns animal with updated busyFree status"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "change busyFree status of animal in db",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = Clients.class)
+                    )
+            )
+    })
+    @PutMapping("/change-busy-free-status")
+    public ResponseEntity<Animals> changeBusyFreeStatus(@RequestParam Long animalId,
+                                                        @Parameter(description = "means the status of the animal, " +
+                                                                "true - the animal is free, false - the animal is adopted")
+                                                        @RequestParam Boolean busyFreeStatus) {
+        Animals animal = animalsService.changeBusyFreeStatus(animalId, busyFreeStatus);
+        return ResponseEntity.ok(animal);
+    }
 }

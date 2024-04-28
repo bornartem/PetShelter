@@ -9,16 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -97,6 +92,18 @@ public class AnimalAvatarServiceTest {
 
         Assertions.assertThat(out.findAnimalAvatarById(2L)).isEqualTo(null);
         Assertions.assertThat(out.findAnimalAvatarById(animalAvatarId)).isEqualTo(new AnimalAvatar());
+    }
+
+    @Test
+    public void testFindAnimalAvatarByAnimalId_Found() {
+        Long animalId = 1L;
+        AnimalAvatar expectedAvatar = new AnimalAvatar();
+        when(animalAvatarRepository.findAnimalAvatarByAnimalId(animalId)).thenReturn(expectedAvatar);
+
+        AnimalAvatar result = out.findAnimalAvatarByAnimalId(animalId);
+
+        assertNotNull(result);
+        assertEquals(expectedAvatar, result);
     }
 
 

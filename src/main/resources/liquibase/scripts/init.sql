@@ -15,6 +15,7 @@ CREATE TABLE animals (
   id_animal BIGINT PRIMARY KEY,
   id_shelter BIGINT,
   name VARCHAR(255),
+  age VARCHAR(255),
   type VARCHAR(255),
   busy_free BOOLEAN NOT NULL,
   date_take TIMESTAMP,
@@ -26,7 +27,9 @@ CREATE TABLE clients (
   chat_id BIGINT NOT NULL,
   name VARCHAR(255),
   contact VARCHAR(255),
-  FOREIGN KEY (id_volunteer) REFERENCES Volunteers(id_volunteer)
+  adopted_animal BIGINT,
+  FOREIGN KEY (id_volunteer) REFERENCES Volunteers(id_volunteer),
+  FOREIGN KEY (adopted_animal) REFERENCES Animals(id_animal)
 );
 CREATE TABLE shelter (
   id_shelter BIGINT PRIMARY KEY,
@@ -44,5 +47,3 @@ CREATE TABLE volunteers (
   name VARCHAR(255),
   contact VARCHAR(255)
 );
-
-select * from animals

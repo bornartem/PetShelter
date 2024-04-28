@@ -3,13 +3,14 @@ package com.example.petShelter.service;
 import com.example.petShelter.model.AnimalAvatar;
 import com.example.petShelter.model.Animals;
 import com.example.petShelter.repository.AnimalAvatarRepository;
-import jakarta.transaction.Transactional;
+import com.pengrad.telegrambot.model.request.InputMedia;
+import com.pengrad.telegrambot.model.request.InputMediaPhoto;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -18,6 +19,9 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -90,6 +94,23 @@ public class AnimalAvatarService {
         log.info("Was invoked method for findAnimalAvatarById");
         if (animalAvatar == null) {
             log.error("There is no animal avatar with id = {}", animalId);
+        }
+
+        return animalAvatar;
+    }
+    /**
+     * Finds an animal avatar by animalId.
+     *
+     * @param animalId The ID of the animal whose avatar need to find
+     * @return The found animal avatar, or null if not found
+     */
+    @Transactional
+    public AnimalAvatar findAnimalAvatarByAnimalId(Long animalId) {
+        AnimalAvatar animalAvatar = animalAvatarRepository
+                .findAnimalAvatarByAnimalId(animalId);
+        log.info("Was invoked method for findAnimalAvatarByAnimalId");
+        if (animalAvatar == null) {
+            log.error("There is no animal avatar with animalId = {}", animalId);
         }
 
         return animalAvatar;

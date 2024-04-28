@@ -1,11 +1,8 @@
 package com.example.petShelter.command;
 
-import com.example.petShelter.command.ShelterCatInnerButtons.*;
-import com.example.petShelter.command.ShelterDogInnerButtons.*;
-import com.example.petShelter.command.cat_menu_buttons.DocumentsForGetACat;
-import com.example.petShelter.command.cat_menu_buttons.GetInfoAboutCatMeeting;
-import com.example.petShelter.command.cat_menu_buttons.RejectToGetACat;
-import com.example.petShelter.command.cat_menu_buttons.TransportingACat;
+import com.example.petShelter.command.shelter_cat_inner_buttons.*;
+import com.example.petShelter.command.shelter_dog_inner_buttons.*;
+import com.example.petShelter.command.cat_menu_buttons.*;
 import com.example.petShelter.command.dog_menu_buttons.*;
 import com.example.petShelter.command.home_improvement_cat_buttons.HomeImprovementForAdultCat;
 import com.example.petShelter.command.home_improvement_cat_buttons.HomeImprovementForCatWithDisabilities;
@@ -50,7 +47,8 @@ public class CommandContainer {
                             HomeImprovementForAdult homeImprovementForAdult, HomeImprovementWithDisabilities homeImprovementWithDisabilities,
                             GetInfoAboutCatMeeting getInfoAboutCatMeeting, DocumentsForGetACat documentsForGetACat,
                             TransportingACat transportingACat, RejectToGetACat rejectToGetACat, HomeImprovementForKitty homeImprovementForKitty,
-                            HomeImprovementForAdultCat homeImprovementForAdultCat, HomeImprovementForCatWithDisabilities homeImprovementForCatWithDisabilities) {
+                            HomeImprovementForAdultCat homeImprovementForAdultCat, HomeImprovementForCatWithDisabilities homeImprovementForCatWithDisabilities,
+                            ChooseACat chooseACat, ChooseADog chooseADog) {
 
         commandMap.put(CommandName.START.getCommandName(), commandStart);
         commandMap.put(CommandName.GET_ADDRESS_OF_DOG_SHELTER.getCommandName(), getAddressOfDogShelterCommand);
@@ -89,6 +87,8 @@ public class CommandContainer {
         commandMap.put(CommandName.HOME_IMPROVEMENT_FOR_KITTY.getCommandName(), homeImprovementForKitty);
         commandMap.put(CommandName.HOME_IMPROVEMENT_FOR_ADULT_CAT.getCommandName(), homeImprovementForAdultCat);
         commandMap.put(CommandName.HOME_IMPROVEMENT_FOR_CAT_WITH_DISABILITIES.getCommandName(), homeImprovementForCatWithDisabilities);
+        commandMap.put(CommandName.CHOOSE_A_CAT.getCommandName(), chooseACat);
+        commandMap.put(CommandName.CHOOSE_A_DOG.getCommandName(), chooseADog);
     }
 
     public void process(String commandName, Long chatId) {

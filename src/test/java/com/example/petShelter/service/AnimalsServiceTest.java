@@ -65,6 +65,20 @@ class AnimalsServiceTest {
     }
 
     @Test
+    public void testFindAnimalsBySheltersIdAndBusyFree() {
+        Long shelterId = 2l;
+        boolean busyAnimalStatus = true;
+        List<Animals> animalsList = new ArrayList<>();
+        when(animalsRepository.findAnimalsBySheltersIdAndBusyFree(shelterId, busyAnimalStatus))
+                .thenReturn(animalsList);
+
+        Collection<Animals> result = animalsService
+                .findAnimalsBySheltersIdAndBusyFree(shelterId, busyAnimalStatus);
+
+        assertEquals(animalsList, result);
+    }
+
+    @Test
     public void testFindAnimalsByType() {
         String animalType = "Dog";
         List<Animals> animalsList = new ArrayList<>();
@@ -104,5 +118,21 @@ class AnimalsServiceTest {
         Animals result = animalsService.changeAnimalInfo(animal);
 
         assertEquals(animal, result);
+    }
+
+    @Test
+    public void shouldChangeBusyFreeStatus() {
+        Long animalId = 1L;
+        Boolean busyFreeStatus = false;
+        Animals animal = new Animals();
+        animal.setId(animalId);
+        animal.setBusyFree(!busyFreeStatus);
+
+        when(animalsRepository.findById(animalId)).thenReturn(Optional.of(animal));
+        when(animalsRepository.save(animal)).thenReturn(animal);
+
+        Animals updatedAnimal = animalsService.changeBusyFreeStatus(animalId, busyFreeStatus);
+
+        assertEquals(animal, updatedAnimal);
     }
 }

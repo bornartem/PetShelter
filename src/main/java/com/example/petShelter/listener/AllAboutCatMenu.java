@@ -22,7 +22,7 @@ public class AllAboutCatMenu {
     }
 
     public void sendMenuMessage(long chatId) {
-        InlineKeyboardButton button0 = new InlineKeyboardButton("Выбрать кошку").callbackData("1");
+        InlineKeyboardButton button0 = new InlineKeyboardButton("Выбрать кошку").callbackData("/chooseACat");
 
         InlineKeyboardButton button1 = new InlineKeyboardButton("Знакомство с кошкой").callbackData("/getInfoAboutCatMeeting");
         InlineKeyboardButton button2 = new InlineKeyboardButton("Документы для усыновления")

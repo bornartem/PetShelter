@@ -1,7 +1,9 @@
 package com.example.petShelter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
 
 /**
  * The class consists of logic of the project, which create "Clients" entity
@@ -34,5 +36,9 @@ public class Clients {
 
     @Column(name = "contact")
     private String contact;
+
+    @JsonIgnore
+    @OneToOne
+    private Animals adoptedAnimal;
 
 }
