@@ -106,7 +106,8 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                         registerUser.continueReg(clients, chatId, userText);
                     }
                 } else {
-                    telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
+                    telegramBotClient.sendMessage(message.chat().id(), "Не понимаю Вас. " +
+                            "Используйте команду /volunteerHelp , чтобы обратиться за помощью к волонтеру.");
                 }
             } else if (update.callbackQuery() != null) {
                 String userText = update.callbackQuery().data();
