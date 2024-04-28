@@ -32,10 +32,10 @@ public class InfoAboutCatShelterMenu {
         InlineKeyboardButton button5 = new InlineKeyboardButton("Пропуск на машину").callbackData("/CarPermissionNumberCatShelter");
         InlineKeyboardButton button6 = new InlineKeyboardButton("Техника безопасности").callbackData("/ShelterSecurityRulesForCats");
 
-        InlineKeyboardButton button7 = new InlineKeyboardButton("Регистрация пользователя").callbackData("/registerUserInCatShelter");
+        InlineKeyboardButton button7 = new InlineKeyboardButton("Регистрация пользователя").callbackData("/registerUser");
         InlineKeyboardButton button8 = new InlineKeyboardButton("Как усыновить кошку").callbackData("/getInfoAboutCat");
 
-        InlineKeyboardButton button9 = new InlineKeyboardButton("Позвать волонтера").callbackData("1");
+        InlineKeyboardButton button9 = new InlineKeyboardButton("Позвать волонтера").callbackData("/volunteerHelp");
         InlineKeyboardButton button10 = new InlineKeyboardButton("Вернуться к выбору приюта")
                 .callbackData("/backToChoosingShelter");
 

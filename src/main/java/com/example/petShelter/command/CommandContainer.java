@@ -12,8 +12,10 @@ import com.example.petShelter.command.home_improvement_dog_buttons.HomeImproveme
 import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementWithDisabilities;
 import com.example.petShelter.service.TelegramBotClient;
 
+import com.pengrad.telegrambot.model.Update;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -26,6 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CommandContainer {
 
     private final ConcurrentHashMap<String, Command> commandMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Command> commandWithListMap = new ConcurrentHashMap<>();
 
     private TelegramBotClient telegramBotClient;
 
@@ -48,6 +51,9 @@ public class CommandContainer {
                             GetInfoAboutCatMeeting getInfoAboutCatMeeting, DocumentsForGetACat documentsForGetACat,
                             TransportingACat transportingACat, RejectToGetACat rejectToGetACat, HomeImprovementForKitty homeImprovementForKitty,
                             HomeImprovementForAdultCat homeImprovementForAdultCat, HomeImprovementForCatWithDisabilities homeImprovementForCatWithDisabilities,
+                            RegistrationNewVolunteer registrationNewVolunteer, ChangeActivityVolunteer changeActivityVolunteer,
+                            VolunteersHelp volunteersHelp, StopConversation stopConversation,
+                            ReportCommands reportCommands,
                             ChooseACat chooseACat, ChooseADog chooseADog) {
 
         commandMap.put(CommandName.START.getCommandName(), commandStart);
@@ -68,7 +74,7 @@ public class CommandContainer {
         commandMap.put(CommandName.GET_DOG_SHELTER_LOCATION.getCommandName(), getDogShelterLocation);
         commandMap.put(CommandName.GET_DOG_SHELTER_CAR_PERMISSION.getCommandName(), getShelterCarPermission);
         commandMap.put(CommandName.GET_DOG_SHELTER_RULES.getCommandName(), shelterSecurityRulesForDogs);
-        commandMap.put(CommandName.REGISTER_USER.getCommandName(), registerUser);
+//        commandMap.put(CommandName.REGISTER_USER.getCommandName(), registerUser);
         commandMap.put(CommandName.GET_HOME_IMPROVEMENT_FOR_CAT.getCommandName(), getHomeImprovementForCat);
         commandMap.put(CommandName.GET_INFO_ABOUT_CAT.getCommandName(), getInfoAboutCat);
         commandMap.put(CommandName.GET_INFO_ABOUT_DOG_MEETING.getCommandName(), getInfoAboutDogMeeting);
@@ -87,15 +93,26 @@ public class CommandContainer {
         commandMap.put(CommandName.HOME_IMPROVEMENT_FOR_KITTY.getCommandName(), homeImprovementForKitty);
         commandMap.put(CommandName.HOME_IMPROVEMENT_FOR_ADULT_CAT.getCommandName(), homeImprovementForAdultCat);
         commandMap.put(CommandName.HOME_IMPROVEMENT_FOR_CAT_WITH_DISABILITIES.getCommandName(), homeImprovementForCatWithDisabilities);
+        commandMap.put(CommandName.REGISTRATION_NEW_VOLUNTEER.getCommandName(), registrationNewVolunteer);
+        commandMap.put(CommandName.CHANGE_ACTIVITY_VOLUNTEER.getCommandName(), changeActivityVolunteer);
+        commandMap.put(CommandName.VOLUNTEER_HELP.getCommandName(), volunteersHelp);
+        commandMap.put(CommandName.STOP_CONVERSATION.getCommandName(), stopConversation);
+//        commandMap.put(CommandName.REPORT_FROM_USERS.getCommandName(),reportCommands);
         commandMap.put(CommandName.CHOOSE_A_CAT.getCommandName(), chooseACat);
         commandMap.put(CommandName.CHOOSE_A_DOG.getCommandName(), chooseADog);
+
+        commandWithListMap.put(CommandName.REGISTER_USER.getCommandName(), registerUser);
+        commandWithListMap.put(CommandName.REPORT_FROM_USERS.getCommandName(), reportCommands);
+
     }
 
-    public void process(String commandName, Long chatId) {
+    public void process(String commandName, Long chatId, List<Update> updateList) {
         if (commandMap.isEmpty()) {
             throw new RuntimeException();
         } else if (commandMap.containsKey(commandName)) {
             commandMap.get(commandName).execute(chatId);
+        } else if (commandWithListMap.containsKey(commandName)) {
+            commandWithListMap.get(commandName).execute(chatId, updateList);
         }
     }
 

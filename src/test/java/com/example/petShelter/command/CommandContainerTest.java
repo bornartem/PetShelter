@@ -80,7 +80,7 @@ public class CommandContainerTest {
     ShelterSecurityRulesForDogs shelterSecurityRulesForDogs;
 
     @Mock
-    RegisterUser registerUser;
+    RegisterUserCommand registerUser;
 
     @Mock
     GetHomeImprovementForCat getHomeImprovementForCat;
@@ -119,6 +119,14 @@ public class CommandContainerTest {
     HomeImprovementForAdultCat homeImprovementForAdultCat;
     @Mock
     HomeImprovementForCatWithDisabilities homeImprovementForCatWithDisabilities;
+    @Mock
+    RegistrationNewVolunteer registrationNewVolunteer;
+    @Mock
+    ChangeActivityVolunteer changeActivityVolunteer;
+    @Mock
+    VolunteersHelp volunteersHelp;
+    @Mock
+    StopConversation stopConversation;
 
     @Mock
     ChooseACat chooseACat;
@@ -140,7 +148,8 @@ public class CommandContainerTest {
                 transportingADog, dogHandlerAdvices, dogHandlersList, rejectToGetADog, homeImprovementForPuppy,
                 homeImprovementForAdult, homeImprovementWithDisabilities, getInfoAboutCatMeeting, documentsForGetACat,
                 transportingACat, rejectToGetACat, homeImprovementForKitty, homeImprovementForAdultCat,
-                homeImprovementForCatWithDisabilities, chooseACat, chooseADog
+                homeImprovementForCatWithDisabilities, chooseACat, chooseADog, registrationNewVolunteer, changeActivityVolunteer,
+                volunteersHelp, stopConversation
         );
     }
 

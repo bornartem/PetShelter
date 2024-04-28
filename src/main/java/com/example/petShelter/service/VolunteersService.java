@@ -1,5 +1,6 @@
 package com.example.petShelter.service;
 
+import com.example.petShelter.exception.NotFoundInDB;
 import com.example.petShelter.model.Volunteers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -68,7 +69,7 @@ public class VolunteersService {
      * @param id identifier of volunteer, can't be null
      */
     public void delete(long id) {
-            volunteersRepository.deleteById(id);
+        volunteersRepository.deleteById(id);
     }
 
     /**
@@ -91,7 +92,33 @@ public class VolunteersService {
      * @return count of volunteers
      */
     public Integer getCountVolunteers() {
-            return volunteersRepository.getCountVolunteers();
+        return volunteersRepository.getCountVolunteers();
     }
 
+    public Volunteers findFirstByChatId(long chatId) {
+        return volunteersRepository.findFirstByChatId(chatId);
+    }
+
+    /**
+     * method made volunteer inactive
+     *
+     * @param volChatId volunteer chat id
+     */
+    public void inactiveVolunteerByChatId(Long volChatId) {
+
+        Volunteers volunteers = volunteersRepository.findFirstByChatId(volChatId);
+        volunteers.setActivity(false);
+        volunteersRepository.save(volunteers);
+    }
+
+
+    public Volunteers findFreeVolunteer() {
+        return volunteersRepository.findVolunteersByActivityTrue()
+                .stream().findAny()
+                .orElseThrow(() -> new NotFoundInDB("Все волонтеры сейчас заняты, Вам ответит первый освободившийся"));
+    }
+
+    public long getMaxIdByVolunteers() {
+        return volunteersRepository.getMaxIdByVolunteers();
+    }
 }

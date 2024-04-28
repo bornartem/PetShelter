@@ -1,6 +1,5 @@
 package com.example.petShelter.service;
 
-import com.example.petShelter.model.Animals;
 import com.example.petShelter.model.Clients;
 import com.example.petShelter.repository.ClientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +87,10 @@ public class ClientsService {
         } else {
             return clientsRepository.findAll();
         }
+    }
+
+    public Clients findFirstByChatId(Long chatId) {
+        return clientsRepository.findFirstByChatId(chatId);
     }
 
     /**

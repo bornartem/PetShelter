@@ -12,7 +12,8 @@ import org.springframework.stereotype.Component;
 @Component("/start")
 public class StartCommand implements Command{
     private final static String START_MESSAGE = "Привет! Это приют \"Пушистый друг\". " +
-            "\nМы помогаем бездомным животным найти новый дом.";
+            "\nМы помогаем бездомным животным найти новый дом. \nЕсли вы не зарегистрированы " +
+            "то зарегистрируйтесь нажав на /registerUser";
 
     private final TelegramBotClient telegramBotClient;
 

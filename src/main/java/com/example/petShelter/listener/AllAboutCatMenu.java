@@ -33,7 +33,7 @@ public class AllAboutCatMenu {
                 .callbackData("/getHomeImprovementForCat");
 
         InlineKeyboardButton button5 = new InlineKeyboardButton("Отказ в усыновлении").callbackData("/rejectToGetACat");
-        InlineKeyboardButton button6 = new InlineKeyboardButton("Позвать волонтера").callbackData("1");
+        InlineKeyboardButton button6 = new InlineKeyboardButton("Позвать волонтера").callbackData("/volunteerHelp");
 
         InlineKeyboardButton button7 = new InlineKeyboardButton("Информация о приюте")
                 .callbackData("/getInfoAboutCatShelter");

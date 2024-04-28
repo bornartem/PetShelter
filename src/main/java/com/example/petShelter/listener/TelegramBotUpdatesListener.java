@@ -2,16 +2,27 @@ package com.example.petShelter.listener;
 
 
 import com.example.petShelter.command.CommandContainer;
+import com.example.petShelter.command.RegisterUserCommand;
+import com.example.petShelter.model.Clients;
+import com.example.petShelter.model.ConversationPeople;
+import com.example.petShelter.model.Volunteers;
+import com.example.petShelter.service.ClientsService;
+import com.example.petShelter.service.ConversationPeopleService;
 import com.example.petShelter.service.TelegramBotClient;
+import com.example.petShelter.service.VolunteersService;
+import com.example.petShelter.service.workingWithVolunteerConversationService.ConversationServiceMain;
+import com.example.petShelter.service.workingWithVolunteerConversationService.FinishedVolunteerSingUp;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
+import com.pengrad.telegrambot.request.SendMessage;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -32,13 +43,32 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
     private final TelegramBotClient telegramBotClient;
 
+    private final FinishedVolunteerSingUp finishedSingUp;
+    private final VolunteersService volunteerService;
+    private final ClientsService clientsService;
+    private final ConversationPeopleService conversationPeopleService;
+    private final ConversationServiceMain conversationServiceMain;
+    private final RegisterUserCommand registerUser;
 
     public TelegramBotUpdatesListener(TelegramBot telegramBot,
                                       CommandContainer commandContainer,
+                                      TelegramBotClient telegramBotClient,
+                                      FinishedVolunteerSingUp finishedSingUp,
+                                      VolunteersService volunteerService,
+                                      ClientsService clientsService,
+                                      ConversationPeopleService conversationPeopleService,
+                                      ConversationServiceMain conversationServiceMain,
+                                      RegisterUserCommand registerUser) {
                                       TelegramBotClient telegramBotClient) {
         this.telegramBot = telegramBot;
         this.commandContainer = commandContainer;
         this.telegramBotClient = telegramBotClient;
+        this.finishedSingUp = finishedSingUp;
+        this.volunteerService = volunteerService;
+        this.clientsService = clientsService;
+        this.conversationPeopleService = conversationPeopleService;
+        this.conversationServiceMain = conversationServiceMain;
+        this.registerUser = registerUser;
     }
 
     @PostConstruct
@@ -54,19 +84,34 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
             if (message != null) {
                 String userText = message.text();
+                Long chatId = update.callbackQuery() != null ?
+                        update.callbackQuery().message().chat().id() : message.chat().id();
+
+
+                Volunteers volunteers = volunteerService.findFirstByChatId(chatId);
+                Clients clients = clientsService.findFirstByChatId(chatId);
+                ConversationPeople people = conversationPeopleService.findByChatId(chatId);
 
                 if (userText.startsWith(COMMAND_PREFIX)) {
-                    Long chatId = update.callbackQuery() != null ?
-                            update.callbackQuery().message().chat().id() : message.chat().id();
-                    commandContainer.process(userText, chatId);
+                    commandContainer.process(userText, chatId, null);
+                }
+                //проверка общается ли человек, и если это так, то нужно перенаправлять сообщения
+                else if (people != null) {
+                    Long opponentChatId = people.getOpponentChatId();
+                    telegramBotClient.sendMessage(opponentChatId, userText);
+                } //иначе если волонтер и он продолжает регистрироваться
+                else if (volunteers != null) {
+                    finishedSingUp.singUp(chatId, userText, volunteers);
+                } else if (clients != null) {
+                    if (clients.getName() == null && clients.getContact() == null) {
+                        registerUser.continueReg(clients, chatId, userText);
+                    }
                 } else {
                     telegramBotClient.sendMessage(message.chat().id(), "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
                 }
-            } else {
-                if (update.callbackQuery() != null) {
-                    String userText = update.callbackQuery().data();
-                    commandContainer.process(userText, update.callbackQuery().message().chat().id());
-                }
+            } else if (update.callbackQuery() != null) {
+                String userText = update.callbackQuery().data();
+                commandContainer.process(userText, update.callbackQuery().message().chat().id(), Arrays.asList(update));
             }
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;

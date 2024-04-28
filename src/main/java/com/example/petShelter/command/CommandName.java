@@ -22,7 +22,7 @@ public enum CommandName {
     GET_CAT_SHELTER_ADDRESS("/getAddressOfCatShelter"),
     GET_CAT_SHELTER_CAR_PERMISSION("/CarPermissionNumberCatShelter"),
     GET_CAT_SHELTER_LOCATION("/getCatShelterLocation"),
-    REGISTER_USER("/registerUserInCatShelter"),
+    REGISTER_USER("/registerUser"),
     GET_CAT_SHELTER_RULES("/ShelterSecurityRulesForCats"),
     GET_DOG_SHELTER_INFO("/getDogShelterInfo"),
     GET_DOG_SHELTER_SCHEDULE("/getDogShelterSchedule"),
@@ -49,6 +49,10 @@ public enum CommandName {
     HOME_IMPROVEMENT_FOR_CAT_WITH_DISABILITIES("/homeImprovementForCatWithDisabilities"),
     CHOOSE_A_CAT("/chooseACat"),
     CHOOSE_A_DOG("/chooseADog"),
+    REGISTRATION_NEW_VOLUNTEER("/volunteersLoginIn"),
+    CHANGE_ACTIVITY_VOLUNTEER("/changeActivity"),
+    REPORT_FROM_USERS("/reportFromUsers"),
+    STOP_CONVERSATION("/stopConversation"),
     NO("noCommand");
 
 

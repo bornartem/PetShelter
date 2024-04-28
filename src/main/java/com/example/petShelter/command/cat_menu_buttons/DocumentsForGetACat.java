@@ -8,18 +8,16 @@ import org.springframework.stereotype.Component;
 @Component("/documentsForGetACat")
 public class DocumentsForGetACat implements Command {
     private final TelegramBotClient telegramBotClient;
+    private final String docForGetPet;
 
     @Autowired
-    public DocumentsForGetACat(TelegramBotClient telegramBotClient) {
+    public DocumentsForGetACat(TelegramBotClient telegramBotClient, String docForGetPet) {
         this.telegramBotClient = telegramBotClient;
+        this.docForGetPet = docForGetPet;
     }
-
-    private final static String DOCUMENTS = " Как происходит передача животного:\n" +
-            "В назначенный день мы встречаемся и заполняем двусторонний договор о передаче.\n" +
-            "При себе необходимо иметь паспорт и переноску (лучше пластиковую с надежными защелками). \n";
 
     @Override
     public void execute(Long chatId) {
-        telegramBotClient.sendMessage(chatId, DOCUMENTS);
+        telegramBotClient.sendMessage(chatId, docForGetPet);
     }
 }
