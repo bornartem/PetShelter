@@ -44,4 +44,13 @@ public class Clients {
     @OneToOne
     private Animals adoptedAnimal;
 
+    @Override
+    public String toString() {
+        return "Clients{" +
+                "id=" + id +
+                ", chatId=" + chatId +
+                ", name='" + name + '\'' +
+                ", contact='" + contact + '\'' +
+                '}';
+    }
 }

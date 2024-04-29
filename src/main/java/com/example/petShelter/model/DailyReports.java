@@ -78,5 +78,18 @@ public class DailyReports {
         return this.isCheck;
     }
 
-
+    @Override
+    public String toString() {
+        return "DailyReports{" +
+                "idDailyReport=" + idDailyReport +
+                ", dateTime=" + dateTime +
+                ", health='" + health + '\'' +
+                ", behavior='" + behavior + '\'' +
+                ", animalMenu='" + animalMenu + '\'' +
+                ", photos='" + photos + '\'' +
+                ", photoPath='" + photoPath + '\'' +
+                ", isCheck=" + isCheck +
+                ", clientId=" + clientId +
+                '}';
+    }
 }
