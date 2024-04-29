@@ -36,7 +36,11 @@ public class RegistrationNewVolunteer implements Command{
         Volunteers volunteers = volunteersService.findFirstByChatId(chatId);
         if (volunteers == null) {
             volunteers = new Volunteers();
-            volunteers.setId(volunteersService.getMaxIdByVolunteers()+1L);
+            try {
+                volunteers.setId(volunteersService.getMaxIdByVolunteers()+1L);
+            } catch (Exception e) {
+                volunteers.setId(1L);
+            }
             volunteers.setChatId(chatId);
             volunteers.setActivity(false);
             volunteersService.create(volunteers);

@@ -39,5 +39,13 @@ public class Clients {
     @OneToMany(mappedBy = "clientId")
     private List<DailyReports> dailyReports;
 
-
+    @Override
+    public String toString() {
+        return "Clients{" +
+                "id=" + id +
+                ", chatId=" + chatId +
+                ", name='" + name + '\'' +
+                ", contact='" + contact + '\'' +
+                '}';
+    }
 }
