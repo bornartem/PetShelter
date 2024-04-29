@@ -16,7 +16,7 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.request.SendMessage;
+import com.pengrad.telegrambot.request.SendPhoto;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,38 +80,45 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
         updates.forEach(update -> {
             logger.info("Processing update: {}", update);
             Message message = update.message();
-
             if (message != null) {
-                String userText = message.text();
-                Long chatId = update.callbackQuery() != null ?
-                        update.callbackQuery().message().chat().id() : message.chat().id();
+                if (message.text() != null) {
+                    String userText = message.text();
+                    Long chatId = update.callbackQuery() != null ?
+                            update.callbackQuery().message().chat().id() : message.chat().id();
 
 
-                Volunteers volunteers = volunteerService.findFirstByChatId(chatId);
-                Clients clients = clientsService.findFirstByChatId(chatId);
-                ConversationPeople people = conversationPeopleService.findByChatId(chatId);
+                    Volunteers volunteers = volunteerService.findFirstByChatId(chatId);
+                    Clients clients = clientsService.findFirstByChatId(chatId);
+                    ConversationPeople people = conversationPeopleService.findByChatId(chatId);
 
-                if (userText.startsWith(COMMAND_PREFIX)) {
-                    commandContainer.process(userText, chatId, null);
-                }
-                //проверка общается ли человек, и если это так, то нужно перенаправлять сообщения
-                else if (people != null) {
-                    Long opponentChatId = people.getOpponentChatId();
-                    telegramBotClient.sendMessage(opponentChatId, userText);
-                } //иначе если волонтер и он продолжает регистрироваться
-                else if (volunteers != null) {
-                    finishedSingUp.singUp(chatId, userText, volunteers);
-                } else if (clients != null) {
-                    if (clients.getName() == null && clients.getContact() == null) {
-                        registerUser.continueReg(clients, chatId, userText);
+                    if (userText.startsWith("/ответ на отчет")) {
+                        conversationServiceMain.reportConversation(chatId, userText);
+                    } else if (userText.startsWith(COMMAND_PREFIX)) {
+                        commandContainer.process(userText, chatId, null);
                     }
-                } else {
-                    telegramBotClient.sendMessage(message.chat().id(), "Не понимаю Вас. " +
-                            "Используйте команду /volunteerHelp , чтобы обратиться за помощью к волонтеру.");
+                    //проверка общается ли человек, и если это так, то нужно перенаправлять сообщения
+                    else if (people != null) {
+                        Long opponentChatId = people.getOpponentChatId();
+                        telegramBotClient.sendMessage(opponentChatId, userText);
+                    } //иначе если волонтер и он продолжает регистрироваться
+                    else if (volunteers != null) {
+                        finishedSingUp.singUp(chatId, userText, volunteers);
+                    } else if (clients != null) {
+                        if (clients.getName() == null && clients.getContact() == null) {
+                            registerUser.continueReg(clients, chatId, userText);
+                        }
+                    } else {
+                        telegramBotClient.sendMessage(message.chat().id(),
+                                "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
+                    }
                 }
             } else if (update.callbackQuery() != null) {
                 String userText = update.callbackQuery().data();
                 commandContainer.process(userText, update.callbackQuery().message().chat().id(), Arrays.asList(update));
+            } else if (update.message().photo() != null) {
+                String photo = update.message().photo()[0].fileId();
+                //здесь код по сохранению фотографии пользователя
+                telegramBot.execute(new SendPhoto(update.message().chat().id(), photo));
             }
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
