@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,9 +27,8 @@ public class CheckReportVolunteer {
             то есть ваш ответ должен выглядеть таким образом:
             /ответ на отчет 13892495 Здравствуйте я проверил ваш отчет, все хорошо... и тд и тп""";
 
-//    @Autowired
+
     DailyReportService dailyReportService;
-//    @Autowired
     VolunteersService volunteersService;
     TelegramBotClient telegramBotClient;
     TelegramBot telegramBot;
@@ -44,8 +42,6 @@ public class CheckReportVolunteer {
         this.telegramBot = telegramBot;
     }
 
-    public CheckReportVolunteer() {
-    }
 
     /**
      * go to every not checking daily reports and give it volunteers
@@ -53,9 +49,9 @@ public class CheckReportVolunteer {
      * all reports will be checking
      * @throws InterruptedException
      */
-    @Scheduled(cron = "10 19 * * * *")
-    public void checkAt21Hour() throws InterruptedException {
-        log.info("find not check report start work");
+    @Scheduled(cron = "20 30 * * * *")
+    public void checkAt21Hour() {
+        log.info("scheduled at 21 o'clock start work");
         List<DailyReports> reports;
         try {
             reports = dailyReportService.findByNotCheck();
@@ -67,26 +63,11 @@ public class CheckReportVolunteer {
             @Override
             public void start() {
                 volunteerFindHimReport(reports);
-//                int i = 0;
-//                while (true) {
-//                    try {
-//                        Thread.sleep(1000);
-//                    } catch (InterruptedException e) {
-//                        System.out.println("throw new RuntimeException(e);");
-//                    }
-//                    System.out.println("Number of opperation = "+i);
-//                    i++;
-//                }
             }
         };
 
         thread.start();
-//        CheckReportVolunteer mmain = new CheckReportVolunteer();
-//        new Thread(() -> mmain.volunteerFindHimReport(reports)).start();
     }
-
-    volatile List<Volunteers> freeVolunteers = new ArrayList<>(List.of());
-
 
 
 
@@ -100,7 +81,7 @@ public class CheckReportVolunteer {
 
 
 
-        List<Volunteers> volunteers = new ArrayList<>(List.of());
+        List<Volunteers> volunteers;
         for (int i = reports.size()-1; i >= 0; ) {
             log.info("report checking sleeping 2 second");
             try {
@@ -109,18 +90,16 @@ public class CheckReportVolunteer {
                 log.info("error sleep in check report volunteer");
             }
 
+
+
+
             log.info("find free volunteers");
-            freeVolunteers.addAll(volunteersService.findAllActivity());
-            log.info("free volunteers: {}", freeVolunteers.toString());
-
-
-            volunteers.addAll(freeVolunteers);
+            volunteers = volunteersService.findAllActivity();
+            log.info("free volunteers: {}", volunteers.toString());
             if (volunteers.isEmpty()) {
                 continue;
             }
-            freeVolunteers = new ArrayList<>(List.of());
 
-            log.info("found free volunteers: {}", volunteers);
             for (Volunteers volunteer : volunteers) {
                 if (reports.isEmpty()) {
                     break;
@@ -130,9 +109,6 @@ public class CheckReportVolunteer {
                 sendReport(volunteer, reports.remove(i));
                 i--;
             }
-            volunteers = new ArrayList<>(List.of());
-
-
         }
     }
 
