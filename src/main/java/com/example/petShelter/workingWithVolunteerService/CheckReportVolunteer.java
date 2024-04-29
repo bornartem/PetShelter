@@ -49,7 +49,7 @@ public class CheckReportVolunteer {
      * all reports will be checking
      * @throws InterruptedException
      */
-    @Scheduled(cron = "20 30 * * * *")
+    @Scheduled(cron = "50 48 * * * *")
     public void checkAt21Hour() {
         log.info("scheduled at 21 o'clock start work");
         List<DailyReports> reports;
@@ -123,7 +123,7 @@ public class CheckReportVolunteer {
         telegramBotClient.sendMessage(chatId, BEGINNING_MESSAGE);
 
 
-        String reportString = "id отчета: " + report.getClientId() +
+        String reportString = "id отчета: " + report.getClientId().getChatId() +
                 "\nЗдоровье:\n" + report.getHealth() +
                 "\nАдаптация:\n" + report.getBehavior() +
                 "\nОписание рациона:\n" + report.getAnimalMenu() +
