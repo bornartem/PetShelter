@@ -113,6 +113,8 @@ public class CommandContainer {
             commandMap.get(commandName).execute(chatId);
         } else if (commandWithListMap.containsKey(commandName)) {
             commandWithListMap.get(commandName).execute(chatId, updateList);
+        } else {
+            telegramBotClient.sendMessage(chatId, "Такой команды не существует.");
         }
     }
 
