@@ -1,18 +1,36 @@
 package com.example.petShelter.service;
 
+import com.example.petShelter.command.Command;
+import com.example.petShelter.exception.NotFoundInDB;
+import com.example.petShelter.model.Clients;
 import com.example.petShelter.model.DailyReports;
+import com.example.petShelter.repository.ClientsRepository;
 import com.example.petShelter.repository.DailyReportRepository;
+import com.pengrad.telegrambot.TelegramBot;
+import com.pengrad.telegrambot.model.PhotoSize;
+import com.pengrad.telegrambot.model.Update;
+import com.pengrad.telegrambot.request.GetFile;
+import com.pengrad.telegrambot.request.SendMessage;
+import com.pengrad.telegrambot.response.GetFileResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 
 
 /**
@@ -23,8 +41,6 @@ import java.util.List;
 @Slf4j
 @Service
 public class DailyReportService {
-    @Value("${path.to.photo.dir}")
-    private String photosDir;
 
     private final DailyReportRepository dailyReportRepository;
 
@@ -36,27 +52,15 @@ public class DailyReportService {
     /**
      * Creates a new daily report.
      *
-     * @param reports The DailyReports object to be created.
+     * @param dailyReports The DailyReports object to be created.
      * @return The created DailyReports object.
      */
-    public DailyReports createDailyReport(DailyReports reports, File photoFile) {
-        if (photoFile != null) {
-            String fileName = photoFile.getName();
-            String filePath = photosDir + fileName;
-            try {
-                Files.copy(Paths.get(photoFile.getAbsolutePath()), Paths.get(filePath),
-                        StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                log.error("Error while saving photo file: {}", e.getMessage());
-                throw new RuntimeException("Error while saving photo file");
-            }
-            reports.setPhotoPath(filePath);
-        }
-        return dailyReportRepository.save(reports);
+    public DailyReports save(DailyReports dailyReports) {
+        return dailyReportRepository.save(dailyReports);
     }
 
     /**
-     * Finds a daily report by its ID.
+     * Find a daily report by its ID.
      *
      * @param id The ID of the daily report to find.
      * @return The DailyReports object if found, otherwise null.
@@ -76,26 +80,35 @@ public class DailyReportService {
             log.info("Deleted daily report with id = {}", id);
         } else {
             log.error("There is no report with id = {}", id);
-            throw new RuntimeException("Daily report not found");
+            throw new NotFoundInDB("Daily report not found");
         }
     }
 
     /**
-     * Updates an existing daily report.
+     * Find daily reports by not checked by boolean.
      *
-     * @param reports The updated DailyReports object.
-     * @return The updated DailyReports object.
+     * @return not checked reports
      */
-    public DailyReports changeDailyReport(DailyReports reports) {
-        return dailyReportRepository.save(reports);
-    }
-
     public List<DailyReports> findByNotCheck() {
         return dailyReportRepository.findByIsCheckFalse();
     }
 
+    /**
+     * Update daily reports by not checked by boolean.
+     *
+     * @return all reports
+     */
     public DailyReports update(DailyReports report) {
         return dailyReportRepository.save(report);
+    }
+
+    /**
+     * Get all daily reports
+     *
+     * @return all reports
+     */
+    public List<DailyReports> getAll() {
+        return dailyReportRepository.findAll();
     }
 }
 

@@ -154,7 +154,7 @@ public class CommandContainerTest {
                 homeImprovementForAdult, homeImprovementWithDisabilities, getInfoAboutCatMeeting, documentsForGetACat,
                 transportingACat, rejectToGetACat, homeImprovementForKitty, homeImprovementForAdultCat,
                 homeImprovementForCatWithDisabilities, registrationNewVolunteer, changeActivityVolunteer,
-                volunteersHelp, stopConversation, reportCommands, chooseACat, chooseADog
+                volunteersHelp, stopConversation,  chooseACat, chooseADog, reportCommands
         );
     }
 

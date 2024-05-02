@@ -7,7 +7,7 @@ CREATE TABLE daily_report (
   well VARCHAR(255),
   reaction VARCHAR(255),
   animal_menu VARCHAR(255),
-  foto_animal BYTEA[],
+  foto_animal SMALLINT[],
   photo_path VARCHAR(255),
   is_check BOOLEAN NOT NULL,
   FOREIGN KEY (id_client) REFERENCES Clients(id_client)

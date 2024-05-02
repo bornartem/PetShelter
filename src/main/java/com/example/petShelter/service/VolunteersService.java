@@ -1,5 +1,6 @@
 package com.example.petShelter.service;
 
+import com.example.petShelter.exception.AlreadyExistInDB;
 import com.example.petShelter.exception.NotFoundInDB;
 import com.example.petShelter.model.Volunteers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class VolunteersService {
      */
     public Volunteers create(Volunteers volunteers) {
         if (volunteersRepository.existsById(volunteers.getId())) {
-            throw new RuntimeException();
+            throw new AlreadyExistInDB("Volunteer already exist in db");
         } else {
             volunteersRepository.save(volunteers);
             return volunteers;
@@ -80,7 +81,7 @@ public class VolunteersService {
      */
     public List<Volunteers> getAll() {
         if (volunteersRepository.findAll().isEmpty()) {
-            throw new RuntimeException();
+            throw new NotFoundInDB("Not found in db");
         }
         return volunteersRepository.findAll();
     }

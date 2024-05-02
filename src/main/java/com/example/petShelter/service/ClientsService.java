@@ -5,10 +5,10 @@ import com.example.petShelter.model.Clients;
 import com.example.petShelter.repository.ClientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The class consists of logic of the project, which has

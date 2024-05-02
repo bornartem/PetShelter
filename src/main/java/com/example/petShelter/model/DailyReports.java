@@ -1,9 +1,11 @@
 package com.example.petShelter.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,72 +26,33 @@ public class DailyReports {
     private long idDailyReport;
 
     @Column(name = "date_time", nullable = false)
-    private LocalDateTime dateTime;
+    private LocalDateTime localDateTime;
 
     /**
-     *the field shows the health and the general animal's  welfare
+     * the field shows the health and the general animal's  welfare
      */
+    @Column(name = "animal_menu")
+    private String animalMenu;
+
     @Column(name = "well")
     private String health;
 
     /**
-     *the field shows the change in animal's  behavior
+     * the field shows the change in animal's  behavior
      */
     @Column(name = "reaction")
     private String behavior;
 
-    @Column(name = "animal_menu")
-    private String animalMenu;
-
-//    @Lob
-    @Column(name = "foto_animal")
+    @Column(name = "photo_animal")
     private String photos;
 
-
-    private String photoPath;
-
-    /**
-     *the field shows the status once daily report is checked by volunteers
-     */
     @Column(name = "is_check", nullable = false)
     private Boolean isCheck;
 
     @ManyToOne
     @JoinColumn(name = "id_client")
     private Clients clientId;
-
-
-    private DailyReportsEnum currentStep;
-
-    public void nextStep() {
-        if(currentStep == null)
-            currentStep = DailyReportsEnum.PHOTO;
-        else if(currentStep == DailyReportsEnum.PHOTO)
-            currentStep = DailyReportsEnum.HEALTH;
-        else if(currentStep == DailyReportsEnum.HEALTH)
-            currentStep = DailyReportsEnum.ANIMAL_MENU;
-        else if(currentStep == DailyReportsEnum.ANIMAL_MENU)
-            currentStep = DailyReportsEnum.REACTION;
-        else if(currentStep == DailyReportsEnum.REACTION)
-            currentStep = null;
-    }
-
-    public boolean isCheck() {
-        return this.isCheck;
-    }
-
-    @Override
-    public String toString() {
-        return "DailyReports{" +
-                "idDailyReport=" + idDailyReport +
-                ", dateTime=" + dateTime +
-                ", health='" + health + '\'' +
-                ", behavior='" + behavior + '\'' +
-                ", animalMenu='" + animalMenu + '\'' +
-                ", photos='" + photos + '\'' +
-                ", photoPath='" + photoPath + '\'' +
-                ", isCheck=" + isCheck +
-                ", clientId=" + clientId +
-                '}';
-    }
+    @ManyToOne
+    @JoinColumn(name = "animal_id")
+    private Animals animals;
 }

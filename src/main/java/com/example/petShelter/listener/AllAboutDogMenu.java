@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * Class for creating a menu on how to adopt a dog.
- * @author  Maria Sinyavskaya
+ *
+ * @author Maria Sinyavskaya
  */
 
 @Component
@@ -40,15 +41,18 @@ public class AllAboutDogMenu {
 
         InlineKeyboardButton button9 = new InlineKeyboardButton("Информация о приюте")
                 .callbackData("/getInfoAboutDogShelter");
-        InlineKeyboardButton button10 = new InlineKeyboardButton("Вернуться к выбору приюта")
+        InlineKeyboardButton button10 = new InlineKeyboardButton("Отправить отчет")
+                .callbackData("/reportFromUsers");
+        InlineKeyboardButton button11 = new InlineKeyboardButton("Вернуться к выбору приюта")
                 .callbackData("/backToChoosingShelter");
 
-        Keyboard keyboard1 = new InlineKeyboardMarkup(new InlineKeyboardButton[][]{{button0},{button1, button2},
-                {button3, button4}, {button5, button6}, {button7, button8}, {button9, button10}});
+
+        Keyboard keyboard1 = new InlineKeyboardMarkup(new InlineKeyboardButton[][]{{button0}, {button1, button2},
+                {button3, button4}, {button5, button6}, {button7, button8}, {button9, button10, button11}});
 
         SendResponse response = bot.execute(
                 new SendMessage(chatId,
                         "Как усыновить собаку и создать благоприятные условия для ее проживания:")
-                .replyMarkup(keyboard1));
+                        .replyMarkup(keyboard1));
     }
 }

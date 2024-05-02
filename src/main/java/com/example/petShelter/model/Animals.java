@@ -14,7 +14,7 @@ import java.util.List;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-//@ToString
+@ToString
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -41,15 +41,11 @@ public class Animals {
     @Column(name = "date_take")
     private LocalDateTime dateTake;
 
-    public Animals(long id, String name, Boolean busyFree) {
-        this.id = id;
-        this.name = name;
-        this.busyFree = busyFree;
-    }
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Clients clients;
 
-    @Override
-    public String toString() {
-        return type + " " + name + ", " + age + "\n";
-    }
+    @OneToMany(mappedBy = "animals")
+    private List<DailyReports> dailyReports;
 
 }

@@ -1,15 +1,22 @@
 package com.example.petShelter.controller;
 
+import com.example.petShelter.model.Clients;
 import com.example.petShelter.model.DailyReports;
 import com.example.petShelter.service.DailyReportService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Class controller  which is using for API/ Swagger DailyRepost commands
@@ -24,18 +31,6 @@ public class DailyReportController {
 
     public DailyReportController(DailyReportService dailyReportService) {
         this.dailyReportService = dailyReportService;
-    }
-
-    @PostMapping
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Daily report created successfully"
-            )
-    })
-    public ResponseEntity<DailyReports> createDailyReport(@Valid @RequestBody DailyReports report, File photoFile) {
-        DailyReports createdReport = dailyReportService.createDailyReport(report, photoFile);
-        return ResponseEntity.ok(createdReport);
     }
 
     @GetMapping("/{id}")
@@ -62,15 +57,41 @@ public class DailyReportController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
+    @Operation(
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "update client",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = Clients.class)
+                    )
+            )
+    )
+    @PutMapping("/update")
+    public ResponseEntity<DailyReports> update(@org.springframework.web.bind.annotation.RequestBody DailyReports dailyReports) {
+        DailyReports updatedDailyReports = dailyReportService.update(dailyReports);
+        if (updatedDailyReports == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(updatedDailyReports);
+    }
+
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",
-                    description = "Changes in daily report saved"
+                    description = "find all daily reports from db",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = DailyReports[].class)
+                    )
             )
     })
-    public ResponseEntity<DailyReports> changeDailyReport(@Valid @RequestBody DailyReports report) {
-        DailyReports updatedReport = dailyReportService.changeDailyReport(report);
-        return ResponseEntity.ok(updatedReport);
+    @GetMapping("/all")
+    public List<DailyReports> getAll() {
+        return dailyReportService.getAll();
+    }
+
+    @GetMapping("/not-checked-reports")
+    public List<DailyReports> findByNotChecked(){
+        return dailyReportService.findByNotCheck();
     }
 }

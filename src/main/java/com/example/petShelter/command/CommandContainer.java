@@ -10,9 +10,11 @@ import com.example.petShelter.command.home_improvement_cat_buttons.HomeImproveme
 import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementForAdult;
 import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementForPuppy;
 import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementWithDisabilities;
+import com.example.petShelter.service.DailyReportService;
 import com.example.petShelter.service.TelegramBotClient;
 
 import com.pengrad.telegrambot.model.Update;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,8 +55,7 @@ public class CommandContainer {
                             HomeImprovementForAdultCat homeImprovementForAdultCat, HomeImprovementForCatWithDisabilities homeImprovementForCatWithDisabilities,
                             RegistrationNewVolunteer registrationNewVolunteer, ChangeActivityVolunteer changeActivityVolunteer,
                             VolunteersHelp volunteersHelp, StopConversation stopConversation,
-                            ReportCommands reportCommands,
-                            ChooseACat chooseACat, ChooseADog chooseADog) {
+                            ChooseACat chooseACat, ChooseADog chooseADog, ReportCommands reportCommands) {
 
         commandMap.put(CommandName.START.getCommandName(), commandStart);
         commandMap.put(CommandName.GET_ADDRESS_OF_DOG_SHELTER.getCommandName(), getAddressOfDogShelterCommand);
@@ -97,13 +98,11 @@ public class CommandContainer {
         commandMap.put(CommandName.CHANGE_ACTIVITY_VOLUNTEER.getCommandName(), changeActivityVolunteer);
         commandMap.put(CommandName.VOLUNTEER_HELP.getCommandName(), volunteersHelp);
         commandMap.put(CommandName.STOP_CONVERSATION.getCommandName(), stopConversation);
-//        commandMap.put(CommandName.REPORT_FROM_USERS.getCommandName(),reportCommands);
+        commandMap.put(CommandName.REPORT_FROM_USERS.getCommandName(), reportCommands);
         commandMap.put(CommandName.CHOOSE_A_CAT.getCommandName(), chooseACat);
         commandMap.put(CommandName.CHOOSE_A_DOG.getCommandName(), chooseADog);
 
         commandWithListMap.put(CommandName.REGISTER_USER.getCommandName(), registerUser);
-        commandWithListMap.put(CommandName.REPORT_FROM_USERS.getCommandName(), reportCommands);
-
     }
 
     public void process(String commandName, Long chatId, List<Update> updateList) {

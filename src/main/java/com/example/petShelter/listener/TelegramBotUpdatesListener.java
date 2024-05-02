@@ -3,17 +3,17 @@ package com.example.petShelter.listener;
 
 import com.example.petShelter.command.CommandContainer;
 import com.example.petShelter.command.RegisterUserCommand;
+import com.example.petShelter.command.ReportCommands;
 import com.example.petShelter.model.Clients;
 import com.example.petShelter.model.ConversationPeople;
+import com.example.petShelter.model.DailyReports;
 import com.example.petShelter.model.Volunteers;
-import com.example.petShelter.service.ClientsService;
-import com.example.petShelter.service.ConversationPeopleService;
-import com.example.petShelter.service.TelegramBotClient;
-import com.example.petShelter.service.VolunteersService;
+import com.example.petShelter.service.*;
 import com.example.petShelter.workingWithVolunteerService.workingWithVolunteerConversationService.ConversationServiceMain;
 import com.example.petShelter.workingWithVolunteerService.workingWithVolunteerConversationService.FinishedVolunteerSingUp;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
+import com.pengrad.telegrambot.model.CallbackQuery;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendPhoto;
@@ -49,6 +49,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     private final ConversationPeopleService conversationPeopleService;
     private final ConversationServiceMain conversationServiceMain;
     private final RegisterUserCommand registerUser;
+    private final ReportCommands reportCommands;
 
     public TelegramBotUpdatesListener(TelegramBot telegramBot,
                                       CommandContainer commandContainer,
@@ -58,7 +59,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                                       ClientsService clientsService,
                                       ConversationPeopleService conversationPeopleService,
                                       ConversationServiceMain conversationServiceMain,
-                                      RegisterUserCommand registerUser) {
+                                      RegisterUserCommand registerUser, ReportCommands reportCommands) {
         this.telegramBot = telegramBot;
         this.commandContainer = commandContainer;
         this.telegramBotClient = telegramBotClient;
@@ -68,6 +69,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
         this.conversationPeopleService = conversationPeopleService;
         this.conversationServiceMain = conversationServiceMain;
         this.registerUser = registerUser;
+        this.reportCommands = reportCommands;
     }
 
     @PostConstruct
@@ -81,11 +83,11 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             logger.info("Processing update: {}", update);
             Message message = update.message();
             if (message != null) {
+
                 if (message.text() != null) {
                     String userText = message.text();
                     Long chatId = update.callbackQuery() != null ?
                             update.callbackQuery().message().chat().id() : message.chat().id();
-
 
                     Volunteers volunteers = volunteerService.findFirstByChatId(chatId);
                     Clients clients = clientsService.findFirstByChatId(chatId);
@@ -96,6 +98,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                     } else if (userText.startsWith(COMMAND_PREFIX)) {
                         commandContainer.process(userText, chatId, null);
                     }
+
                     //проверка общается ли человек, и если это так, то нужно перенаправлять сообщения
                     else if (people != null) {
                         Long opponentChatId = people.getOpponentChatId();
@@ -107,10 +110,12 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                         if (clients.getName() == null && clients.getContact() == null) {
                             registerUser.continueReg(clients, chatId, userText);
                         }
-                    } else {
-                        telegramBotClient.sendMessage(message.chat().id(),
-                                "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
                     }
+                } else if (message.photo() != null && message.caption() != null) {
+                    reportCommands.saveReport(message);
+                } else {
+                    telegramBotClient.sendMessage(message.chat().id(),
+                            "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
                 }
             } else if (update.callbackQuery() != null) {
                 String userText = update.callbackQuery().data();

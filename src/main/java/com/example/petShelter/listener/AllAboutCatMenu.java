@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * Class for creating a menu on how to adopt a cat.
- * @author  Maria Sinyavskaya
+ *
+ * @author Maria Sinyavskaya
  */
 
 @Component
@@ -37,15 +38,18 @@ public class AllAboutCatMenu {
 
         InlineKeyboardButton button7 = new InlineKeyboardButton("Информация о приюте")
                 .callbackData("/getInfoAboutCatShelter");
-        InlineKeyboardButton button8 = new InlineKeyboardButton("Вернуться к выбору приюта")
+        InlineKeyboardButton button8 = new InlineKeyboardButton("Отправить отчет")
+                .callbackData("/reportFromUsers");
+        InlineKeyboardButton button9 = new InlineKeyboardButton("Вернуться к выбору приюта")
                 .callbackData("/backToChoosingShelter");
 
-        Keyboard keyboard1 = new InlineKeyboardMarkup(new InlineKeyboardButton[][]{{button0},{button1, button2},
-                {button3, button4}, {button5, button6}, {button7, button8}});
+
+        Keyboard keyboard1 = new InlineKeyboardMarkup(new InlineKeyboardButton[][]{{button0}, {button1, button2},
+                {button3, button4}, {button5, button6}, {button7, button8, button9}});
 
         SendResponse response = bot.execute(
                 new SendMessage(chatId,
                         "Как усыновить кошку и создать благоприятные условия для ее проживания:")
-                .replyMarkup(keyboard1));
+                        .replyMarkup(keyboard1));
     }
 }
