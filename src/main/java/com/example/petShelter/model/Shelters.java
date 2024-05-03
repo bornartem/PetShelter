@@ -1,5 +1,6 @@
 package com.example.petShelter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,6 +21,7 @@ import java.util.List;
 @Table(name = "shelter")
 public class Shelters {
     @OneToMany(mappedBy = "shelters")
+    @JsonIgnore
     private List<Animals> animals;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

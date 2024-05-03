@@ -49,7 +49,7 @@ public class CheckReportVolunteer {
      * all reports will be checking
      * @throws InterruptedException
      */
-    @Scheduled(cron = "0 30 * * * *")
+    @Scheduled(cron = "40 56 * * * *")
     public void checkAt21Hour() {
         log.info("scheduled at 21 o'clock start work");
         List<DailyReports> reports;
@@ -73,8 +73,8 @@ public class CheckReportVolunteer {
 
     public void volunteerFindHimReport(List<DailyReports> reports) {
 
-        log.info("volunteerFindHimReport for checking start working. " +
-                "{}", reports.toString());
+        log.info("volunteerFindHimReport for checking start working. Count reports" +
+                "{}", reports.size());
         if (reports.isEmpty()) {
             return;
         }
@@ -95,7 +95,7 @@ public class CheckReportVolunteer {
 
             log.info("find free volunteers");
             volunteers = volunteersService.findAllActivity();
-            log.info("free volunteers: {}", volunteers.toString());
+            log.info("count free volunteers: {}", volunteers.size());
             if (volunteers.isEmpty()) {
                 continue;
             }

@@ -43,9 +43,11 @@ public class Animals {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @JsonIgnore
     private Clients clients;
 
     @OneToMany(mappedBy = "animals")
+    @JsonIgnore
     private List<DailyReports> dailyReports;
 
 }

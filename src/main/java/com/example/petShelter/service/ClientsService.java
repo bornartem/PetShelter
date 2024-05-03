@@ -107,7 +107,9 @@ public class ClientsService {
         Clients client = clientsRepository.findById(clientId).orElseThrow();
         Animals animal = animalsService.findAnimalById(animalId);
         client.setAdoptedAnimal(animal);
+        animal.setClients(client);
         clientsRepository.save(client);
+        animalsService.changeAnimalInfo(animal);
         return client;
     }
 

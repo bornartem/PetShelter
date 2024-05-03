@@ -21,6 +21,7 @@ public class Clients {
 
     @ManyToOne
 //    @JoinColumn(name="id_volunteer")
+    @JsonIgnore
     private Volunteers volunteer;
 
     @Id
@@ -38,6 +39,7 @@ public class Clients {
     private String contact;
 
     @OneToMany(mappedBy = "clientId")
+    @JsonIgnore
     private List<DailyReports> dailyReports;
 
     @JsonIgnore

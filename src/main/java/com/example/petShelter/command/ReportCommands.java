@@ -87,9 +87,9 @@ public class ReportCommands implements Command {
             GetFile getFileRequest = new GetFile(message.photo()[1].fileId());
             GetFileResponse getFileResponse = telegramBot.execute(getFileRequest);
             try {
-                File file = getFileResponse.file();
-                file.fileSize();
-                String fullPathPhoto = file.filePath();
+//                File file = getFileResponse.file();
+//                file.fileSize();
+//                String fullPathPhoto = file.filePath();
                 LocalDateTime dateTime = LocalDateTime.now();
 
                 Clients clients = clientsService.findFirstByChatId(chatId);
@@ -101,7 +101,7 @@ public class ReportCommands implements Command {
                 dailyReports.setAnimalMenu(animalMenu);
                 dailyReports.setHealth(health);
                 dailyReports.setBehavior(behavior);
-                dailyReports.setPhotos(fullPathPhoto);
+                dailyReports.setPhotos(message.photo()[1].fileId());
                 dailyReports.setIsCheck(isCheck);
                 dailyReports.setAnimals(animals);
                 dailyReports.setClientId(clients);
