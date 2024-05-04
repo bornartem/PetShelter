@@ -12,12 +12,9 @@ import java.util.List;
  *
  * @author Khilola Kushbakova
  */
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@Getter
-@Setter
-@EqualsAndHashCode
 @Entity
 public class Animals {
 

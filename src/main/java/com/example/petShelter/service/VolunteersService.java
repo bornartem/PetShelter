@@ -86,16 +86,6 @@ public class VolunteersService {
         return volunteersRepository.findAll();
     }
 
-    /**
-     * get integer count volunteers from db
-     * called method getCountVolunteers()
-     *
-     * @return count of volunteers
-     */
-    public Integer getCountVolunteers() {
-        return volunteersRepository.getCountVolunteers();
-    }
-
     public Volunteers findFirstByChatId(long chatId) {
         return volunteersRepository.findFirstByChatId(chatId);
     }
@@ -124,6 +114,6 @@ public class VolunteersService {
     }
 
     public List<Volunteers> findAllActivity() {
-        return volunteersRepository.findVolunteersByActivityTrue()  ;
+        return volunteersRepository.findVolunteersByActivityTrue();
     }
 }

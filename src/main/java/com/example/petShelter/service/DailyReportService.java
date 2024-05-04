@@ -1,36 +1,16 @@
 package com.example.petShelter.service;
 
-import com.example.petShelter.command.Command;
 import com.example.petShelter.exception.NotFoundInDB;
-import com.example.petShelter.model.Clients;
 import com.example.petShelter.model.DailyReports;
-import com.example.petShelter.repository.ClientsRepository;
 import com.example.petShelter.repository.DailyReportRepository;
-import com.pengrad.telegrambot.TelegramBot;
-import com.pengrad.telegrambot.model.PhotoSize;
-import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.request.GetFile;
-import com.pengrad.telegrambot.request.SendMessage;
-import com.pengrad.telegrambot.response.GetFileResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
 
 
 /**
@@ -43,11 +23,24 @@ import java.util.UUID;
 public class DailyReportService {
 
     private final DailyReportRepository dailyReportRepository;
+    private final TelegramBotClient telegramBotClient;
 
     @Autowired
-    public DailyReportService(DailyReportRepository dailyReportRepository) {
+    public DailyReportService(DailyReportRepository dailyReportRepository, TelegramBotClient telegramBotClient) {
         this.dailyReportRepository = dailyReportRepository;
+        this.telegramBotClient = telegramBotClient;
     }
+
+    public static final String REMINDER_ONE_DAY = "Уважаемый пользователь, Вы не прислали вчера отчет. " +
+            "Пожалуйста, не забывайте присылать каждый день ";
+    public static final String REMINDER_TWO_DAYS = "Уважаемый усыновитель, Мы не получали от Вас отчет" +
+            " более 2 дней. С Вами свяжется волонтер в ближайшее время";
+    public static final String PASS_REPORT_PERIOD = "Поздравляем, Вы прошли испытательный период";
+
+    public static final String PLUS_REPORT_PERIOD = "Уважаемый пользователь, в течении 30 дней мы  " +
+            "не получили необходимого количества отчетов, поэтому Ваш срок увеличивается на 14 дней";
+    public static final String REJECT = "Уважаемый пользователь, к сожалению Вы не прошли испытательный " +
+            "срок и мы вынуждены забрать нашего питомца. Ожидайте звонка от волонтера для дальнейших инструкций";
 
     /**
      * Creates a new daily report.
@@ -109,6 +102,35 @@ public class DailyReportService {
      */
     public List<DailyReports> getAll() {
         return dailyReportRepository.findAll();
+    }
+
+    /**
+     * Check daily reports by scheduled
+     *
+     * @return reminder, reject or congrats if client pass test period
+     */
+    @Scheduled(cron = "10 31 16 * * *")
+    public void reportController() {
+        List<DailyReports> dailyReports = dailyReportRepository.findAll();
+        int reportCount = dailyReportRepository.getCountReports();
+        int reportsForPass = 2;
+
+        dailyReports.forEach(reports -> {
+            LocalDateTime currentDay = LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
+            LocalDateTime lastDay = reports.getLocalDateTime().truncatedTo(ChronoUnit.DAYS);
+
+            if (lastDay.plusDays(1).equals(currentDay)) {
+                telegramBotClient.sendMessage(reports.getClientId().getChatId(), REMINDER_ONE_DAY);
+            } else if (lastDay.plusDays(2).equals(currentDay)) {
+                telegramBotClient.sendMessage(reports.getClientId().getChatId(), REMINDER_TWO_DAYS);
+            } else if (lastDay.plusDays(3).equals(currentDay)) {
+                telegramBotClient.sendMessage(reports.getClientId().getChatId(), REJECT);
+            } else if (lastDay.equals(currentDay) && reportCount == reportsForPass) {
+                telegramBotClient.sendMessage(reports.getClientId().getChatId(), PASS_REPORT_PERIOD);
+            } else {
+                telegramBotClient.sendMessage(reports.getClientId().getChatId(), PLUS_REPORT_PERIOD);
+            }
+        });
     }
 }
 

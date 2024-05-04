@@ -91,7 +91,7 @@ public class DailyReportController {
     }
 
     @GetMapping("/not-checked-reports")
-    public List<DailyReports> findByNotChecked(){
+    public List<DailyReports> findByNotChecked() {
         return dailyReportService.findByNotCheck();
     }
 }

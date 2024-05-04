@@ -203,17 +203,4 @@ public class VolunteerControllerTest {
                 .andExpect(jsonPath("$[0].id").value(1L))
                 .andExpect(jsonPath("$[1].id").value(2L));
     }
-
-    @Test
-    void findCountAllVolunteers() throws Exception {
-        Volunteers volunteer = new Volunteers(null, 1L, 1L, "Artem", "+7-911-081_18_10", true);
-        Volunteers volunteer1 = new Volunteers(null, 2L, 2L, "Ar", "+7-911-081_10_10", true);
-        Integer count = 2;
-        when(volunteersRepository.save(any(Volunteers.class))).thenReturn(volunteer, volunteer1);
-        when(volunteersRepository.getCountVolunteers()).thenReturn(count);
-        mockMvc.perform(MockMvcRequestBuilders
-                        .get("/volunteer/count"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value(count));
-    }
 }

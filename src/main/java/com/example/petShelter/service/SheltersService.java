@@ -1,8 +1,9 @@
 package com.example.petShelter.service;
 
+import com.example.petShelter.exception.AlreadyExistInDB;
+import com.example.petShelter.exception.NotFoundInDB;
 import com.example.petShelter.model.Shelters;
 import com.example.petShelter.repository.SheltersRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,9 @@ public class SheltersService {
     public Collection<Shelters> listAllShelters() {
         log.info("Was invoked method for listAllShelters");
         Collection<Shelters> shelters = sheltersRepository.findAll();
-        if (shelters == null) {
-            log.error("There is no any shelter ");
-            throw new RuntimeException();
-        }
         if (shelters.isEmpty()) {
             log.warn("No shelters found, add a new shelter");
-            throw new RuntimeException();
+            throw new NotFoundInDB("No shelters found, add a new shelter");
         }
 
         return shelters;
@@ -56,7 +53,7 @@ public class SheltersService {
      */
     public Shelters addShelter(Shelters shelter) {
         if (sheltersRepository.existsById(shelter.getId())) {
-            throw new RuntimeException();
+            throw new AlreadyExistInDB("Such shelter already in DB");
         } else {
             log.info("Was invoked method for addShelter");
             return sheltersRepository.save(shelter);
@@ -90,7 +87,7 @@ public class SheltersService {
             log.info("Was invoked method for removeShelter");
         } else {
             log.error("There is no shelter with id = {}", shelterId);
-            throw new RuntimeException();
+            throw new NotFoundInDB("Not found in DB");
         }
     }
 
@@ -110,7 +107,7 @@ public class SheltersService {
         log.info("Was invoked method for showAddress");
 
         final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(shelterId);
-        return byIdOptionalShelters.isPresent() ? byIdOptionalShelters.get().getAddress() : null;
+        return byIdOptionalShelters.map(Shelters::getAddress).orElse(null);
     }
 
     /**

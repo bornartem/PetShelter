@@ -113,8 +113,4 @@ public class VolunteersController {
         return volunteersService.getAll();
     }
 
-    @GetMapping("/count")
-    public Integer getCountVolunteer() {
-        return volunteersService.getCountVolunteers();
-    }
 }

@@ -91,7 +91,7 @@ public class ClientsController {
 
     @Operation(summary = "Register a foster animal with an adoptive parent",
             description = "Returns the client who adopted the animal"
-            )
+    )
     @ApiResponses({
             @ApiResponse(
                     responseCode = "200",

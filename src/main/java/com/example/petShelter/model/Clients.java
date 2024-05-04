@@ -5,22 +5,21 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+
 /**
  * The class consists of logic of the project, which create "Clients" entity
  *
  * @author bornartem
  */
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
 @Entity(name = "clients")
 public class Clients {
 
     @ManyToOne
-//    @JoinColumn(name="id_volunteer")
+    @JoinColumn(name="id_volunteer")
     @JsonIgnore
     private Volunteers volunteer;
 
