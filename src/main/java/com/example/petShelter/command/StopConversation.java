@@ -4,7 +4,7 @@ import com.example.petShelter.model.Volunteers;
 import com.example.petShelter.service.ConversationPeopleService;
 import com.example.petShelter.service.TelegramBotClient;
 import com.example.petShelter.service.VolunteersService;
-import com.example.petShelter.workingWithVolunteerService.workingWithVolunteerConversationService.ConstantsSendMessageInConv;
+import com.example.petShelter.workingWithVolunteerService.conversationService.ConstantsSendMessageInConv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
