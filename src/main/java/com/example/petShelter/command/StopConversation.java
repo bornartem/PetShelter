@@ -4,7 +4,7 @@ import com.example.petShelter.model.Volunteers;
 import com.example.petShelter.service.ConversationPeopleService;
 import com.example.petShelter.service.TelegramBotClient;
 import com.example.petShelter.service.VolunteersService;
-import com.example.petShelter.workingWithVolunteerService.workingWithVolunteerConversationService.ConstantsSendMessageInConv;
+import com.example.petShelter.workingWithVolunteerService.conversationService.ConstantsSendMessageInConv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,10 +31,21 @@ public class StopConversation implements Command {
 
     }
 
+    /**
+     * method for stopping conversation between volunteer and client
+     * if there is click stop command when there isn't dialogs
+     * not working
+     * @param chatId - who click stop command his chat id
+     */
     @Override
     public void execute(Long chatId) {
         Volunteers volunteers = volunteerService.findFirstByChatId(chatId);
-        Long clientChatId = conversationPeopleService.findByChatId(chatId).getOpponentChatId();
+        Long clientChatId;
+        try {
+            clientChatId = conversationPeopleService.findByChatId(chatId).getOpponentChatId();
+        } catch (NullPointerException e) {
+            return;
+        }
         if (volunteers != null) {
             telegramBotClient.sendMessage(chatId, ConstantsSendMessageInConv.STOP_MESSAGE_FOR_VOL);
             telegramBotClient.sendMessage(clientChatId, ConstantsSendMessageInConv.STOP_MESSAGE);

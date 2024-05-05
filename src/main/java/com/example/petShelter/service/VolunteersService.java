@@ -86,16 +86,6 @@ public class VolunteersService {
         return volunteersRepository.findAll();
     }
 
-    /**
-     * get integer count volunteers from db
-     * called method getCountVolunteers()
-     *
-     * @return count of volunteers
-     */
-    public Integer getCountVolunteers() {
-        return volunteersRepository.getCountVolunteers();
-    }
-
     public Volunteers findFirstByChatId(long chatId) {
         return volunteersRepository.findFirstByChatId(chatId);
     }
@@ -113,17 +103,33 @@ public class VolunteersService {
     }
 
 
+    /**
+     * method find free volunteer inactive
+     *
+     * @return volunteer inactive
+     */
     public Volunteers findFreeVolunteer() {
         return volunteersRepository.findVolunteersByActivityTrue()
                 .stream().findAny()
                 .orElseThrow(() -> new NotFoundInDB("Все волонтеры сейчас заняты, Вам ответит первый освободившийся"));
     }
 
+    /**
+     * method find max id volunteers
+     *
+     * @return find max id volunteers
+     */
     public long getMaxIdByVolunteers() {
         return volunteersRepository.getMaxIdByVolunteers();
     }
 
+    /**
+     * get all volunteers from db
+     * called method of repository {@link JpaRepository#findAll()}
+     *
+     * @return all volunteers
+     */
     public List<Volunteers> findAllActivity() {
-        return volunteersRepository.findVolunteersByActivityTrue()  ;
+        return volunteersRepository.findVolunteersByActivityTrue();
     }
 }

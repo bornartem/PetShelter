@@ -12,15 +12,12 @@ import java.util.List;
  *
  * @author Khilola Kushbakova
  */
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@Getter
-@Setter
-@EqualsAndHashCode
 @Entity
+@Table(name = "animals")
 public class Animals {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

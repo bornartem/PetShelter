@@ -10,11 +10,9 @@ import com.example.petShelter.command.home_improvement_cat_buttons.HomeImproveme
 import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementForAdult;
 import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementForPuppy;
 import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementWithDisabilities;
-import com.example.petShelter.service.DailyReportService;
 import com.example.petShelter.service.TelegramBotClient;
 
 import com.pengrad.telegrambot.model.Update;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

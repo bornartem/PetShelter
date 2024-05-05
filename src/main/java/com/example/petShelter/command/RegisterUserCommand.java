@@ -36,7 +36,10 @@ public class RegisterUserCommand implements Command {
     @Override
     public void execute(Long chatId, List<Update> updatesList) {
         try {
-//
+            if (clientsService.findFirstByChatId(chatId) != null) {
+                telegramBotClient.sendMessage(chatId, "Вы уже зарегистрированы!");
+                return;
+            }
 
             Clients client = new Clients();
             client.setChatId(chatId);

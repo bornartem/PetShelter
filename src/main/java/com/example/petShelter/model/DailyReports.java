@@ -1,13 +1,10 @@
 package com.example.petShelter.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * The class consists of logic of the project, which create "DailyReports" entity
@@ -17,7 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity(name = "daily_report")
+@Entity
+@Table(name = "daily_report")
 public class DailyReports {
 
     @Id
@@ -50,9 +48,24 @@ public class DailyReports {
     private Boolean isCheck;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_client")
     private Clients clientId;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "animal_id")
     private Animals animals;
+
+    @Override
+    public String toString() {
+        return "DailyReports{" +
+                "idDailyReport=" + idDailyReport +
+                ", localDateTime=" + localDateTime +
+                ", animalMenu='" + animalMenu + '\'' +
+                ", health='" + health + '\'' +
+                ", behavior='" + behavior + '\'' +
+                ", photos='" + photos + '\'' +
+                ", isCheck=" + isCheck +
+                '}';
+    }
 }

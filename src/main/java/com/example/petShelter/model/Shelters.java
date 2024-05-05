@@ -11,12 +11,9 @@ import java.util.List;
  *
  * @author Khilola Kushbakova
  */
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
 @Entity
 @Table(name = "shelter")
 public class Shelters {

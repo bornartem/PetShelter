@@ -12,13 +12,11 @@ import java.util.List;
  *
  * @author bornartem
  */
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-//@ToString
-@EqualsAndHashCode
-@Entity(name = "volunteers")
+@Entity
+@Table(name = "volunteers")
 @JsonIgnoreProperties(value = {"clients"})
 public class Volunteers {
 
@@ -26,7 +24,6 @@ public class Volunteers {
     @JsonManagedReference
     private List<Clients> clients;
     @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_volunteer")
     private long id;
 

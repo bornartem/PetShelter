@@ -8,12 +8,9 @@ import lombok.*;
  *
  * @author danil
  */
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
 @Entity(name = "conversation_people")
 public class ConversationPeople {
     @Id

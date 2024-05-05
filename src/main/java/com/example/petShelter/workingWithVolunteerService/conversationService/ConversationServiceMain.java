@@ -1,9 +1,9 @@
-package com.example.petShelter.workingWithVolunteerService.workingWithVolunteerConversationService;
+package com.example.petShelter.workingWithVolunteerService.conversationService;
 
 import com.example.petShelter.exception.NotFoundInDB;
-import com.example.petShelter.model.Clients;
 import com.example.petShelter.service.ClientsService;
 import com.example.petShelter.service.ConversationPeopleService;
+import com.example.petShelter.service.TelegramBotClient;
 import com.example.petShelter.service.VolunteersService;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -27,6 +27,9 @@ public class ConversationServiceMain {
 
     @Autowired
     private TelegramBot telegramBot;
+
+    @Autowired
+    private TelegramBotClient telegramBotClient;
     @Autowired
     private ConversationPeopleService conversationPeopleService;
 
@@ -40,10 +43,12 @@ public class ConversationServiceMain {
      */
     public void firstGivingUsers(Long clientChatId) {
 
-        telegramBot.execute(new SendMessage(
-                clientChatId,
-                ConstantsSendMessageInConv.WE_FIND_VOLUNTEER
-        ));
+//        telegramBot.execute(new SendMessage(
+//                clientChatId,
+//                ConstantsSendMessageInConv.WE_FIND_VOLUNTEER
+//        ));
+
+        telegramBotClient.sendMessage(clientChatId, ConstantsSendMessageInConv.WE_FIND_VOLUNTEER);
 
         Long volId;
         try {
@@ -66,10 +71,13 @@ public class ConversationServiceMain {
      * @param clientChatId is client chat id in telegram
      */
     private void volunteerNotFound(Long clientChatId) {
-        telegramBot.execute(new SendMessage(
-                clientChatId,
-                "Все волонтеры сейчас заняты, напишите чуть позже")
-        );
+//        telegramBot.execute(new SendMessage(
+//                clientChatId,
+//                "Все волонтеры сейчас заняты, напишите чуть позже")
+//        );
+
+    telegramBotClient.sendMessage(clientChatId, "Все волонтеры сейчас заняты, напишите чуть позже");
+
     }
 
 
@@ -89,10 +97,12 @@ public class ConversationServiceMain {
 
         conversationPeopleService.addPeople(clientChatId, volChatId);
 
-        telegramBot.execute(new SendMessage(
-                volChatId,
-                ConstantsSendMessageInConv.HI_MESSAGE
-        ));
+//        telegramBot.execute(new SendMessage(
+//                volChatId,
+//                ConstantsSendMessageInConv.HI_MESSAGE
+//        ));
+
+        telegramBotClient.sendMessage(volChatId, ConstantsSendMessageInConv.HI_MESSAGE);
     }
 
 
@@ -112,13 +122,15 @@ public class ConversationServiceMain {
         try {
             Long clientChatId = Long.parseLong(text.split(" ")[3]);
             if (clientService.findFirstByChatId(clientChatId) == null) {
-                telegramBot.execute(new SendMessage(volChatId, "проверьте правильность введенного id"));
+                telegramBotClient.sendMessage(volChatId, "проверьте правильность введенного id");
                 return;
             }
             String notNeed = "/ответ на отчет " + clientChatId + " ";
             int len = notNeed.length();
-            telegramBot.execute(new SendMessage(clientChatId, text.substring(len)));
-            telegramBot.execute(new SendMessage(volChatId, VOLUNTEER_MESSAGE_LATE));
+//            telegramBot.execute(new SendMessage(clientChatId, text.substring(len)));
+            telegramBotClient.sendMessage(clientChatId, text.substring(len));
+            telegramBotClient.sendMessage(volChatId, VOLUNTEER_MESSAGE_LATE);
+//            telegramBot.execute(new SendMessage(volChatId, VOLUNTEER_MESSAGE_LATE));
         } catch (Exception e) {
             log.info("error in send message about checking report to client (report = {})", text);
         }

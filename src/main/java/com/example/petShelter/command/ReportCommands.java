@@ -6,7 +6,6 @@ import com.example.petShelter.model.DailyReports;
 import com.example.petShelter.service.ClientsService;
 import com.example.petShelter.service.DailyReportService;
 import com.example.petShelter.service.TelegramBotClient;
-import com.pengrad.telegrambot.model.File;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.request.GetFile;
 import com.pengrad.telegrambot.TelegramBot;
@@ -87,9 +86,6 @@ public class ReportCommands implements Command {
             GetFile getFileRequest = new GetFile(message.photo()[1].fileId());
             GetFileResponse getFileResponse = telegramBot.execute(getFileRequest);
             try {
-//                File file = getFileResponse.file();
-//                file.fileSize();
-//                String fullPathPhoto = file.filePath();
                 LocalDateTime dateTime = LocalDateTime.now();
 
                 Clients clients = clientsService.findFirstByChatId(chatId);

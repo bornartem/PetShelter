@@ -125,6 +125,7 @@ public class SheltersController {
                               @RequestParam long shelterId) {
         return sheltersService.showAddress(shelterId);
     }
+
     @Operation(summary = "Show shelter's security number",
             description = "Retrieve the security number of a shelter")
     @ApiResponses(value = {

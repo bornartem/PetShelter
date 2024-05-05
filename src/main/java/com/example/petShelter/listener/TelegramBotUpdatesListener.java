@@ -6,20 +6,19 @@ import com.example.petShelter.command.RegisterUserCommand;
 import com.example.petShelter.command.ReportCommands;
 import com.example.petShelter.model.Clients;
 import com.example.petShelter.model.ConversationPeople;
-import com.example.petShelter.model.DailyReports;
 import com.example.petShelter.model.Volunteers;
 import com.example.petShelter.service.*;
-import com.example.petShelter.workingWithVolunteerService.workingWithVolunteerConversationService.ConversationServiceMain;
-import com.example.petShelter.workingWithVolunteerService.workingWithVolunteerConversationService.FinishedVolunteerSingUp;
+import com.example.petShelter.workingWithVolunteerService.conversationService.ConversationServiceMain;
+import com.example.petShelter.workingWithVolunteerService.conversationService.FinishedVolunteerSingUp;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
-import com.pengrad.telegrambot.model.CallbackQuery;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendPhoto;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -51,6 +50,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     private final RegisterUserCommand registerUser;
     private final ReportCommands reportCommands;
 
+    @Autowired
     public TelegramBotUpdatesListener(TelegramBot telegramBot,
                                       CommandContainer commandContainer,
                                       TelegramBotClient telegramBotClient,
