@@ -22,13 +22,12 @@ import java.util.List;
 
 /**
  * The class consists of methods for REST API in order to make CRUD and
- other commands for the entity "Animals"
-
+ * other commands for the entity "Animals"
  *
  * @author Khilola Kushbakova
  */
 
-@Tag(name="animalControllerTag")
+@Tag(name = "animalControllerTag")
 @RestController
 @RequestMapping("/animals")
 @Slf4j
@@ -47,9 +46,8 @@ public class AnimalsController {
             @ApiResponse(responseCode = "200", description = "Animal removed successfully")
     })
     @DeleteMapping("{animalId}")
-    public ResponseEntity removeAnimal(@PathVariable long animalId) {
+    public void removeAnimal(@PathVariable long animalId) {
         animalsService.removeAnimal(animalId);
-        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Find animal by ID",
@@ -64,11 +62,9 @@ public class AnimalsController {
         Animals animal = animalsService.findAnimalById(animalId);
         if (animal == null) {
             return ResponseEntity.notFound().build();
-//            return null;
         }
         log.info("found animal is {}", animal);
         return ResponseEntity.ok(animal);
-//        return animal.toString();
     }
 
 
@@ -94,17 +90,17 @@ public class AnimalsController {
     }
 
 
-//    @Operation(summary = "Add a new animal",
-//            description = "Creates and adds a new animal to the list")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "New animal added successfully",
-//                    content = @Content(
-//                            mediaType = MediaType.APPLICATION_JSON_VALUE,
-//                            schema = @Schema(implementation = Shelters.class)
-//                    )
-//            )
-//    })
-    @PostMapping
+    @Operation(summary = "Add a new animal",
+            description = "Add a new animal to the list")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "New animal added successfully",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = Animals.class)
+                    )
+            )
+    })
+    @PostMapping("/create-animal")
     public Animals addNewAnimal(@RequestBody Animals animal) {
         return animalsService.addNewAnimal(animal);
     }
@@ -116,10 +112,11 @@ public class AnimalsController {
             @ApiResponse(responseCode = "404", description = "Animal with the provided data not found",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Shelters.class)
+                            schema = @Schema(implementation = Animals.class)
                     )
             )
     })
+    @PutMapping("/update-animal")
     public ResponseEntity<Animals> changeAnimalInfo(@RequestBody Animals animal) {
         Animals changeAnimalInfo = animalsService.changeAnimalInfo(animal);
         if (changeAnimalInfo == null) {
@@ -137,7 +134,7 @@ public class AnimalsController {
                     description = "change busyFree status of animal in db",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = Clients.class)
+                            schema = @Schema(implementation = Animals.class)
                     )
             )
     })

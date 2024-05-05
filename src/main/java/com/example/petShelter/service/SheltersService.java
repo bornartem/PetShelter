@@ -123,6 +123,12 @@ public class SheltersService {
         return location;
     }
 
+    /**
+     * Method to find a security number by its identifier.
+     *
+     * @param shelterId the identifier of the shelter to find
+     * @return the found shelter or null if the shelter was not found
+     */
     public String showSecurityNumber(long shelterId) {
         log.info("Was invoked method for giveSecurityNumber");
         return sheltersRepository.getReferenceById(shelterId).getSecurityContact();
@@ -142,6 +148,12 @@ public class SheltersService {
 
     }
 
+    /**
+     * Method to find a animal info by its identifier.
+     *
+     * @param id the identifier of the shelter to find
+     * @return the found animal or null if the animal was not found
+     */
     public String showAnimalInfoById(long id) {
         log.info("Was invoked method for  showAnimalInfoById");
         final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);
@@ -151,18 +163,36 @@ public class SheltersService {
                 + shelters.getContact()).orElse(null);
     }
 
+    /**
+     * Method to find a schedule info by its identifier.
+     *
+     * @param id the identifier of the schedule to find
+     * @return the found schedule or null if the schedule was not found
+     */
     public String showSchedule(long id) {
         log.info("Was invoked method for showSchedule");
         final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);
         return byIdOptionalShelters.map(Shelters::getWorkingHours).orElse(null);
     }
 
+    /**
+     * Method to find a security number by its identifier.
+     *
+     * @param id the identifier of the shelter to find
+     * @return the found shelter or null if the shelter was not found
+     */
     public String showSecurityContact(long id) {
         log.info("Was invoked method for  showSecurityContact");
         final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);
         return byIdOptionalShelters.map(Shelters::getSecurityContact).orElse(null);
     }
 
+    /**
+     * Method to find a shelter rules by its identifier.
+     *
+     * @param id the identifier of the shelter rules to find
+     * @return the found shelter rules or null if the shelter rules was not found
+     */
     public String showShelterRules(long id) {
         log.info("Was invoked method for showShelterRules");
         final Optional<Shelters> byIdOptionalShelters = sheltersRepository.findById(id);

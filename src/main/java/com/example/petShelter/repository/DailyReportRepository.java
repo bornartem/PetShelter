@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface DailyReportRepository extends JpaRepository<DailyReports, Long> {
     List<DailyReports> findByIsCheckFalse();
+
     @Query(value = "select count (*) from daily_report", nativeQuery = true)
     int getCountReports();
 }

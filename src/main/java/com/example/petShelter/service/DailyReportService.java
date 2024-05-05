@@ -31,16 +31,17 @@ public class DailyReportService {
         this.telegramBotClient = telegramBotClient;
     }
 
-    public static final String REMINDER_ONE_DAY = "Уважаемый пользователь, Вы не прислали вчера отчет. " +
+    public static final String REMINDER_ONE_DAY = "Уважаемый усыновитель, Вы не прислали вчера отчет. " +
             "Пожалуйста, не забывайте присылать каждый день ";
     public static final String REMINDER_TWO_DAYS = "Уважаемый усыновитель, Мы не получали от Вас отчет" +
             " более 2 дней. С Вами свяжется волонтер в ближайшее время";
     public static final String PASS_REPORT_PERIOD = "Поздравляем, Вы прошли испытательный период";
 
-    public static final String PLUS_REPORT_PERIOD = "Уважаемый пользователь, в течении 30 дней мы  " +
+    public static final String PLUS_REPORT_PERIOD = "Уважаемый усыновитель, в течении 30 дней мы  " +
             "не получили необходимого количества отчетов, поэтому Ваш срок увеличивается на 14 дней";
-    public static final String REJECT = "Уважаемый пользователь, к сожалению Вы не прошли испытательный " +
+    public static final String REJECT = "Уважаемый усыновитель, к сожалению Вы не прошли испытательный " +
             "срок и мы вынуждены забрать нашего питомца. Ожидайте звонка от волонтера для дальнейших инструкций";
+    public static final Integer COUNT_REPORTS_FOR_PASS = 1;
 
     /**
      * Creates a new daily report.
@@ -109,11 +110,10 @@ public class DailyReportService {
      *
      * @return reminder, reject or congrats if client pass test period
      */
-    @Scheduled(cron = "10 31 16 * * *")
+    @Scheduled(cron = "50 11 20 * * *")
     public void reportController() {
         List<DailyReports> dailyReports = dailyReportRepository.findAll();
         int reportCount = dailyReportRepository.getCountReports();
-        int reportsForPass = 2;
 
         dailyReports.forEach(reports -> {
             LocalDateTime currentDay = LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
@@ -125,7 +125,7 @@ public class DailyReportService {
                 telegramBotClient.sendMessage(reports.getClientId().getChatId(), REMINDER_TWO_DAYS);
             } else if (lastDay.plusDays(3).equals(currentDay)) {
                 telegramBotClient.sendMessage(reports.getClientId().getChatId(), REJECT);
-            } else if (lastDay.equals(currentDay) && reportCount == reportsForPass) {
+            } else if (lastDay.equals(currentDay) && reportCount == COUNT_REPORTS_FOR_PASS) {
                 telegramBotClient.sendMessage(reports.getClientId().getChatId(), PASS_REPORT_PERIOD);
             } else {
                 telegramBotClient.sendMessage(reports.getClientId().getChatId(), PLUS_REPORT_PERIOD);

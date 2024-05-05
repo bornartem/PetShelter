@@ -1,5 +1,7 @@
 package com.example.petShelter.service;
 
+import com.example.petShelter.exception.AlreadyExistInDB;
+import com.example.petShelter.exception.NotFoundInDB;
 import com.example.petShelter.model.Animals;
 import com.example.petShelter.repository.AnimalsRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,7 @@ public class AnimalsService {
     public AnimalsService(AnimalsRepository animalsRepository) {
         this.animalsRepository = animalsRepository;
     }
+
     /**
      * Method to find all animals belonging to a certain shelter.
      *
@@ -48,9 +51,11 @@ public class AnimalsService {
         log.info("Was invoked method for findAnimalById");
         if (animal == null) {
             log.error("There is no animal with id = {}", animalId);
+            throw new NotFoundInDB("There is no animal in DB");
         }
         return animal;
     }
+
     /**
      * Method to find animals based on their status.
      *
@@ -61,10 +66,11 @@ public class AnimalsService {
         log.info("Was invoked method for findAnimalsByStatus");
         return animalsRepository.findAnimalsByBusyFree(busyAnimalStatus);
     }
+
     /**
      * Method to find animals of a certain shelter and with a certain status.
      *
-     * @param shelterId the identifier of the shelter whose animals are to be found
+     * @param shelterId        the identifier of the shelter whose animals are to be found
      * @param busyAnimalStatus the status of animals to search for
      * @return a collection of animals according to the given parameters.
      */
@@ -72,6 +78,7 @@ public class AnimalsService {
         log.info("Was invoked method for findAnimalsByShelterIdAndBusyFree");
         return animalsRepository.findAnimalsBySheltersIdAndBusyFree(shelterId, busyAnimalStatus);
     }
+
     /**
      * Method to find animals based on their type.
      *
@@ -83,6 +90,7 @@ public class AnimalsService {
         Collection<Animals> animals = animalsRepository.findAnimalsByType(animalType);
         if (animals == null) {
             log.error("There is no animal with type = {}", animalType);
+            throw new NotFoundInDB("There is no animal in DB");
         }
         return animals;
     }
@@ -94,21 +102,28 @@ public class AnimalsService {
      */
     public Animals addNewAnimal(Animals animal) {
         if (animalsRepository.existsById(animal.getId())) {
-            throw new RuntimeException();
+            throw new AlreadyExistInDB("Such animal exists in DB");
         } else {
             log.info("Was invoked method for addNewAnimal");
             return animalsRepository.save(animal);
         }
     }
+
     /**
      * Method to remove an animal by its identifier.
      *
      * @param animalId the identifier of the animal to remove
      */
     public void removeAnimal(long animalId) {
-            animalsRepository.deleteById(animalId);
-            log.info("Was invoked method for remove removeAnimal");
+        animalsRepository.deleteById(animalId);
+        log.info("Was invoked method for remove removeAnimal");
     }
+
+    /**
+     * Method to change info an animal.
+     *
+     * @param animal the identifier of the animal to change
+     */
     public Animals changeAnimalInfo(Animals animal) {
         log.info("Was invoked method for changeAnimalInfo");
         return animalsRepository.save(animal);
@@ -119,7 +134,7 @@ public class AnimalsService {
      * called method of repository {@link JpaRepository#findById(Object)}
      * called method of repository {@link JpaRepository#save(Object)}
      *
-     * @param animalId identifier of animal, can't be null
+     * @param animalId       identifier of animal, can't be null
      * @param busyFreeStatus means the status of the animal, true - the animal is free, false - the animal is adopted
      * @return client who adopted the animal
      */

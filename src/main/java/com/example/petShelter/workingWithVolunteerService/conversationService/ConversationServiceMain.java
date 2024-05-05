@@ -43,6 +43,11 @@ public class ConversationServiceMain {
      */
     public void firstGivingUsers(Long clientChatId) {
 
+//        telegramBot.execute(new SendMessage(
+//                clientChatId,
+//                ConstantsSendMessageInConv.WE_FIND_VOLUNTEER
+//        ));
+
         telegramBotClient.sendMessage(clientChatId, ConstantsSendMessageInConv.WE_FIND_VOLUNTEER);
 
         Long volId;
@@ -66,8 +71,13 @@ public class ConversationServiceMain {
      * @param clientChatId is client chat id in telegram
      */
     private void volunteerNotFound(Long clientChatId) {
-    telegramBotClient.sendMessage(clientChatId,
-            "Все волонтеры сейчас заняты, напишите чуть позже");
+//        telegramBot.execute(new SendMessage(
+//                clientChatId,
+//                "Все волонтеры сейчас заняты, напишите чуть позже")
+//        );
+
+    telegramBotClient.sendMessage(clientChatId, "Все волонтеры сейчас заняты, напишите чуть позже");
+
     }
 
 
@@ -86,6 +96,11 @@ public class ConversationServiceMain {
         volunteerService.inactiveVolunteerByChatId(volChatId);
 
         conversationPeopleService.addPeople(clientChatId, volChatId);
+
+//        telegramBot.execute(new SendMessage(
+//                volChatId,
+//                ConstantsSendMessageInConv.HI_MESSAGE
+//        ));
 
         telegramBotClient.sendMessage(volChatId, ConstantsSendMessageInConv.HI_MESSAGE);
     }
@@ -112,10 +127,10 @@ public class ConversationServiceMain {
             }
             String notNeed = "/ответ на отчет " + clientChatId + " ";
             int len = notNeed.length();
-
+//            telegramBot.execute(new SendMessage(clientChatId, text.substring(len)));
             telegramBotClient.sendMessage(clientChatId, text.substring(len));
             telegramBotClient.sendMessage(volChatId, VOLUNTEER_MESSAGE_LATE);
-
+//            telegramBot.execute(new SendMessage(volChatId, VOLUNTEER_MESSAGE_LATE));
         } catch (Exception e) {
             log.info("error in send message about checking report to client (report = {})", text);
         }

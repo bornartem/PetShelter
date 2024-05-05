@@ -15,7 +15,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "clients")
+@Entity
+@Table(name = "clients")
 public class Clients {
 
     @ManyToOne

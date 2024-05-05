@@ -15,7 +15,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "volunteers")
+@Entity
+@Table(name = "volunteers")
 @JsonIgnoreProperties(value = {"clients"})
 public class Volunteers {
 

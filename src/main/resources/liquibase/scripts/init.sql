@@ -1,80 +1,77 @@
 -- liquibase formatted sql
--- changeset bkvdm:1
-CREATE TABLE daily_report (
-  id_daily_report BIGSERIAL PRIMARY KEY,
-  id_client BIGINT,
-  date_time TIMESTAMP NOT NULL,
-  well VARCHAR(255),
-  reaction VARCHAR(255),
-  animal_menu VARCHAR(255),
-  foto_animal SMALLINT[],
-  photo_path VARCHAR(255),
-  is_check BOOLEAN NOT NULL,
-  FOREIGN KEY (id_client) REFERENCES Clients(id_client)
+-- changeset bornartem:1
+CREATE TABLE public.animal_avatar (
+	id int8 NOT NULL,
+	"data" oid NULL,
+	file_path varchar(255) NULL,
+	file_size int8 NOT NULL,
+	media_type varchar(255) NULL,
+	animal_id_animal int8 NULL,
+	CONSTRAINT animal_avatar_pkey PRIMARY KEY (id),
+	CONSTRAINT uk_oprgj8d2brr7rnpglmlflcbjd UNIQUE (animal_id_animal)
 );
 
-CREATE TABLE animals (
-  id_animal BIGINT PRIMARY KEY,
-  id_shelter BIGINT,
-  name VARCHAR(255),
-  age VARCHAR(255),
-  type VARCHAR(255),
-  busy_free BOOLEAN NOT NULL,
-  date_take TIMESTAMP,
-  FOREIGN KEY (id_shelter) REFERENCES shelter(id_shelter)
+CREATE TABLE public.animals (
+	id_animal bigserial NOT NULL,
+	age varchar(255) NULL,
+	busy_free bool NOT NULL,
+	date_take timestamp(6) NULL,
+	"name" varchar(255) NULL,
+	"type" varchar(255) NULL,
+	client_id int8 NULL,
+	shelters_id int8 NULL,
+	CONSTRAINT animals_pkey PRIMARY KEY (id_animal)
 );
 
-CREATE TABLE clients (
-  id_client BIGINT PRIMARY KEY,
-  id_volunteer BIGINT,
-  chat_id BIGINT NOT NULL,
-  name VARCHAR(255),
-  contact VARCHAR(255),
-  adopted_animal BIGINT,
-  FOREIGN KEY (id_volunteer) REFERENCES volunteers(id_volunteer),
-  FOREIGN KEY (adopted_animal) REFERENCES Animals(id_animal)
+CREATE TABLE public.clients (
+	id_client bigserial NOT NULL,
+	chat_id int8 NOT NULL,
+	contact varchar(255) NULL,
+	"name" varchar(255) NULL,
+	adopted_animal_id_animal int8 NULL,
+	id_volunteer int8 NULL,
+	CONSTRAINT clients_pkey PRIMARY KEY (id_client),
+	CONSTRAINT uk_irs9sx761mntg1xspsit1695f UNIQUE (adopted_animal_id_animal)
 );
 
-CREATE TABLE shelter (
-  id_shelter BIGINT PRIMARY KEY,
-  name VARCHAR(255),
-  working_hours VARCHAR(255),
-  contact VARCHAR(255),
-  address VARCHAR(255),
-  location VARCHAR(255),
-  security_contact VARCHAR(255),
-  rules VARCHAR(255)
+CREATE TABLE public.conversation_people (
+	id bigserial NOT NULL,
+	chat_id int8 NOT NULL,
+	is_volunteer bool NOT NULL,
+	opponent_chat_id int8 NOT NULL,
+	CONSTRAINT conversation_people_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE volunteers (
-  id_volunteer BIGINT PRIMARY KEY,
-  chat_id BIGINT NOT NULL,
-  name VARCHAR(255),
-  contact VARCHAR(255)
+CREATE TABLE public.daily_report (
+	id_daily_report bigserial NOT NULL,
+	animal_menu varchar(255) NULL,
+	reaction varchar(255) NULL,
+	well varchar(255) NULL,
+	is_check bool NOT NULL,
+	date_time timestamp(6) NOT NULL,
+	photo_animal varchar(255) NULL,
+	animal_id int8 NULL,
+	id_client int8 NULL,
+	CONSTRAINT daily_report_pkey PRIMARY KEY (id_daily_report)
 );
 
-CREATE TABLE animal_avatar (
-  id BIGINT PRIMARY KEY,
-  file_path VARCHAR(255),
-  file_size BIGINT,
-  media_type VARCHAR(255),
-  data BYTEA,
-  animal_id BIGINT,
-  FOREIGN KEY (animal_id) REFERENCES animals(id_animal)
+CREATE TABLE public.shelter (
+	id_shelter bigserial NOT NULL,
+	address varchar(255) NULL,
+	contact varchar(255) NULL,
+	"location" varchar(255) NULL,
+	"name" varchar(255) NULL,
+	security_contact varchar(255) NULL,
+	rules varchar(255) NULL,
+	working_hours varchar(255) NULL,
+	CONSTRAINT shelter_pkey PRIMARY KEY (id_shelter)
 );
 
-CREATE TABLE conversation_people (
-  id BIGINT PRIMARY KEY,
-  chat_id BIGINT NOT NULL,
-  opponent_chat_id BIGINT NOT NULL,
-  is_volunteer BOOLEAN NOT NULL
+CREATE TABLE public.volunteers (
+	id_volunteer int8 NOT NULL,
+	activity bool NULL,
+	chat_id int8 NOT NULL,
+	contact varchar(255) NULL,
+	"name" varchar(255) NULL,
+	CONSTRAINT volunteers_pkey PRIMARY KEY (id_volunteer)
 );
-
-CREATE TABLE notification_task (
-id BIGSERIAL PRIMARY KEY,
-  chat_id BIGINT NOT NULL,
-  date_time TIMESTAMP NOT NULL,
-  notification VARCHAR(255) NOT NULL
-);
-
-select * from animals

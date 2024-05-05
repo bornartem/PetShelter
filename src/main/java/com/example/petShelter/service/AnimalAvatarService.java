@@ -7,6 +7,7 @@ import com.pengrad.telegrambot.model.request.InputMedia;
 import com.pengrad.telegrambot.model.request.InputMediaPhoto;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,7 @@ public class AnimalAvatarService {
     private final AnimalsService animalsService;
     private final AnimalAvatarRepository animalAvatarRepository;
 
+    @Autowired
     public AnimalAvatarService(AnimalsService animalsService, AnimalAvatarRepository animalAvatarRepository) {
         this.animalsService = animalsService;
         this.animalAvatarRepository = animalAvatarRepository;
@@ -58,7 +60,7 @@ public class AnimalAvatarService {
         Animals animal = animalsService.findAnimalById(animalId);
 
         Path filePath = Path.of(avatarsDir, animalId + "." + getExtension(file.getOriginalFilename()));
-        log.info("file path = {}",filePath);
+        log.info("file path = {}", filePath);
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
 
@@ -83,6 +85,7 @@ public class AnimalAvatarService {
 
         animalAvatarRepository.save(animalAvatar);
     }
+
     /**
      * Finds an animal avatar by ID.
      *
@@ -98,6 +101,7 @@ public class AnimalAvatarService {
 
         return animalAvatar;
     }
+
     /**
      * Finds an animal avatar by animalId.
      *
