@@ -41,8 +41,9 @@ public class FinishedVolunteerSingUpTest {
 
         when(volunteersService.update(any())).thenReturn(volunteer);
         String message = "Вы зарегистрированы в качестве волонтера, с данными:\n" +
-                volunteer.getId() + name + contact +
-                " Сейчас вы не в активном поиске клиентов нажмите /changeActivity" +
+                "id = " + volunteer.getId()+ ", name = " + name +
+                ", contacts: " + contact +
+                ".\n Сейчас вы не в активном поиске клиентов нажмите /changeActivity" +
                 " чтобы изменить активность.\n\n" +
                 "(Если введенные данные необходимо изменить введите данные еще раз, " +
                 "в том же формате - \"имя: контактное инфо\")";
@@ -79,6 +80,8 @@ public class FinishedVolunteerSingUpTest {
                 " чтобы изменить активность.\n\n" +
                 "(Если введенные данные необходимо изменить введите данные еще раз, " +
                 "в том же формате - \"имя: контактное инфо\")";
+
+
 
         verify(telegramBotClient).sendMessage(chatId, message);
     }

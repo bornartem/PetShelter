@@ -28,8 +28,9 @@ public class FinishedVolunteerSingUp {
                 volunteers.setContact(strings[1]);
                 volunteersService.update(volunteers);
                 String message = "Вы зарегистрированы в качестве волонтера, с данными:\n" +
-                        volunteers.getId() + volunteers.getName() + volunteers.getContact() +
-                        " Сейчас вы не в активном поиске клиентов нажмите /changeActivity" +
+                        "id = " + volunteers.getId() + ", name = " + volunteers.getName() +
+                        ", contacts: " + volunteers.getContact() +
+                        ".\n Сейчас вы не в активном поиске клиентов нажмите /changeActivity" +
                         " чтобы изменить активность.\n\n" +
                         "(Если введенные данные необходимо изменить введите данные еще раз, " +
                         "в том же формате - \"имя: контактное инфо\")";
