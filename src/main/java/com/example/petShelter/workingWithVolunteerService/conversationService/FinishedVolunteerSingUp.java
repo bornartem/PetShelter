@@ -54,8 +54,9 @@ public class FinishedVolunteerSingUp {
 
             volunteersService.update(volunteers);
             String message = "Вы изменили свои данные, теперь они выглядят так:\n" +
-                    volunteers.getId() + volunteers.getName() + volunteers.getContact() +
-                    "\nСейчас вы не в активном поиске клиентов нажмите /changeActivity" +
+                    "id = " + volunteers.getId()+ ", name = " + volunteers.getName()+
+                    ", contacts = " + volunteers.getContact() +
+                    ".\nСейчас вы не в активном поиске клиентов нажмите /changeActivity" +
                     " чтобы изменить активность.\n\n" +
                     "(Если введенные данные необходимо изменить введите данные еще раз, " +
                     "в том же формате - \"имя: контактное инфо\")";

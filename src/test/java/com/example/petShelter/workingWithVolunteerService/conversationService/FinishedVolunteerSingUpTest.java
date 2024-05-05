@@ -73,12 +73,12 @@ public class FinishedVolunteerSingUpTest {
         finishedVolunteerSingUp.singUp(chatId, textNormal, volunteer);
 
         String message = "Вы изменили свои данные, теперь они выглядят так:\n" +
-                volunteer.getId() + name + contact +
-                "\nСейчас вы не в активном поиске клиентов нажмите /changeActivity" +
+                "id = " + volunteer.getId()+ ", name = " + name+
+                ", contacts = " + contact +
+                ".\nСейчас вы не в активном поиске клиентов нажмите /changeActivity" +
                 " чтобы изменить активность.\n\n" +
                 "(Если введенные данные необходимо изменить введите данные еще раз, " +
                 "в том же формате - \"имя: контактное инфо\")";
-
 
         verify(telegramBotClient).sendMessage(chatId, message);
     }

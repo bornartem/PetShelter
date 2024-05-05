@@ -49,7 +49,7 @@ public class CheckReportVolunteer {
      * all reports will be checking
      * @throws InterruptedException
      */
-    @Scheduled(cron = "0 0 21 * * *")
+    @Scheduled(cron = "10 33 * * * *")
     public void checkAt21Hour() {
         log.info("scheduled at 21 o'clock start work");
         List<DailyReports> reports;
