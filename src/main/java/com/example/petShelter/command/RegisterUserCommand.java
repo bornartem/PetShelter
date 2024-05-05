@@ -36,7 +36,9 @@ public class RegisterUserCommand implements Command {
     @Override
     public void execute(Long chatId, List<Update> updatesList) {
         try {
-//
+            if (clientsService.findFirstByChatId(chatId) != null) {
+                return;
+            }
 
             Clients client = new Clients();
             client.setChatId(chatId);
