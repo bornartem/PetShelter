@@ -56,6 +56,7 @@ public class CheckReportVolunteer {
         try {
             reports = dailyReportService.findByNotCheck();
         } catch (NullPointerException e) {
+            log.info("error in scheduled 21 hour!");
             return;
         }
 
@@ -71,7 +72,7 @@ public class CheckReportVolunteer {
 
 
 
-    public void volunteerFindHimReport(List<DailyReports> reports) {
+    private void volunteerFindHimReport(List<DailyReports> reports) {
 
         log.info("volunteerFindHimReport for checking start working. Count reports" +
                 "{}", reports.size());
