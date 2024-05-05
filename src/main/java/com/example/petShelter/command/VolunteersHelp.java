@@ -1,6 +1,6 @@
 package com.example.petShelter.command;
 
-import com.example.petShelter.workingWithVolunteerService.workingWithVolunteerConversationService.ConversationServiceMain;
+import com.example.petShelter.workingWithVolunteerService.conversationService.ConversationServiceMain;
 import org.springframework.stereotype.Component;
 
 /**

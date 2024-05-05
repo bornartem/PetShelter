@@ -49,13 +49,14 @@ public class CheckReportVolunteer {
      * all reports will be checking
      * @throws InterruptedException
      */
-    @Scheduled(cron = "40 56 * * * *")
+    @Scheduled(cron = "0 0 21 * * *")
     public void checkAt21Hour() {
         log.info("scheduled at 21 o'clock start work");
         List<DailyReports> reports;
         try {
             reports = dailyReportService.findByNotCheck();
         } catch (NullPointerException e) {
+            log.info("error in scheduled 21 hour!");
             return;
         }
 
@@ -71,7 +72,7 @@ public class CheckReportVolunteer {
 
 
 
-    public void volunteerFindHimReport(List<DailyReports> reports) {
+    private void volunteerFindHimReport(List<DailyReports> reports) {
 
         log.info("volunteerFindHimReport for checking start working. Count reports" +
                 "{}", reports.size());

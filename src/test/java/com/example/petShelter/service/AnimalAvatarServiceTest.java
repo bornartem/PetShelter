@@ -58,7 +58,11 @@ public class AnimalAvatarServiceTest {
         // Инициализируем объект MultipartFile
         MultipartFile multipartFile = new MockMultipartFile("file", "file.txt", "text/plain", fileBytes);
 
-        when(animalsService.findAnimalById(any())).thenReturn(new Animals());
+        Animals animals = new Animals();
+        animals.setId(animalId);
+        animals.setName(name);
+        animals.setBusyFree(busy);
+        when(animalsService.findAnimalById(any())).thenReturn(animals);
         when(animalAvatarRepository.findById(any())).thenReturn(Optional.empty());
         when(animalAvatarRepository.save(any())).thenReturn(null);
 

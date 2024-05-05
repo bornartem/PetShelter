@@ -1,4 +1,4 @@
-package com.example.petShelter.workingWithVolunteerService.workingWithVolunteerConversationService;
+package com.example.petShelter.workingWithVolunteerService.conversationService;
 
 import com.example.petShelter.model.Volunteers;
 import com.example.petShelter.service.TelegramBotClient;
@@ -26,16 +26,23 @@ public class FinishedVolunteerSingUp {
                 String[] strings = text.split(": ");
                 volunteers.setName(strings[0]);
                 volunteers.setContact(strings[1]);
+                volunteersService.update(volunteers);
+                String message = "Вы зарегистрированы в качестве волонтера, с данными:\n" +
+                        volunteers.getId() + volunteers.getName() + volunteers.getContact() +
+                        " Сейчас вы не в активном поиске клиентов нажмите /changeActivity" +
+                        " чтобы изменить активность.\n\n" +
+                        "(Если введенные данные необходимо изменить введите данные еще раз, " +
+                        "в том же формате - \"имя: контактное инфо\")";
+                telegramBotClient.sendMessage(chatId, message);
+            } catch (IndexOutOfBoundsException e) {
+                log.info("volunteer id {} was create mistake in message in sing in from not " +
+                        "valid text", volunteers.getId());
+                telegramBotClient.sendMessage(volunteers.getChatId(), "повторите попытку");
             } catch (Exception e) {
-                log.info("volunteer {} was create mistake in message in sing in", volunteers);
+                log.info("volunteer id {} was create mistake in message in sing in",
+                        volunteers.getId());
+                telegramBotClient.sendMessage(volunteers.getChatId(), "повторите попытку");
             }
-            volunteersService.update(volunteers);
-            String message = "Вы зарегистрированы в качестве волонтера, с данными:\n" +
-                    volunteers + " Сейчас вы не в активном поиске клиентов нажмите /changeActivity" +
-                    " чтобы изменить активность.\n\n" +
-                    "(Если введенные данные необходимо изменить введите данные еще раз, " +
-                    "в том же формате - \"имя: контактное инфо\")";
-            telegramBotClient.sendMessage(chatId, message);
         } else {
             try {
                 String[] strings = text.split(": ");
@@ -47,7 +54,8 @@ public class FinishedVolunteerSingUp {
 
             volunteersService.update(volunteers);
             String message = "Вы изменили свои данные, теперь они выглядят так:\n" +
-                    volunteers + "\nСейчас вы не в активном поиске клиентов нажмите /changeActivity" +
+                    volunteers.getId() + volunteers.getName() + volunteers.getContact() +
+                    "\nСейчас вы не в активном поиске клиентов нажмите /changeActivity" +
                     " чтобы изменить активность.\n\n" +
                     "(Если введенные данные необходимо изменить введите данные еще раз, " +
                     "в том же формате - \"имя: контактное инфо\")";
