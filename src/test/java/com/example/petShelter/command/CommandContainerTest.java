@@ -1,5 +1,8 @@
 package com.example.petShelter.command;
 
+import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementForAdult;
+import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementForPuppy;
+import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementWithDisabilities;
 import com.example.petShelter.command.shelter_cat_inner_buttons.*;
 import com.example.petShelter.command.shelter_dog_inner_buttons.*;
 import com.example.petShelter.command.cat_menu_buttons.*;
@@ -7,9 +10,6 @@ import com.example.petShelter.command.dog_menu_buttons.*;
 import com.example.petShelter.command.home_improvement_cat_buttons.HomeImprovementForAdultCat;
 import com.example.petShelter.command.home_improvement_cat_buttons.HomeImprovementForCatWithDisabilities;
 import com.example.petShelter.command.home_improvement_cat_buttons.HomeImprovementForKitty;
-import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementForAdult;
-import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementForPuppy;
-import com.example.petShelter.command.home_improvement_dog_buttons.HomeImprovementWithDisabilities;
 import com.example.petShelter.service.TelegramBotClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

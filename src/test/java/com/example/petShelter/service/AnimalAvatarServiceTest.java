@@ -53,12 +53,16 @@ public class AnimalAvatarServiceTest {
         Long animalId = 1L;
         String name = "bobik";
         boolean busy = true;
+        Animals animal = new Animals();
+        animal.setId(animalId);
+        animal.setName(name);
+        animal.setBusyFree(busy);
         byte[] fileBytes = {72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100};
 
         // Инициализируем объект MultipartFile
         MultipartFile multipartFile = new MockMultipartFile("file", "file.txt", "text/plain", fileBytes);
 
-        when(animalsService.findAnimalById(any())).thenReturn(new Animals(animalId, name, busy));
+        when(animalsService.findAnimalById(any())).thenReturn(animal);
         when(animalAvatarRepository.findById(any())).thenReturn(Optional.empty());
         when(animalAvatarRepository.save(any())).thenReturn(null);
 

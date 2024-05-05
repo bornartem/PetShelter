@@ -115,7 +115,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                     reportCommands.saveReport(message);
                 } else {
                     telegramBotClient.sendMessage(message.chat().id(),
-                            "Не понимаю вас, напишите /help чтобы узнать что я понимаю.");
+                            "Не понимаю Вас, напишите /volunteerHelp и наши волонтеры помогут Вам.");
                 }
             } else if (update.callbackQuery() != null) {
                 String userText = update.callbackQuery().data();
