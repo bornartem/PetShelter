@@ -18,6 +18,7 @@ import com.pengrad.telegrambot.request.SendPhoto;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -49,6 +50,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     private final RegisterUserCommand registerUser;
     private final ReportCommands reportCommands;
 
+    @Autowired
     public TelegramBotUpdatesListener(TelegramBot telegramBot,
                                       CommandContainer commandContainer,
                                       TelegramBotClient telegramBotClient,

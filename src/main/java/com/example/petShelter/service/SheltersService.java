@@ -26,6 +26,7 @@ public class SheltersService {
 
     private Logger log = LoggerFactory.getLogger(SheltersService.class);
 
+    @Autowired
     public SheltersService(SheltersRepository sheltersRepository) {
         this.sheltersRepository = sheltersRepository;
     }
