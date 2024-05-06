@@ -34,3 +34,4 @@ build/
 /mvnw.cmd
 /mvnw
 /HELP.md
+/src/main/resources/Dan.properties

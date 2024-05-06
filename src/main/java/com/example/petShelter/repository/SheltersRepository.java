@@ -1,4 +1,9 @@
 package com.example.petShelter.repository;
 
-public class SheltersRepository {
+import com.example.petShelter.model.Shelters;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+public interface SheltersRepository extends JpaRepository<Shelters, Long> {
+
 }
