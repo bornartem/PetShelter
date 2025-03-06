@@ -78,3 +78,14 @@ id BIGSERIAL PRIMARY KEY,
 );
 
 select * from animals
+
+SELECT name, a
+FROM shelter
+group by name
+
+
+create table employee (
+    name varchar(255),
+    department varchar(255),
+    salary integer(2),
+);

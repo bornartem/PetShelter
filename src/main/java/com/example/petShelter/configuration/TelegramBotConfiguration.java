@@ -7,9 +7,11 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +39,7 @@ public class TelegramBotConfiguration {
 
     @Bean
     public String meetingFile() throws Exception {
-        File pdfFile = new File(".//src//main//resources//files//1.pdf");
+        InputStream pdfFile = new ClassPathResource("files/1.pdf").getInputStream();
 
         PDDocument document = PDDocument.load(pdfFile);
 
@@ -50,7 +52,7 @@ public class TelegramBotConfiguration {
 
     @Bean
     public String docForGetPet() throws IOException {
-        File pdfFile = new File(".//src//main//resources//files//2.pdf");
+        InputStream pdfFile = new ClassPathResource("files/2.pdf").getInputStream();
 
         PDDocument document = PDDocument.load(pdfFile);
 
@@ -63,7 +65,7 @@ public class TelegramBotConfiguration {
 
     @Bean
     public String transportingFile() throws IOException {
-        File pdfFile = new File(".//src//main//resources//files//3.pdf");
+        InputStream pdfFile = new ClassPathResource("files/3.pdf").getInputStream();
 
         PDDocument document = PDDocument.load(pdfFile);
 
@@ -76,7 +78,7 @@ public class TelegramBotConfiguration {
 
     @Bean
     public String dogHandlerAdvicesFile() throws IOException {
-        File pdfFile = new File(".//src//main//resources//files//7.pdf");
+        InputStream pdfFile = new ClassPathResource("files/7.pdf").getInputStream();
 
         PDDocument document = PDDocument.load(pdfFile);
 
@@ -89,7 +91,7 @@ public class TelegramBotConfiguration {
 
     @Bean
     public String dogHandlersListFile() throws IOException {
-        File pdfFile = new File(".//src//main//resources//files//8.pdf");
+        InputStream pdfFile = new ClassPathResource("files/8.pdf").getInputStream();
 
         PDDocument document = PDDocument.load(pdfFile);
 
@@ -102,7 +104,7 @@ public class TelegramBotConfiguration {
 
     @Bean
     public String rejectFile() throws IOException {
-        File pdfFile = new File(".//src//main//resources//files//9.pdf");
+        InputStream pdfFile = new ClassPathResource("files/9.pdf").getInputStream();
 
         PDDocument document = PDDocument.load(pdfFile);
 
@@ -115,7 +117,7 @@ public class TelegramBotConfiguration {
 
     @Bean
     public String littlePetFile() throws IOException {
-        File pdfFile = new File(".//src//main//resources//files//4.pdf");
+        InputStream pdfFile = new ClassPathResource("files/4.pdf").getInputStream();
 
         PDDocument document = PDDocument.load(pdfFile);
 
@@ -128,7 +130,7 @@ public class TelegramBotConfiguration {
 
     @Bean
     public String adultPetFile() throws IOException {
-        File pdfFile = new File(".//src//main//resources//files//5.pdf");
+        InputStream pdfFile = new ClassPathResource("files/5.pdf").getInputStream();
 
         PDDocument document = PDDocument.load(pdfFile);
 
@@ -141,7 +143,7 @@ public class TelegramBotConfiguration {
 
     @Bean
     public String petWithDisabilitiesFile() throws IOException {
-        File pdfFile = new File(".//src//main//resources//files//6.pdf");
+        InputStream pdfFile = new ClassPathResource("files/6.pdf").getInputStream();
 
         PDDocument document = PDDocument.load(pdfFile);
 
